@@ -1,0 +1,14 @@
+The workflow of a user through the HTML pages is as follows (for now)
+
+
+
+             > admin_board.html 
+           /
+          /   
+index.html                        > mem_behavior_form.html 
+          \                     /                          \
+           \                   /                            \
+             > choose_form.html --> accident_form.html -------> print_and_email.html  
+                               \                            /
+                                \                          /
+                                  > gen_incident_form.html 
