@@ -47,8 +47,26 @@ code {
   word-break: break-all;
 }
 h3 {
-  background: url('firebase-logo.png') no-repeat;
   background-size: 40px;
-  padding-left: 50px;
   color: white;
+  padding: 2px;
+}
+form, button {
+  display: inline;
+}
+main-header {
+  background-color: white;
+  color: blue;
+}
+main-header, img {
+  width: 100px;
+}
+.logout {
+  position: absolute;
+  right: 15px;
+}
+.button-options {
+  width: 670px;
+  position: relative;
+  margin: auto;
 }
