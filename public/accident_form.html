@@ -28,7 +28,6 @@ limitations under the License.
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
   <script src="resources/js/jquery-3.2.0.min.js"></script>
   <script src="resources/js/accident.js"></script>
-
   <link rel="stylesheet" href="./resources/css/main.css">
 
 </head>
@@ -54,7 +53,7 @@ limitations under the License.
 
             <div class=logout>
 
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="memb-behavior" name="logout" onclick="myFunction()">Logout</button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="memb-behavior" name="logout" onclick="confirmLogout()">Logout</button>
             </div>
 
           </div>
@@ -100,7 +99,7 @@ limitations under the License.
                         <input type="text" placeholder="Treatment Description" id="treatment_id" name="parent" autofocus required>
                     </p>
                 </div>
-                <button onclick="submitButton()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Form Complete</button>
+                <button onclick="writeAccidentData()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Write Data</button>
               </form>
             </div>
           </div>
@@ -109,4 +108,19 @@ limitations under the License.
     </main>
   </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
+    authDomain: "bngcdb-86373.firebaseapp.com",
+    databaseURL: "https://bngcdb-86373.firebaseio.com",
+    storageBucket: "bngcdb-86373.appspot.com",
+    messagingSenderId: "164973952286"
+  };
+  firebase.initializeApp(config);
+</script>
+<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script src="resources/js/accident.js"></script>
+<script src="resources/js/allpages.js"></script>
 </html>
