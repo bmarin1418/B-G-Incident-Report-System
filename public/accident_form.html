@@ -25,9 +25,7 @@ limitations under the License.
   <!-- Material Design Theming -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-  <script src="resources/js/accident.js"></script>
-  <script src="resources/js/allpages.js"></script>
+
 
   <link rel="stylesheet" href="./resources/css/main.css">
 
@@ -85,6 +83,8 @@ limitations under the License.
                   <label for="parentid">Parent Notified<em>*</em></label>
                   <input type="text" placeholder="Parents Name" id="parentid" name="parent" autofocus required>
                 </p>
+                <button onclick="writeAccidentData()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Write Data</button>
+
                 <button onclick="submitButton()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Form Complete</button>
               </form>
             </div>
@@ -94,4 +94,19 @@ limitations under the License.
     </main>
   </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
+    authDomain: "bngcdb-86373.firebaseapp.com",
+    databaseURL: "https://bngcdb-86373.firebaseio.com",
+    storageBucket: "bngcdb-86373.appspot.com",
+    messagingSenderId: "164973952286"
+  };
+  firebase.initializeApp(config);
+</script>
+<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script src="resources/js/accident.js"></script>
+<script src="resources/js/allpages.js"></script>
 </html>
