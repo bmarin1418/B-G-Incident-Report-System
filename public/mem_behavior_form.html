@@ -60,19 +60,22 @@ limitations under the License.
               <form>
                 <p>
                   <label for="name_id">Name of Member<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="name_id" name="name" autofocus required>
+                  <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
                 </p>
                 <p>
-                  <label for="dateid">Date<em>*</em></label>
-                  <input type="text" placeholder="mn/dd/yyyy" id="date_id" name="date" autofocus required>
+                  <label for="dateid">Date</label>
+                  <input type="date" id="dateid" name="date" autofocus>
+                  <script type="text/javascript">
+                    document.getElementById('dateid').valueAsDate = new Date();
+                  </script>
                 </p>
                 <p>
                   <label for="staffid">Staff Members<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="staff_id" name="staff" autofocus required>
+                  <input type="text" placeholder="Jane Doe" id="staffid" name="staff" autofocus required>
                 </p>
                 <p>
                   <label for="staffid">Issued By<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="issued_by_id" name="issued_by" autofocus required>
+                  <input type="text" placeholder="Jane Doe" id="issuedbyid" name="issued_by" autofocus required>
                 </p>
                 <p>
                     <label for="behavior_checkboxes">Inappropriate Behavior Type</label><br><br>

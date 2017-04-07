@@ -65,8 +65,11 @@ limitations under the License.
               <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
             </p>
             <p>
-              <label for="dateid">Date<em>*</em></label>
-              <input type="text" placeholder="" id="dateid" name="date" autofocus required>
+              <label for="dateid">Date</label>
+              <input type="date" id="dateid" name="date" autofocus>
+              <script type="text/javascript">
+                document.getElementById('dateid').valueAsDate = new Date();
+              </script>
             </p>
             <p>
               <label for="staffid">Name of Staff Member<em>*</em></label>
