@@ -5,12 +5,14 @@ var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
 var INJURY_DIV_ID = '#head_injury_div';
 var SUBMIT_BUTTON_ID = '#submit_button_id';    
 var LOGOUT_ID = '#logout';
+var DATE_FIELD_ID = '#dateid'
 
 /* ------ Main Execution ------ */
 
 $(document).ready(function(){
     firbaseInit();
     linkHandlers();
+    initDateField();
 });
 
 
@@ -47,18 +49,35 @@ function firbaseInit() {
 
 //Returns an input validator object initalized for the accident form
 function initValidatorObj() {
-    return new InputValidator({
+    return new InputValidator(FORM_ID, {
         name: {
           presence: true
         },
         date: {
           presence: true,
-          date: {dateTime: true}
+          date: {
+              latest: moment(),
+              dateTime: true
+          }
         },
         staff: {
           presence: true
+        },
+        incident : {
+            presence: true
+        },
+        response: {
+            presence: true
+        },
+        parent: {
+            presence: true
         }
     });
+}
+
+//Fill in the current date for the date field
+function initDateField() {
+    $(DATE_FIELD_ID)[0].valueAsDate = new Date();
 }
 
 /* ------ Event Handler Functions ------ */
