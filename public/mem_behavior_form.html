@@ -26,8 +26,6 @@ limitations under the License.
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-  <script src="resources/js/accident.js"></script>
-  <script src="resources/js/allpages.js"></script>
   <link rel="stylesheet" href="./resources/css/main.css">
 
 </head>
@@ -56,8 +54,7 @@ limitations under the License.
             </div>
           </div>
           <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-            <div id="mem_behavior_form">
-              <form>
+              <form id="mem_behavior_form">
                 <p>
                   <label for="name_id">Name of Member<em>*</em></label>
                   <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
@@ -105,15 +102,12 @@ limitations under the License.
                 </p>
                 <p>
                   <label for="comments">Staff Comments<em>*</em></label>
-                  <input type="text" placeholder="" id="comments_id" name="comments" autofocus required>
+                  <input type="text" placeholder="" id="commentsid" name="comments" autofocus required>
                 </p>
 
-                <button onclick="writeMemBehaviorData()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Write Data</button>
-
-                <button onclick="submitButton()" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Form Complete</button>
+                <input id="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
 
               </form>
-            </div>
           </div>
         </div>
       </div>
@@ -132,6 +126,7 @@ limitations under the License.
   };
   firebase.initializeApp(config);
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 <script src="resources/js/mem_behavior.js"></script>
 <script src="resources/js/allpages.js"></script>

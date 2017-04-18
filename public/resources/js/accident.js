@@ -1,9 +1,9 @@
 /* ------ HTML id's for global use ------ */
 
-var FORM_ID = '#accident_form_id';
-var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
+var FORM_ID = '#accident_form';
+var INJURY_TEXTBOX_ID = '#headinjuryid';
 var INJURY_DIV_ID = '#head_injury_div';
-var SUBMIT_BUTTON_ID = '#submit_button_id';    
+var SUBMIT_BUTTON_ID = '#sendForm';    
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
 
@@ -109,3 +109,45 @@ function logoutHandler() {
     window.location.href = "index.html";
   }
 }
+
+
+
+
+$(function(){
+  var data = [];
+
+  var ref = firebase.database().ref('accident/').push();
+
+$('#accident_form').submit(function(event) {
+  var $form = $(this);
+  console.log("Submit to Firebase");
+
+  var newForm = {
+    "childName" : $('#nameid').val(),
+    "date" : $('#dateid').val(),
+    "staffName" : $('#staffid').val(),
+    "witnessName" : $('#witnessid').val(),
+    "incidentDescription" : $('#incidentid').val(),
+    "responseDescription" : $('#responseid').val(),
+    "parentNotified" : $('#parentid').val(),
+    "headInjury" : $('#headinjuryid')
+  }
+
+
+  data = newForm;
+  console.log(data);
+
+  ref.set(data,function(err){
+    if(err){
+      alert("Data did not send");
+    }
+  });
+
+
+  window.location.href = "print_and_email.html";
+
+  return false;
+})
+
+
+})
