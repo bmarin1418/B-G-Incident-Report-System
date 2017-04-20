@@ -7,7 +7,7 @@
 /*
         // Create an object. For the JSON, fields are referenced by name attribute
         // see validator.js for the complete JSON format specification
-        
+
         var inputValidator = new InputValidator('#myform_id', {
             name: {
               presence: true
@@ -20,7 +20,7 @@
               presence: true
             }
         });
-        
+
         if (inputValidator.validate()) {
             //send the form to the server
         }
@@ -35,7 +35,7 @@ function InputValidator(form_id, constraints) {
     this.constraints = constraints;
     this.form_id = form_id;
     this.allowDateTimeValidation();
-    
+
     // Hook up the inputs to validate on the fly
     var inputs = document.querySelectorAll("input, textarea, select")
     for (var i = 0; i < inputs.length; i++) {
@@ -134,12 +134,13 @@ InputValidator.prototype.addError = function(messages, error) {
 
 //Change array of key-value ojects to a key-value map
 InputValidator.prototype.objectifyForm = function(formArray) {
+  console.log(formArray);
   var returnArray = {};
   for (var i = 0; i < formArray.length; i++){
     returnArray[formArray[i]['name']] = formArray[i]['value'];
   }
   return returnArray;
-} 
+}
 
 //Extends input validator.js to to include dates
 InputValidator.prototype.allowDateTimeValidation = function() {
@@ -149,7 +150,7 @@ InputValidator.prototype.allowDateTimeValidation = function() {
         parse: function(value, options) {
             return +moment.utc(value);
         },
-    
+
         // Input is a unix timestamp
         format: function(value, options) {
             var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";

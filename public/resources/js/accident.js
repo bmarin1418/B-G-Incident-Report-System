@@ -3,7 +3,7 @@
 var FORM_ID = '#accident_form_id';
 var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
 var INJURY_DIV_ID = '#head_injury_div';
-var SUBMIT_BUTTON_ID = '#submit_button_id';    
+var SUBMIT_BUTTON_ID = '#submit_button_id';
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
 
@@ -20,22 +20,24 @@ $(document).ready(function(){
 
 //Links all DOM events to handler functions
 function linkHandlers() {
+  console.log('adsfadf');
         $(INJURY_TEXTBOX_ID).change(function(){
             var cntxt = this;
             headInjuryChangeHandler(cntxt);
         });
-    
+
         var inputValidator = initValidatorObj();
         $(SUBMIT_BUTTON_ID).click(function(){
             submitClickHandler(inputValidator);
+            console.log("form complete button clicked.");
         });
-    
+
         $(LOGOUT_ID).click(function(){
             logoutHandler();
         });
 }
 
-//Initialize Firebase 
+//Initialize Firebase
 function firbaseInit() {
   var config = {
     apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
@@ -69,7 +71,7 @@ function initValidatorObj() {
         response: {
             presence: true
         },
-        parent: {
+        parentNotified: {
             presence: true
         }
     });
@@ -95,7 +97,6 @@ function headInjuryChangeHandler(cntxt) {
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
         var data = [];
-        var ref = firebase.database().ref('accident/').push();
         var $form = $(this);
         console.log("Submit to Firebase");
 
@@ -108,16 +109,17 @@ function submitClickHandler(inputValidator) {
             "parentNotified": $('#parentid').val(),
             "headInjury": $('#headinjuryid')
         }
-        
+
         data = newForm;
         console.log(data);
-        ref.set(data, function (err) {
+        firebase.database().ref('accident/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
             }
+            window.location.href = "print_and_email.html";
+
         });
-        
-        window.location.href = "print_and_email.html";
+
         return false;
     }
 }
@@ -128,6 +130,3 @@ function logoutHandler() {
     window.location.href = "index.html";
   }
 }
-
-
-
