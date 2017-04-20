@@ -93,38 +93,19 @@ function headInjuryChangeHandler(cntxt) {
 
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
-  if (inputValidator.validate()) {
-      firebase.database().ref('accident/').push({
-        name: "Child Name",
-        staff: "Staff Name",
-        description: "Description of Event"
-      });
-      window.location.href = "print_and_email.html";
-  }
-}
+  //if (inputValidator.validate()) {
+      
+    var data = [];
 
-//Display logout warning info and redirect to login page
-function logoutHandler() {
-  if (confirm("Are you sure you want to logout?") == true) {
-    window.location.href = "index.html";
-  }
-}
+    var ref = firebase.database().ref('accident/').push();
 
-
-$(function(){
-  var data = [];
-
-  var ref = firebase.database().ref('accident/').push();
-
-$('#accident_form').submit(function(event) {
-  var $form = $(this);
-  console.log("Submit to Firebase");
+    var $form = $(this);
+    console.log("Submit to Firebase");
 
   var newForm = {
     "childName" : $('#nameid').val(),
     "date" : $('#dateid').val(),
     "staffName" : $('#staffid').val(),
-    "witnessName" : $('#witnessid').val(),
     "incidentDescription" : $('#incidentid').val(),
     "responseDescription" : $('#responseid').val(),
     "parentNotified" : $('#parentid').val(),
@@ -144,9 +125,20 @@ $('#accident_form').submit(function(event) {
 
   window.location.href = "print_and_email.html";
 
-  return false;
-})
+  return false; 
 
 
-})
+
+
+  //}
+}
+
+//Display logout warning info and redirect to login page
+function logoutHandler() {
+  if (confirm("Are you sure you want to logout?") == true) {
+    window.location.href = "index.html";
+  }
+}
+
+
 
