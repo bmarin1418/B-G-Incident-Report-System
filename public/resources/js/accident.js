@@ -93,44 +93,33 @@ function headInjuryChangeHandler(cntxt) {
 
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
-  //if (inputValidator.validate()) {
-      
-    var data = [];
+    if (inputValidator.validate()) {
+        var data = [];
+        var ref = firebase.database().ref('accident/').push();
+        var $form = $(this);
+        console.log("Submit to Firebase");
 
-    var ref = firebase.database().ref('accident/').push();
-
-    var $form = $(this);
-    console.log("Submit to Firebase");
-
-  var newForm = {
-    "childName" : $('#nameid').val(),
-    "date" : $('#dateid').val(),
-    "staffName" : $('#staffid').val(),
-    "incidentDescription" : $('#incidentid').val(),
-    "responseDescription" : $('#responseid').val(),
-    "parentNotified" : $('#parentid').val(),
-    "headInjury" : $('#headinjuryid')
-  }
-
-
-  data = newForm;
-  console.log(data);
-
-  ref.set(data,function(err){
-    if(err){
-      alert("Data did not send");
+        var newForm = {
+            "childName": $('#nameid').val(),
+            "date": $('#dateid').val(),
+            "staffName": $('#staffid').val(),
+            "incidentDescription": $('#incidentid').val(),
+            "responseDescription": $('#responseid').val(),
+            "parentNotified": $('#parentid').val(),
+            "headInjury": $('#headinjuryid')
+        }
+        
+        data = newForm;
+        console.log(data);
+        ref.set(data, function (err) {
+            if (err) {
+                alert("Data did not send");
+            }
+        });
+        
+        window.location.href = "print_and_email.html";
+        return false;
     }
-  });
-
-
-  window.location.href = "print_and_email.html";
-
-  return false; 
-
-
-
-
-  //}
 }
 
 //Display logout warning info and redirect to login page
