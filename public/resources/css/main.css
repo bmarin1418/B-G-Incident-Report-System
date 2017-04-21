@@ -70,3 +70,15 @@ main-header, img {
   position: relative;
   margin: auto;
 }
+.single-line-text {
+  width: 200px;
+  position: relative;
+  margin: auto;
+}
+
+.multi-line-text {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  margin: auto;
+}

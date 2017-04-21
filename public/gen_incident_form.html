@@ -60,30 +60,30 @@ limitations under the License.
             <form id="general_incident_form">
             <p>
               <label for="nameid">Name of Member<em>*</em></label>
-              <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
+              <input type="text" class="single-line-text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
             </p>
             <p>
               <label for="dateid">Date</label>
-              <input type="date" id="dateid" name="date" autofocus>
+              <input type="date" class="single-line-text" id="dateid" name="date" autofocus>
               <script type="text/javascript">
                 document.getElementById('dateid').valueAsDate = new Date();
               </script>
             </p>
             <p>
               <label for="staffid">Name of Staff Member<em>*</em></label>
-              <input type="text" placeholder="Jane Doe" id="staffid" name="staff" autofocus required>
+              <input type="text" class="single-line-text" placeholder="Jane Doe" id="staffid" name="staff" autofocus required>
             </p>
             <p>
               <label for="witnessid">Witness/People Involved<em>*</em></label>
-              <input type="text" placeholder="Jane Doe" id="witnessid" name="witness" autofocus required>
+              <input type="text" class="single-line-text" placeholder="Jane Doe" id="witnessid" name="witness" autofocus required>
             </p>
             <p>
               <label for="incidentid">Nature of the Incident</label>
-              <textarea placeholder="Describe the incident." id="incidentid" rows="4"></textarea>
+              <textarea class="multi-line-text" placeholder="Describe the incident." id="incidentid" rows="4"></textarea>
             </p>
             <p>
               <label for="responseid">Staff Person's Response</label>
-              <textarea placeholder="Describe your response to the incident." id="responseid" rows="4"></textarea>
+              <textarea class="multi-line-text" placeholder="Describe your response to the incident." id="responseid" rows="4"></textarea>
             </p>
             <p>
               <label for="directorid">Director Notified<em>*</em></label>
@@ -95,6 +95,9 @@ limitations under the License.
 
         </div>
 
+        <div>
+        </div> 
+  
         </div>
       </div>
 
