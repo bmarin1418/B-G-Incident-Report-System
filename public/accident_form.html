@@ -60,7 +60,7 @@ limitations under the License.
             <h2 class="mdl-card__title-text" overflow:hidden >Accident Form</h2>
 
             <div class=logout>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout">Logout</button>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
             </div>
 
           </div>
@@ -68,68 +68,68 @@ limitations under the License.
             <div id="accidentform">
               <form id="accident_form_id">
                 <div class="form-group">
-                    <p>
-                        <label for="nameid">Name of Member<em>*</em></label>
-                        <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="nameid">Name of Member<em>*</em></label>
+                    <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <label for="dateid">Date</label>
-                        <input type="date" id="dateid" name="date" min="2017-01-01" max="2100-01-01" autofocus>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="dateid">Date</label>
+                    <input type="date" id="dateid" name="date" min="2017-01-01" max="2100-01-01" autofocus>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <label for="staffid">Name of Staff Member<em>*</em></label>
-                        <input type="text" placeholder="Jane Doe" id="staffid" name="staff" autofocus>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="staffid">Name of Staff Member<em>*</em></label>
+                    <input type="text" placeholder="Jane Doe" id="staffid" name="staff" autofocus>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <label for="incidentid">Nature of the Incident</label>
-                        <textarea placeholder="Describe incident." id="incidentid" name="incident" rows="4"></textarea>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="incidentid">Nature of the Incident</label>
+                    <textarea placeholder="Describe incident." id="incidentid" name="incident" rows="4"></textarea>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <label for="responseid">Staff Person's Response</label>
-                        <textarea placeholder="Describe response." id="responseid" name="response" rows="4"></textarea>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="responseid">Staff Person's Response</label>
+                    <textarea placeholder="Describe response." id="responseid" name="response" rows="4"></textarea>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <label for="parentid">Parent Notified<em>*</em></label>
-                        <input type="text" placeholder="Parents Name" id="parentid" name="parentNotified" autofocus>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <label for="parentid">Parent Notified<em>*</em></label>
+                    <input type="text" placeholder="Parents Name" id="parentid" name="parentNotified" autofocus>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <input type="checkbox" id="head_injury_checkbox" name="head_injury_checkbox">IMPORTANT: Check this box for head injury<br>
-                    </p>
-                    <div class="messages"></div>
+                  <p>
+                    <input type="checkbox" id="head_injury_checkbox" name="head_injury_checkbox">IMPORTANT: Check this box for head injury<br>
+                  </p>
+                  <div class="messages"></div>
                 </div>
                 <div id="head_injury_div" style="display: none;">
-                    <div class="form-group">
-                        <p>
-                            <label for="natureid">Nature of Head Injury<em>*</em></label>
-                            <input type="text" placeholder="Nature of Head Injury" id="natureid" name="nature" autofocus>
-                        </p>
-                        <div class="messages"></div>
-                    </div>
-                    <div class="form-group">
-                        <p>
-                            <label for="treatment_id">Treatment Given<em>*</em></label>
-                            <input type="text" placeholder="Treatment Description" id="treatment_id" name="treatment" autofocus>
-                        </p>
-                        <div class="messages"></div>
-                    </div>
+                  <div class="form-group">
+                    <p>
+                      <label for="natureid">Nature of Head Injury<em>*</em></label>
+                      <input type="text" placeholder="Nature of Head Injury" id="natureid" name="nature" autofocus>
+                    </p>
+                    <div class="messages"></div>
+                  </div>
+                  <div class="form-group">
+                    <p>
+                      <label for="treatment_id">Treatment Given<em>*</em></label>
+                      <input type="text" placeholder="Treatment Description" id="treatment_id" name="treatment" autofocus>
+                    </p>
+                    <div class="messages"></div>
+                  </div>
                 </div>
               </form>
               <button id="submit_button_id" class="mdl-button mdl-js-button mdl-button--raised" name="finished">Form Complete</button>

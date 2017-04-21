@@ -32,9 +32,9 @@ function linkHandlers() {
             console.log("form complete button clicked.");
         });
 
-        $(LOGOUT_ID).click(function(){
+  /*      $(LOGOUT_ID).click(function(){
             logoutHandler();
-        });
+        });*/
 }
 
 //Initialize Firebase
