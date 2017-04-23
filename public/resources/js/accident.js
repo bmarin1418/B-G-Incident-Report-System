@@ -104,6 +104,7 @@ function submitClickHandler(inputValidator) {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
             "staffName": $('#staffid').val(),
+	    "location" : $('#locationid').val(),
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val(),
             "parentNotified": $('#parentid').val(),

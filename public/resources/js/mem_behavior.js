@@ -36,6 +36,7 @@ $('#mem_behavior_form').submit(function(event) {
     "childName" : $('#nameid').val(),
     "date" : $('#dateid').val(),
     "staffName" : $('#staffid').val(),
+    "location" : $('#locationid').val(),
     "issuerName" : $('#issuedbyid').val(),
     "behaviors" : behaviors,
     "consequences": consequences,

@@ -1,19 +1,3 @@
-function writeGenIncidentData() {
-  firebase.database().ref('general/').push({
-    childName: "Child Name",
-    date: "Date",
-    staffName: "Staff Name",
-    involved: "Names of Witnesses/ People Involved",
-    nature: "Description of the Incident",
-    response: "Description of Response to the Incident",
-    directorNotified: "Yes or No"
-  });
-}
-
-function submitButton(){
-  window.location.href = "print_and_email.html";
-  console.log("Submit Button Clicked.")
-}
 $(function(){
   var data = [];
 
@@ -28,6 +12,7 @@ $('#general_incident_form').submit(function(event) {
     "date" : $('#dateid').val(),
     "staffName" : $('#staffid').val(),
     "witnessName" : $('#witnessid').val(),
+    "location" : $('#locationid').val(),
     "incidentDescription" : $('#incidentid').val(),
     "responseDescription" : $('#responseid').val(),
     "directorNotified" : $('#directorid').val()
