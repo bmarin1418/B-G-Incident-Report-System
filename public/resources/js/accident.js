@@ -3,7 +3,7 @@
 var FORM_ID = '#accident_form_id';
 var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
 var INJURY_DIV_ID = '#head_injury_div';
-var SUBMIT_BUTTON_ID = '#submit_button_id';
+var SUBMIT_BUTTON_ID = '#sendForm';
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
 

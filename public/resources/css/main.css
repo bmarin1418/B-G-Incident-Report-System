@@ -82,3 +82,12 @@ main-header, img {
   position: relative;
   margin: auto;
 }
+label {
+  margin-left: 55px;
+}
+input {
+  margin-left: 55px;
+}
+input, #sendForm {
+  margin-left: 55px;
+}
