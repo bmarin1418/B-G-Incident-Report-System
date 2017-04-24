@@ -20,7 +20,6 @@ $(document).ready(function(){
 
 //Links all DOM events to handler functions
 function linkHandlers() {
-  console.log('adsfadf');
         $(INJURY_TEXTBOX_ID).change(function(){
             var cntxt = this;
             headInjuryChangeHandler(cntxt);
@@ -112,7 +111,6 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
-        console.log(data);
         firebase.database().ref('accident/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");

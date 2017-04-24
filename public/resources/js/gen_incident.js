@@ -7,6 +7,7 @@ $('#general_incident_form').submit(function(event) {
   var $form = $(this);
   console.log("Submit to Firebase");
 
+
   var newForm = {
     "childName" : $('#nameid').val(),
     "date" : $('#dateid').val(),
