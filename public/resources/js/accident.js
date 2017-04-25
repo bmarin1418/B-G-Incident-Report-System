@@ -3,7 +3,7 @@
 var FORM_ID = '#accident_form_id';
 var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
 var INJURY_DIV_ID = '#head_injury_div';
-var SUBMIT_BUTTON_ID = '#submit_button_id';
+var SUBMIT_BUTTON_ID = '#sendForm';
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
 
@@ -20,7 +20,6 @@ $(document).ready(function(){
 
 //Links all DOM events to handler functions
 function linkHandlers() {
-  console.log('adsfadf');
         $(INJURY_TEXTBOX_ID).change(function(){
             var cntxt = this;
             headInjuryChangeHandler(cntxt);
@@ -104,6 +103,7 @@ function submitClickHandler(inputValidator) {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
             "staffName": $('#staffid').val(),
+	    "location" : $('#locationid').val(),
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val(),
             "parentNotified": $('#parentid').val(),
@@ -111,7 +111,6 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
-        console.log(data);
         firebase.database().ref('accident/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
