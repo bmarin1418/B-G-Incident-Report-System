@@ -1,6 +1,6 @@
 /* ------ HTML id's for global use ------ */
 
-var FORM_ID = '#accident_form_id';
+var FORM_ID = '#accident_form';
 var INJURY_TEXTBOX_ID = '#head_injury_checkbox';
 var INJURY_DIV_ID = '#head_injury_div';
 var SUBMIT_BUTTON_ID = '#sendForm';

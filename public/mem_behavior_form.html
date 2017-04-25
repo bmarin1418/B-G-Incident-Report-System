@@ -28,6 +28,16 @@ limitations under the License.
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
   <link rel="stylesheet" href="./resources/css/main.css">
 
+  <!-- JavaScript Resources -->
+  <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+  <script src="resources/js/jquery-3.2.0.min.js"></script>
+  <script src="resources/js/underscore.min.js"></script>
+  <script src="resources/js/moment.min.js"></script>
+  <script src="resources/js/validate.min.js"></script>
+  <script src="resources/js/InputValidator.js"></script>
+  <script src="resources/js/mem_behavior.js"></script>
+  <script src="resources/js/allpages.js"></script>
+
 </head>
 <body>
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -50,36 +60,51 @@ limitations under the License.
             <h2 class="mdl-card__title-text">Member Behavior Form</h2>
 
             <div class=logout>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
             </div>
+
           </div>
           <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-              <form id="mem_behavior_form">
-                <p>
-                  <label for="name_id">Name of Member<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
-                </p>
-                <p>
-                  <label for="dateid">Date</label>
-                  <input type="date" id="dateid" name="date">
-                  <script type="text/javascript">
-                    document.getElementById('dateid').valueAsDate = new Date();
-                  </script>
-                </p>
-                <p>
-                  <label for="staffid">Staff Members<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="staffid" name="staff" required>
-                </p>
-                <p>
-                  <label for="issuedbyid">Issued By<em>*</em></label>
-                  <input type="text" placeholder="Jane Doe" id="issuedbyid" name="issued_by" required>
-                </p>
-		<p>
-                  <label for="locationid">Location of the Incident</label>
-                  <input type="text" class="single-line-text" placeholder="Location" id="locationid" name="location"></textarea>
-		</p>
-                <p>
-                  <label for="behavior_checkboxes">Inappropriate Behavior Type</label><br><br>
+	    <div id="memberbehaviorform">
+              <form id="member_behavior_form">
+	        <div class="form_group">
+                  <p>
+                    <label for="name_id">Name of Member<em>*</em></label>
+                    <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+	        <div class="form_group">
+                  <p>
+                    <label for="dateid">Date</label>
+                    <input type="date" id="dateid" name="date">
+                  </p>
+                  <div class="messages"></div>
+                </div>
+	        <div class="form_group">
+                  <p>
+                    <label for="staffid">Staff Members<em>*</em></label>
+                    <input type="text" placeholder="Jane Doe" id="staffid" name="staff" required>
+                  </p>
+		  <div class="messages"></div>
+		</div>
+		<div class="form_group">
+                  <p>
+                    <label for="issuedbyid">Issued By<em>*</em></label>
+                    <input type="text" placeholder="Jane Doe" id="issuedbyid" name="issued_by" required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+		  <p>
+                    <label for="locationid">Location of the Incident</label>
+                    <input type="text" class="single-line-text" placeholder="Location" id="locationid" name="location"></textarea>
+		  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="behavior_checkboxes">Inappropriate Behavior Type</label><br><br>
                     <input type="checkbox" id="talking">Talking at inappropriate times<br>
                     <input type="checkbox" id="not_listening">Not listening to staff or following direction<br>
                     <input type="checkbox" id="language">Inappropriate language/profanity<br>
@@ -95,44 +120,33 @@ limitations under the License.
                     <input type="checkbox" id="property_damage">Damage to property<br>
                     <input type="checkbox" id="stealing_cheating">Stealing/cheating<br>
                     <input type="checkbox" id="behavior_other">Other (suicide tendencies, illegal substances, weapons, etc.)<br>
-                </p>
-                <p>
-                  <label for="consequences_checkboxes">Consequences</label><br><br>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="consequences_checkboxes">Consequences</label><br><br>
                     <input type="checkbox" id="event_loss">Loss of an activity/event<br>
                     <input type="checkbox" id="conference">Parent conference requested<br>
                     <input type="checkbox" id="parent_contact">Parents contacted<br>
                     <input type="checkbox" id="suspension">Out of club suspension<br>
                     <input type="checkbox" id="consequence_other">Other<br>
-               </p>
-                <p>
-                  <label for="comments">Staff Comments<em>*</em></label>
-                  <input type="text" placeholder="" id="commentsid" name="comments" required>
-                </p>
-
-                <input id="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
-
-              </form>
-          </div>
+                 </p>
+                 <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="comments">Staff Comments<em>*</em></label>
+                    <input type="text" placeholder="" id="commentsid" name="comments" required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+	    </div>
+          </form>
+          <input id="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
         </div>
       </div>
     </main>
   </div>
 </body>
-<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
-    authDomain: "bngcdb-86373.firebaseapp.com",
-    databaseURL: "https://bngcdb-86373.firebaseio.com",
-    storageBucket: "bngcdb-86373.appspot.com",
-    messagingSenderId: "164973952286"
-  };
-  firebase.initializeApp(config);
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-<script src="resources/js/mem_behavior.js"></script>
-<script src="resources/js/allpages.js"></script>
-</html>
 </html>
