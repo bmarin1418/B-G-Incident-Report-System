@@ -63,71 +63,71 @@ limitations under the License.
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
             </div>
 
-        </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-	  <div id=generalincidentform">
-            <form id="general_incident_form">
-            <div class="form_group">
-	      <p>
-                <label for="nameid">Name of Member</label>
-                <input type="text" class="single-line-text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
-              </p>
-	      <div class="messages"></div>
-	    </div>
-	    <div class="form_group">
-              <p>
-                <label for="dateid">Date</label>
-                <input type="date" class="single-line-text" id="dateid" name="date">
-              </p>
-	      <div class="messages"></div>
-	    </div>
-	    <div class="form_group">
-              <p>
-                <label for="staffid">Name of Staff Member</label>
-                <input type="text" class="single-line-text" placeholder="Jane Doe" id="staffid" name="staff" required>
-              </p>
-              <div class="messages"></div>
+          </div>
+          <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            <div id="generalincidentform">
+              <form id="general_incident_form">
+                <div class="form_group">
+                  <p>
+                    <label for="nameid">Name of Member</label>
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="nameid" name="name" autofocus required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="dateid">Date</label>
+                    <input type="date" class="single-line-text" id="dateid" name="date">
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="staffid">Name of Staff Member</label>
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="staffid" name="staff" required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="witnessid">Witness/People Involved</label>
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="witnessid" name="witness" required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="locationid">Location of the Incident</label>
+                    <input type="text" class="single-line-text" placeholder="Location" id="locationid" name="location">
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="incidentid">Nature of the Incident</label>
+                    <textarea class="multi-line-text" placeholder="Describe the incident." id="incidentid" rows="4"></textarea>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="responseid">Staff Person's Response</label>
+                    <textarea class="multi-line-text" placeholder="Describe your response to the incident." id="responseid" rows="4"></textarea>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="directorid">Director Notified</label>
+                    <input type="checkbox" id="directorid" required>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+              </form>
+              <input id="sendForm" name="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
             </div>
-	    <div class="form_group">
-              <p>
-                <label for="witnessid">Witness/People Involved</label>
-                <input type="text" class="single-line-text" placeholder="Jane Doe" id="witnessid" name="witness" required>
-              </p>
-              <div class="messages"></div>
-            </div>
-	    <div class="form_group">
-	      <p>
-                <label for="locationid">Location of the Incident</label>
-                <input type="text" class="single-line-text" placeholder="Location" id="locationid" name="location">
-              </p>
-              <div class="messages"></div>
-            </div>
-	    <div class="form_group">
-              <p>
-                <label for="incidentid">Nature of the Incident</label>
-                <textarea class="multi-line-text" placeholder="Describe the incident." id="incidentid" rows="4"></textarea>
-              </p>
-              <div class="messages"></div>
-            </div>
-	    <div class="form_group">
-              <p>
-                <label for="responseid">Staff Person's Response</label>
-                <textarea class="multi-line-text" placeholder="Describe your response to the incident." id="responseid" rows="4"></textarea>
-              </p>
-              <div class="messages"></div>
-            </div>
-	    <div class="form_group">
-              <p>
-                <label for="directorid">Director Notified</label>
-                <input type="checkbox" id="directorid" required>
-              </p>
-              <div class="messages"></div>
-            </div>
-          </form>
-          <input id="sendForm" name="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
-        </div>
+          </div>
+        </main>
       </div>
-    </main>
-  </div>
-</body>
-</html>
+    </body>
+    </html>
