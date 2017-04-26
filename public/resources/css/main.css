@@ -83,6 +83,11 @@ label {
   display: inline-block;
   margin-right: 20px;
 }
+.override {
+  width: 180px;
+  display: inline-block;
+  margin-right: 20px;
+}
 textarea {
   width: 200px;
   height: 100px;

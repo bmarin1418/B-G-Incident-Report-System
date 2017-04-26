@@ -70,76 +70,76 @@ limitations under the License.
 	        <div class="form_group">
                   <p>
                     <label for="name_id">Name of Member</label>
-                    <input type="text" placeholder="Jane Doe" id="nameid" name="name" autofocus>
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="nameid" name="name" autofocus>
                   </p>
                   <div class="messages"></div>
                 </div>
 	        <div class="form_group">
                   <p>
                     <label for="dateid">Date</label>
-                    <input type="date" id="dateid" name="date">
+                    <input type="date" class="single-line-text" id="dateid" name="date">
                   </p>
                   <div class="messages"></div>
                 </div>
 	        <div class="form_group">
                   <p>
                     <label for="staffid">Staff Members</label>
-                    <input type="text" placeholder="Jane Doe" id="staffid" name="staff">
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="staffid" name="staff">
                   </p>
 		  <div class="messages"></div>
 		</div>
 		<div class="form_group">
                   <p>
                     <label for="issuedbyid">Issued By</label>
-                    <input type="text" placeholder="Jane Doe" id="issuedbyid" name="issuer">
+                    <input type="text" class="single-line-text" placeholder="Jane Doe" id="issuedbyid" name="issuer">
                   </p>
                   <div class="messages"></div>
                 </div>
                 <div class="form_group">
-		  <p>
+		             <p>
                     <label for="locationid">Location of the Incident</label>
                     <input type="text" class="single-line-text" placeholder="Location" id="locationid" name="location"></textarea>
-		  </p>
+		            </p>
                   <div class="messages"></div>
-                </div>
-                <div class="form_group">
-                  <p>
-                    <label for="behavior_checkboxes">Inappropriate Behavior Type</label><br><br>
-                    <input type="checkbox" id="talking">Talking at inappropriate times<br>
-                    <input type="checkbox" id="not_listening">Not listening to staff or following direction<br>
-                    <input type="checkbox" id="language">Inappropriate language/profanity<br>
-                    <input type="checkbox" id="gestures">Inappropriate body language/gestures<br>
-                    <input type="checkbox" id="BGC_rules">Lack of respect for BGC rules/procedures<br>
-                    <input type="checkbox" id="member_disrespect">Disrespectful towards other members<br>
-                    <input type="checkbox" id="staff_disrespect">Disrespectful towards staff<br>
-                    <input type="checkbox" id="name_calling">Name calling/labeling of others<br>
-                    <input type="checkbox" id="touching">Improper touching of others<br>
-                    <input type="checkbox" id="physical_contact">Kicking, hitting, pushing, etc.<br>
-                    <input type="checkbox" id="fighting">Fighting<br>
-                    <input type="checkbox" id="threatening">Threatening/intimidating others<br>
-                    <input type="checkbox" id="property_damage">Damage to property<br>
-                    <input type="checkbox" id="stealing_cheating">Stealing/cheating<br>
-                    <input type="checkbox" id="behavior_other">Other (suicide tendencies, illegal substances, weapons, etc.)<br>
-                  </p>
-                  <div class="messages"></div>
-                </div>
-                <div class="form_group">
-                  <p>
-                    <label for="consequences_checkboxes">Consequences</label><br><br>
-                    <input type="checkbox" id="event_loss">Loss of an activity/event<br>
-                    <input type="checkbox" id="conference">Parent conference<br>
-                    <input type="checkbox" id="parent_contact">Parents contacted<br>
-                    <input type="checkbox" id="suspension">Out of club suspension<br>
-                    <input type="checkbox" id="consequence_other">Other<br>
-                 </p>
-                 <div class="messages"></div>
                 </div>
                 <div class="form_group">
                   <p>
                     <label for="comments">Staff Comments</label>
-                    <input type="text" placeholder="" id="commentsid" name="comments">
+                    <input type="text" class="single-line-text" placeholder="" id="commentsid" name="comments">
                   </p>
                   <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="behavior_checkboxes" class="override">Inappropriate Behavior Type</label><br>
+                    <input type="checkbox" class="checkbox" id="talking">Talking at inappropriate times<br>
+                    <input type="checkbox" class="checkbox" id="not_listening">Not listening to staff or following direction<br>
+                    <input type="checkbox" class="checkbox" id="language">Inappropriate language/profanity<br>
+                    <input type="checkbox" class="checkbox" id="gestures">Inappropriate body language/gestures<br>
+                    <input type="checkbox" class="checkbox" id="BGC_rules">Lack of respect for BGC rules/procedures<br>
+                    <input type="checkbox" class="checkbox" id="member_disrespect">Disrespectful towards other members<br>
+                    <input type="checkbox" class="checkbox" id="staff_disrespect">Disrespectful towards staff<br>
+                    <input type="checkbox" class="checkbox" id="name_calling">Name calling/labeling of others<br>
+                    <input type="checkbox" class="checkbox" id="touching">Improper touching of others<br>
+                    <input type="checkbox" class="checkbox" id="physical_contact">Kicking, hitting, pushing, etc.<br>
+                    <input type="checkbox" class="checkbox" id="fighting">Fighting<br>
+                    <input type="checkbox" class="checkbox" id="threatening">Threatening/intimidating others<br>
+                    <input type="checkbox" class="checkbox" id="property_damage">Damage to property<br>
+                    <input type="checkbox" class="checkbox" id="stealing_cheating">Stealing/cheating<br>
+                    <input type="checkbox" class="checkbox" id="behavior_other">Other (suicide tendencies, illegal substances, weapons, etc.)<br>
+                  </p>
+                  <div class="messages"></div>
+                </div>
+                <div class="form_group">
+                  <p>
+                    <label for="consequences_checkboxes">Consequences</label><br>
+                    <input type="checkbox" class="checkbox"id="event_loss">Loss of an activity/event<br>
+                    <input type="checkbox" class="checkbox" id="conference">Parent conference<br>
+                    <input type="checkbox" class="checkbox" id="parent_contact">Parents contacted<br>
+                    <input type="checkbox" class="checkbox" id="suspension">Out of club suspension<br>
+                    <input type="checkbox" class="checkbox" id="consequence_other">Other<br>
+                 </p>
+                 <div class="messages"></div>
                 </div>
 	    </div>
           </form>
