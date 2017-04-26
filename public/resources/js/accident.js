@@ -57,21 +57,24 @@ function initValidatorObj() {
         date: {
           presence: true,
           date: {
-              latest: moment(),
-              dateTime: true
+            latest: moment(),
+            dateTime: true
           }
         },
         staff: {
           presence: true
         },
+	location: {
+	  presence: true
+	},
         incident : {
-            presence: true
+          presence: true
         },
         response: {
-            presence: true
+          presence: true
         },
         parentNotified: {
-            presence: true
+          presence: true
         }
     });
 }

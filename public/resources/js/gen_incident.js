@@ -60,7 +60,16 @@ function initValidatorObj() {
         witness : {
             presence: true
         },
-        directorNotified: {
+	location : {
+	    presence: true
+	},
+	incident : {
+	    presence: true
+	},
+	response : {
+	    presence: true
+	},
+        director: {
             presence: true
         }
     });

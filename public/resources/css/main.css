@@ -75,19 +75,19 @@ main-header, img {
   position: relative;
   margin: auto;
 }
-
-.multi-line-text {
-  width: 200px;
-  height: 100px;
-  position: relative;
-  margin: auto;
+.checkbox {
+  width: 30px;
 }
 label {
-  margin-left: 55px;
+  width: 160px;
+  display: inline-block;
+  margin-right: 20px;
 }
-input {
-  margin-left: 55px;
+textarea {
+  width: 200px;
+  height: 100px;
+  vertical-align: top;
 }
-input, #sendForm {
-  margin-left: 55px;
+.messages {
+  color: red;
 }
