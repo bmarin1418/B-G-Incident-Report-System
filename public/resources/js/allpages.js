@@ -7,3 +7,6 @@ function confirmLogout() {
   }
   else{}
 }
+function backToChoose() {
+  window.location.href = "choose_form.html";
+}
