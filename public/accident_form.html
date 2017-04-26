@@ -34,9 +34,9 @@ limitations under the License.
   <script src="resources/js/underscore.min.js"></script>
   <script src="resources/js/moment.min.js"></script>
   <script src="resources/js/validate.min.js"></script>
+  <script src="resources/js/allpages.js"></script>
   <script src="resources/js/InputValidator.js"></script>
   <script src="resources/js/accident.js"></script>
-  <script src="resources/js/allpages.js"></script>
 
 </head>
 <body>
@@ -116,9 +116,9 @@ limitations under the License.
                   </p>
                   <div class="messages"></div>
                 </div>
-                <div class="form_group">
+                   <div class="form_group">
                   <p>
-                    <input type="checkbox" class="checkbox" id="head_injury_checkbox" name="head_injury_checkbox">IMPORTANT: Check this box for head injury<br>
+                    <input type="checkbox" class="checkbox" id="head_injury_checkbox" name="head_injury_checkbox">IMPORTANT: Check this box if the incident was a head injury<br>
                   </p>
                   <div class="messages"></div>
                 </div>
@@ -126,20 +126,22 @@ limitations under the License.
                   <div class="form_group">
                     <p>
                       <label for="natureid">Nature of Head Injury</label>
-                      <input type="text" class="single-line-text" placeholder="Nature of Head Injury" id="natureid" name="nature">
+                      <textarea type="text" class="single-line-text" placeholder="Nature of Head Injury" id="natureid" name="nature">
+                      </textarea>
                     </p>
                     <div class="messages"></div>
                   </div>
                   <div class="form_group">
                     <p>
                       <label for="treatment_id">Treatment Given</label>
-                      <input type="text" class="single-line-text" placeholder="Treatment Description" id="treatment_id" name="treatment">
+                      <textarea type="text" class="single-line-text" placeholder="Treatment Description" id="treatment_id" name="treatment">
+                      </textarea>
                     </p>
                     <div class="messages"></div>
                   </div>
                 </div>
               </form>
-              <input id="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete"></input>
+              <input id="sendForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit" value="Form Complete">
             </div>
           </div>
         </div>

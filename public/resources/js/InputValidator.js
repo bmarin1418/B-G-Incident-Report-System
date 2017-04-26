@@ -35,6 +35,7 @@ function InputValidator(form_id, constraints) {
     this.constraints = constraints;
     this.form_id = form_id;
     this.allowDateTimeValidation();
+    //this.allowTextAreaValidation();
 
     // Hook up the inputs to validate on the fly
     var inputs = document.querySelectorAll("input, textarea, select")
@@ -70,7 +71,7 @@ InputValidator.prototype.validate = function() {
 InputValidator.prototype.showErrors = function (form, errors) {
     // We loop through all the inputs and show the errors for that input
     var objref = this;
-    _.each(form.querySelectorAll("input[name], select[name]"), function (input) {
+    _.each(form.querySelectorAll("input[name], select[name], textarea[name]"), function (input) {
         // Since the errors can be null if no errors were found we need to handle that
         objref.showErrorsForInput(input, errors && errors[input.name]);
     });
@@ -134,7 +135,6 @@ InputValidator.prototype.addError = function(messages, error) {
 
 //Change array of key-value ojects to a key-value map
 InputValidator.prototype.objectifyForm = function(formArray) {
-  console.log(formArray);
   var returnArray = {};
   for (var i = 0; i < formArray.length; i++){
     returnArray[formArray[i]['name']] = formArray[i]['value'];
@@ -158,3 +158,16 @@ InputValidator.prototype.allowDateTimeValidation = function() {
         }
     });
 }
+
+//For validation of textarea fields
+InputValidator.prototype.allowTextAreaValidation = function() {
+    validate.validators.textArea = function(value, options, key, attr){
+        if (value == "") {
+            return "Reponse can't be blank";
+        } else {
+            return undefined;   
+        }
+    }
+}
+
+

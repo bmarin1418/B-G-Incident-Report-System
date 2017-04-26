@@ -6,13 +6,14 @@ var INJURY_DIV_ID = '#head_injury_div';
 var SUBMIT_BUTTON_ID = '#sendForm';
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
+var HEAD_INJURY_ID = '#head_injury_checkbox';
 
 /* ------ Main Execution ------ */
 
-$(document).ready(function(){
+$(document).ready(function () {
     firbaseInit();
     linkHandlers();
-    initDateField();
+    initDateField(DATE_FIELD_ID);
 });
 
 
@@ -20,79 +21,74 @@ $(document).ready(function(){
 
 //Links all DOM events to handler functions
 function linkHandlers() {
-        $(INJURY_TEXTBOX_ID).change(function(){
-            var cntxt = this;
-            headInjuryChangeHandler(cntxt);
-        });
+    $(INJURY_TEXTBOX_ID).change(function () {
+        var cntxt = this;
+        headInjuryChangeHandler(cntxt);
+    });
 
-        var inputValidator = initValidatorObj();
-        $(SUBMIT_BUTTON_ID).click(function(){
-            submitClickHandler(inputValidator);
-            console.log("form complete button clicked.");
-        });
-
-  /*      $(LOGOUT_ID).click(function(){
-            logoutHandler();
-        });*/
-}
-
-//Initialize Firebase
-function firbaseInit() {
-  var config = {
-    apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
-    authDomain: "bngcdb-86373.firebaseapp.com",
-    databaseURL: "https://bngcdb-86373.firebaseio.com",
-    storageBucket: "bngcdb-86373.appspot.com",
-    messagingSenderId: "164973952286"
-  };
-  firebase.initializeApp(config);
+    var inputValidator = initValidatorObj();
+    $(SUBMIT_BUTTON_ID).click(function () {
+        submitClickHandler(inputValidator);
+        console.log("form complete button clicked.");
+    });
 }
 
 //Returns an input validator object initalized for the accident form
 function initValidatorObj() {
     return new InputValidator(FORM_ID, {
         name: {
-          presence: true
+            presence: true
         },
         date: {
-          presence: true,
-          date: {
-            latest: moment(),
-            dateTime: true
-          }
+            presence: true,
+            datetime: {
+                dateOnly: true,
+                earliest: moment().utc().subtract(7, 'days'),
+                latest: moment()
+            }
         },
         staff: {
-          presence: true
+            presence: true
         },
-	location: {
-	  presence: true
-	},
-        incident : {
-          presence: true
+        location: {
+            presence: true
+        },
+        incident: {
+            presence: true
         },
         response: {
-          presence: true
+            presence: true
         },
         parentNotified: {
-          presence: true
-        }
+            presence: true
+        },
+        nature: presentIfHeadInjury,
+        treatment: presentIfHeadInjury
     });
 }
 
-//Fill in the current date for the date field
-function initDateField() {
-    $(DATE_FIELD_ID)[0].valueAsDate = new Date();
+//Function to set validation at runtime depending on the head injury checkbox checked status
+function presentIfHeadInjury(value, attributes, attributeName, options, constraints) {
+    if ($(HEAD_INJURY_ID).is(':checked')) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
 }
 
 /* ------ Event Handler Functions ------ */
 
 //Link click on head injury checkbox to showing or hiding the head injury form
 function headInjuryChangeHandler(cntxt) {
-        if ($(cntxt).is(":checked")) {
-            $(INJURY_DIV_ID).show();
-        } else {
-            $(INJURY_DIV_ID).hide();
-        }
+    if ($(cntxt).is(":checked")) {
+        $(INJURY_DIV_ID).show();
+    } else {
+        $(INJURY_DIV_ID).hide();
+    }
 }
 
 //Send accident form data to firebase if the input is valid
@@ -106,7 +102,7 @@ function submitClickHandler(inputValidator) {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
             "staffName": $('#staffid').val(),
-	    "location" : $('#locationid').val(),
+            "location": $('#locationid').val(),
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val(),
             "parentNotified": $('#parentid').val(),
@@ -124,11 +120,4 @@ function submitClickHandler(inputValidator) {
 
         return false;
     }
-}
-
-//Display logout warning info and redirect to login page
-function logoutHandler() {
-  if (confirm("Are you sure you want to logout?") == true) {
-    window.location.href = "index.html";
-  }
 }
