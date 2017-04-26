@@ -15,17 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<!-- TODO make these stylesheet links local -->
 <html>
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Incident Report Database</title>
 
-  <!-- Material Design Theming -->
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="./resources/css/main.css">
+    <!-- Material Design Theming -->
+    <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
+    <script src="resources/js/libraries/material.min.js"></script>
+    <link rel="stylesheet" href="./resources/css/custom/main.css">
+
+    <!-- JavaScript Resources -->
+    <script src="resources/js/libraries/firebase.js"></script>
+    <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
+    <script src="resources/js/custom/allpages.js"></script>
+    <script src="resources/js/custom/signin.js"></script>
 
 </head>
 <body>
@@ -69,21 +74,4 @@ limitations under the License.
   </main>
 </div>
 </body>
-
-<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
-    authDomain: "bngcdb-86373.firebaseapp.com",
-    databaseURL: "https://bngcdb-86373.firebaseio.com",
-    storageBucket: "bngcdb-86373.appspot.com",
-    messagingSenderId: "164973952286"
-  };
-  firebase.initializeApp(config);
-</script>
-  <script src="resources/js/allpages.js"></script>
-<script src="resources/js/signin.js"></script>
-<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-
 </html>

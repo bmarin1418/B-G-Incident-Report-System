@@ -35,7 +35,6 @@ function InputValidator(form_id, constraints) {
     this.constraints = constraints;
     this.form_id = form_id;
     this.allowDateTimeValidation();
-    //this.allowTextAreaValidation();
 
     // Hook up the inputs to validate on the fly
     var inputs = document.querySelectorAll("input, textarea, select")
@@ -159,15 +158,5 @@ InputValidator.prototype.allowDateTimeValidation = function() {
     });
 }
 
-//For validation of textarea fields
-InputValidator.prototype.allowTextAreaValidation = function() {
-    validate.validators.textArea = function(value, options, key, attr){
-        if (value == "") {
-            return "Reponse can't be blank";
-        } else {
-            return undefined;   
-        }
-    }
-}
 
 
