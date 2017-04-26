@@ -44,7 +44,7 @@ function firbaseInit() {
 //Returns an input validator object initalized for the accident form
 function initValidatorObj() {
     return new InputValidator(FORM_ID, {
-        /*name: {
+        name: {
           presence: true
         },
         date: {
@@ -62,7 +62,7 @@ function initValidatorObj() {
         },
         directorNotified: {
             presence: true
-        }*/
+        }
     });
 }
 
