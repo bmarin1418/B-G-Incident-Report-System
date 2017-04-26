@@ -43,8 +43,8 @@ function initValidatorObj() {
             presence: true,
             datetime: {
                 dateOnly: true,
-                earliest: moment().utc().subtract(7, 'days'),
-                latest: moment()
+                earliest: moment().utc().local().subtract(8, 'days'),
+                latest: moment().local()
             }
         },
         staff: {
@@ -120,4 +120,30 @@ function submitClickHandler(inputValidator) {
 
         return false;
     }
+}
+
+
+//Take the form and turn it to JSON to make a pdf
+function getDocDefinition(form_id) {
+    var user_inputs = $(form_id).find('input');
+    document_definition = {
+        content: [{
+            text: "Accident Report",
+            style: "main_header"
+        }],
+        styles: {
+            main_header: {
+                fontSize: 20,
+                bold: true,
+                alignment: "center"
+            }
+        }
+    }
+    $(form_id).find('labels').each(function(index) {
+        form_json[$(this).html()] = undefined;
+    });
+    $(form_id).find('input').each(function(index) {
+        form_json[] 
+    });
+    
 }

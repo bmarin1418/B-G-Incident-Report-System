@@ -31,3 +31,7 @@ function backToChoose() {
   window.location.href = "choose_form.html";
 }
 
+//Creates a pdf and prints from json
+function printForm(doc_def) {
+    
+}

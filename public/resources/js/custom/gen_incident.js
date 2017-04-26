@@ -33,16 +33,17 @@ function initValidatorObj() {
         },
         date: {
             presence: true,
-            date: {
-                latest: moment(),
-                dateTime: true
+            datetime: {
+                dateOnly: true,
+                earliest: moment().utc().local().subtract(8, 'days'),
+                latest: moment().local()
             }
         },
         staff: {
             presence: true
         },
         witness: {
-            presence: true
+            presence: true  
         },
         location: {
             presence: true
@@ -51,9 +52,6 @@ function initValidatorObj() {
             presence: true
         },
         response: {
-            presence: true
-        },
-        director: {
             presence: true
         }
     });
@@ -73,8 +71,7 @@ function submitClickHandler(inputValidator) {
             "witnessName": $('#witnessid').val(),
             "location": $('#locationid').val(),
             "incidentDescription": $('#incidentid').val(),
-            "responseDescription": $('#responseid').val(),
-            "directorNotified": $('#directorid').val()
+            "responseDescription": $('#responseid').val()
         }
 
         data = newForm;
