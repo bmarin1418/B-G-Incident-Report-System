@@ -9,7 +9,6 @@ function confirmLogout() {
   }
 }
 
-
 //Initialize Firebase
 function firbaseInit() {
     var config = {
@@ -25,5 +24,10 @@ function firbaseInit() {
 //Fill in the current date for the date field
 function initDateField(date_field_id) {
     $(date_field_id)[0].valueAsDate = new Date();
+}
+
+//Redirect to choose_form.html
+function backToChoose() {
+  window.location.href = "choose_form.html";
 }
 

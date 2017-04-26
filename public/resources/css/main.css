@@ -51,9 +51,6 @@ h3 {
   color: white;
   padding: 2px;
 }
-form, button {
-  display: inline;
-}
 main-header {
   background-color: white;
   color: blue;
@@ -61,14 +58,14 @@ main-header {
 main-header, img {
   width: 100px;
 }
+.back {
+  position: absolute;
+  right: 120px;
+  top: 12px;
+}
 .logout {
   position: absolute;
   right: 15px;
-}
-.button-options {
-  width: 670px;
-  position: relative;
-  margin: auto;
 }
 .single-line-text {
   width: 200px;
@@ -83,6 +80,11 @@ label {
   display: inline-block;
   margin-right: 20px;
 }
+.override {
+  width: 180px;
+  display: inline-block;
+  margin-right: 20px;
+}
 textarea {
   width: 200px;
   height: 100px;
@@ -90,4 +92,8 @@ textarea {
 }
 .messages {
   color: red;
+}
+.chooseform {
+  text-align: center;
+  margin: auto;
 }
