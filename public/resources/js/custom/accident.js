@@ -11,7 +11,7 @@ var HEAD_INJURY_ID = '#head_injury_checkbox';
 /* ------ Main Execution ------ */
 
 $(document).ready(function () {
-    firbaseInit();
+    firebaseInit();
     linkHandlers();
     initDateField(DATE_FIELD_ID);
 });

@@ -10,7 +10,7 @@ function confirmLogout() {
 }
 
 //Initialize Firebase
-function firbaseInit() {
+function firebaseInit() {
     var config = {
         apiKey: "AIzaSyBGobM_iD5YqUo09kAu2bSfXlhQhJaz3-U",
         authDomain: "bngcdb-86373.firebaseapp.com",

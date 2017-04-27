@@ -8,7 +8,7 @@ var DATE_FIELD_ID = '#dateid'
 /* ------ Main Execution ------ */
 
 $(document).ready(function () {
-    firbaseInit();
+    firebaseInit();
     linkHandlers();
     initDateField(DATE_FIELD_ID);
 });
