@@ -33,5 +33,5 @@ function backToChoose() {
 
 //Creates a pdf and prints from json
 function printForm(doc_def) {
-    
+    //var pdfDoc = printer.creadtePdf
 }
