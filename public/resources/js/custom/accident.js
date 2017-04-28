@@ -129,12 +129,15 @@ function printPDF(form_id) {
     var user_inputs = $(form_id).find('input');
     document_definition = {
         content: [
-            {image: BASE_64_BNG_LOGO, style: "main_header"},
+            {image: BASE_64_BNG_LOGO, width: 109, height: 65, style: "logo"},
             {text: "BOYS AND GIRLS CLUBS", style: "main_header"},
             {text: "OF ST. JOSEPH COUNTY", style: "sub_header"},
-            {text: "Accident Report", style: "main_header"}
+            {text: "\nAccident Report", style: "form_title"}
         ],
         styles: {
+            logo: {
+                alignment: "center"
+            },
             main_header: {
                 fontSize: 20,
                 bold: true,
@@ -144,7 +147,11 @@ function printPDF(form_id) {
                 fontSize: 15,
                 alignment: "center"
             },
-            'form_field': {
+            form_title: {
+                fontSize: 18,
+                alignment: "center"
+            },
+            form_field: {
                 fontSize: 12,
                 alignment: 'left'
             }
