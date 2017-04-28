@@ -158,5 +158,5 @@ function printPDF(form_id) {
         document_definition.content.push(txt);
     });   
     
-    pdfMake.createPdf(document_definition).open()
+    printForm(document_definition);
 }

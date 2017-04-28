@@ -1,6 +1,6 @@
 //Main execution
 $(document).ready(function () {
-    firbaseInit();
+    firebaseInit();
     initApp();
 });
 
