@@ -107,7 +107,7 @@ function printPDF() {
                 style: "sub_header"
             },
             {
-                text: "\nAccident Report",
+                text: "\nGeneral Incident Report",
                 style: "form_title"
             }
         ],

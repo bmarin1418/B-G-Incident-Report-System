@@ -130,7 +130,7 @@ function printPDF() {
                 style: "sub_header"
             },
             {
-                text: "\nAccident Report",
+                text: "\nMember Behavior Report",
                 style: "form_title"
             }
         ],
