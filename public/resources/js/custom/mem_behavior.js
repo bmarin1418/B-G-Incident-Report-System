@@ -112,16 +112,32 @@ function submitClickHandler(inputValidator) {
 }
 
 //Take the form and turn it to JSON to make a pdf
-function printPDF(form_id) {
-    var user_inputs = $(form_id).find('input');
+function printPDF() {
     document_definition = {
         content: [
-            {image: BASE_64_BNG_LOGO, style: "main_header"},
-            {text: "BOYS AND GIRLS CLUBS", style: "main_header"},
-            {text: "OF ST. JOSEPH COUNTY", style: "sub_header"},
-            {text: "Member Behavior Report", style: "main_header"}
+            {
+                image: BASE_64_BNG_LOGO,
+                width: 109,
+                height: 65,
+                style: "logo"
+            },
+            {
+                text: "BOYS AND GIRLS CLUBS",
+                style: "main_header"
+            },
+            {
+                text: "OF ST. JOSEPH COUNTY",
+                style: "sub_header"
+            },
+            {
+                text: "\nAccident Report",
+                style: "form_title"
+            }
         ],
         styles: {
+            logo: {
+                alignment: "center"
+            },
             main_header: {
                 fontSize: 20,
                 bold: true,
@@ -131,19 +147,24 @@ function printPDF(form_id) {
                 fontSize: 15,
                 alignment: "center"
             },
-            'form_field': {
+            form_title: {
+                fontSize: 18,
+                alignment: "center"
+            },
+            form_field_title: {
+                bold: true,
+                fontSize: 12,
+                alignment: 'left'
+            },
+            form_field: {
                 fontSize: 12,
                 alignment: 'left'
             }
         }
     }
+    document_definition = addInputsTo(document_definition); //TODO implement this
+    //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
+    //If a head injury occured, add that page
 
-    $(form_id).find('.form_group').each(function(index) {
-        var label = $(this).find('label')[0];
-        var input = $(this).find('input')[0];
-        var txt = {text: $(label).text() + ': \n' + $(input).text(), style: 'form_field'};
-        document_definition.content.push(txt);
-    });   
-    
-    printForm(document_definition);
+    pdfMake.createPdf(document_definition).open();
 }

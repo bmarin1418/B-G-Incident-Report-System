@@ -30,8 +30,3 @@ function initDateField(date_field_id) {
 function backToChoose() {
   window.location.href = "choose_form.html";
 }
-
-//Creates a pdf and prints from json
-function printForm(doc_def) {
-  pdfMake.createPdf(doc_def).open();
-}

@@ -29,7 +29,6 @@ function linkHandlers() {
     var inputValidator = initValidatorObj();
     $(SUBMIT_BUTTON_ID).click(function () {
         submitClickHandler(inputValidator);
-        console.log("form complete button clicked.");
     });
 }
 
@@ -114,7 +113,7 @@ function submitClickHandler(inputValidator) {
             if (err) {
                 alert("Data did not send");
             }
-            printPDF(FORM_ID);
+            printPDF();
             //window.location.href = "print_and_email.html";
 
         });
@@ -125,14 +124,27 @@ function submitClickHandler(inputValidator) {
 
 
 //Take the form and turn it to JSON to make a pdf
-function printPDF(form_id) {
-    var user_inputs = $(form_id).find('input');
+function printPDF() {
     document_definition = {
         content: [
-            {image: BASE_64_BNG_LOGO, width: 109, height: 65, style: "logo"},
-            {text: "BOYS AND GIRLS CLUBS", style: "main_header"},
-            {text: "OF ST. JOSEPH COUNTY", style: "sub_header"},
-            {text: "\nAccident Report", style: "form_title"}
+            {
+                image: BASE_64_BNG_LOGO,
+                width: 109,
+                height: 65,
+                style: "logo"
+            },
+            {
+                text: "BOYS AND GIRLS CLUBS",
+                style: "main_header"
+            },
+            {
+                text: "OF ST. JOSEPH COUNTY",
+                style: "sub_header"
+            },
+            {
+                text: "\nAccident Report",
+                style: "form_title"
+            }
         ],
         styles: {
             logo: {
@@ -151,19 +163,56 @@ function printPDF(form_id) {
                 fontSize: 18,
                 alignment: "center"
             },
+            form_field_title: {
+                bold: true,
+                fontSize: 12,
+                alignment: 'left'
+            },
             form_field: {
                 fontSize: 12,
                 alignment: 'left'
             }
         }
     }
+    document_definition = addInputsTo(document_definition);
+    //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
+    //If a head injury occured, add that page
 
-    $(form_id).find('.form_group').each(function(index) {
-        var label = $(this).find('label')[0];
-        var input = $(this).find('input')[0];
-        var txt = {text: $(label).text() + ': \n' + $(input).text(), style: 'form_field'};
-        document_definition.content.push(txt);
-    });   
-    
-    printForm(document_definition);
+    pdfMake.createPdf(document_definition).open();
 }
+
+//Take the form inputs and add them to the pdf document definition
+function addInputsTo(document_definition) {
+    var form_inputs = $(FORM_ID).serializeArray();
+    var form_groups = $(FORM_ID).find('.form_group');
+    //Serialize arrary returns a different size array when there is and isn't a checked checkbox
+    //which makes the indexing a headache. That is why there is an index offset if the checkbox is
+    //checked.
+
+    var index_offset = 0;
+    form_groups.each(function (form_index) {
+            var label = $(this).find('label')[0];
+            if (label) {
+                if (form_inputs[form_index - index_offset].value) {
+                    if ($(HEAD_INJURY_ID).is(':checked') || 
+                    ($(label).text() != 'Nature of Head Injury' && $(label).text() != 'Treatment Given')) {
+                        var title = {
+                            text: '\n' + $(label).text() + '',
+                            style: 'form_field_title'
+                        };
+                        var txt = {
+                            text: form_inputs[form_index - index_offset].value,
+                            style: 'form_field'
+                        };
+                        document_definition.content.push(title);
+                        document_definition.content.push(txt);
+                    }
+                }
+            } else {
+                if (!$(HEAD_INJURY_ID).is(':checked')) {
+                    index_offset += 1;
+                }
+            }
+        });
+        return document_definition;
+    }
