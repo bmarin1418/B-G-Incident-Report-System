@@ -14,7 +14,7 @@ function toggleSignIn() {
         console.log("signed out");
         // [END signout]
     } else {
-        var email = document.getElementById('email').value;
+        var email = document.getElementById('email').value + "@bngc.com";
         var password = document.getElementById('password').value;
         if (email.length < 4) {
             alert('Please enter an email address.');
