@@ -43,7 +43,7 @@ function initValidatorObj() {
             presence: true
         },
         witness: {
-            presence: true  
+            presence: true
         },
         location: {
             presence: true
@@ -144,4 +144,32 @@ function printPDF() {
     //If a head injury occured, add that page
 
     pdfMake.createPdf(document_definition).open();
+}
+
+//Take the form inputs and add them to the pdf document definition
+function addInputsTo(document_definition) {
+  var form_inputs = $(FORM_ID).serializeArray();
+  var form_groups = $(FORM_ID).find('.form_group');
+  //Serialize arrary returns a different size array when there is and isn't a checked checkbox
+  //which makes the indexing a headache. That is why there is an index offset if the checkbox is
+  //checked.
+
+  form_groups.each(function (form_index) {
+    var label = $(this).find('label')[0];
+    if (label) {
+      if (form_inputs[form_index].value) {
+        var title = {
+          text: '\n' + $(label).text() + '',
+          style: 'form_field_title'
+        };
+        var txt = {
+          text: form_inputs[form_index].value,
+          style: 'form_field'
+        };
+        document_definition.content.push(title);
+        document_definition.content.push(txt);
+      }
+    }
+  });
+  return document_definition;
 }
