@@ -4,7 +4,6 @@ var FORM_ID = '#member_behavior_form';
 var SUBMIT_BUTTON_ID = '#sendForm';
 var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid'
-var HEAD_INJURY_ID = '#head_injury_checkbox';
 
 
 /* ------ Main Execution ------ */
@@ -87,7 +86,7 @@ function submitClickHandler(inputValidator) {
       "suspension": $('#suspension').is(':checked'),
       "consequence_other": $('#consequence_other').is(':checked')
     }
-
+    var $studentID = $('#nameid').val();
     var newForm = {
       "childName": $('#nameid').val(),
       "date": $('#dateid').val(),
@@ -100,7 +99,7 @@ function submitClickHandler(inputValidator) {
     }
 
     data = newForm;
-    firebase.database().ref('behavior/').push(data, function (err) {
+    firebase.database().ref('locations/carmichael/students/'+$studentID+'/behavior/').push(data, function (err) {
       if (err) {
         alert("Data did not send");
       }

@@ -97,6 +97,8 @@ function submitClickHandler(inputValidator) {
         var $form = $(this);
         console.log("Submit to Firebase");
 
+        var $studentID = $('#nameid').val();
+
         var newForm = {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
@@ -109,7 +111,7 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
-        firebase.database().ref('accident/').push(data, function (err) {
+        firebase.database().ref('locations/carmichael/students/'+$studentID+'/accident/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
             }
@@ -194,7 +196,7 @@ function addInputsTo(document_definition) {
             var label = $(this).find('label')[0];
             if (label) {
                 if (form_inputs[form_index - index_offset].value) {
-                    if ($(HEAD_INJURY_ID).is(':checked') || 
+                    if ($(HEAD_INJURY_ID).is(':checked') ||
                     ($(label).text() != 'Nature of Head Injury' && $(label).text() != 'Treatment Given')) {
                         var title = {
                             text: '\n' + $(label).text() + '',

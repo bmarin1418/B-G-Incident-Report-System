@@ -63,7 +63,7 @@ function submitClickHandler(inputValidator) {
         var data = [];
         var $form = $(this);
         console.log("Submit to Firebase");
-
+        var $studentID = $('#nameid').val();
         var newForm = {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
@@ -75,7 +75,7 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
-        firebase.database().ref('general/').push(data, function (err) {
+        firebase.database().ref('locations/carmichael/students/'+$studentID+'/general/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
             }
