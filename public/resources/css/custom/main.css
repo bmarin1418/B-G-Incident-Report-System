@@ -133,5 +133,10 @@ textarea {
 }
 
 #inappropriate_behavior_id {
-    width: 250px;
+  width: 250px;
+}
+
+#confirmation_message {
+  width: 500px;
+  margin: auto;  
 }
