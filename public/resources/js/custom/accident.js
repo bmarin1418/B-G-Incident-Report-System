@@ -184,7 +184,10 @@ function printPDF() {
         document_definition = addHeadInjuryFormTo(document_definition);
         document_definition = addHeadInjuryAdviceTo(document_definition);
     }
-    pdfMake.createPdf(document_definition).open();
+
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
+    window.location.href = "confirmation_page.html";
 }
 
 //Take the form inputs and add them to the pdf document definition
