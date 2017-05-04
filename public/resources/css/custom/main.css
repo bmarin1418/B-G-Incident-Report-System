@@ -131,16 +131,11 @@ textarea {
   vertical-align: top;
 }
 
-.chooseform {
+.button-center {
   text-align: center;
   margin: auto;
 }
 
 #inappropriate_behavior_id {
   width: 250px;
-}
-
-#confirmation_message {
-  width: 500px;
-  margin: auto;  
 }
