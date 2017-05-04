@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-html, body {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
+
+* {
+  font-family: 'Helvetica Neue', 'Open Sans', 'Helvetica', 'Arial', 'sans-serif' !important;
+}
+
+.mdl-button {
+    text-transform: none;
+    font-size: 18px;
 }
 
 a {
   text-decoration: none;
+}
+
+button.confirm {
+    background-color: #0288d1 !important; 
 }
 
 li a {
