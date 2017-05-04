@@ -97,6 +97,14 @@ main-header, img {
   margin: auto;
 }
 
+.messages {
+  text-align: left;
+  margin-top: -40px;
+  float: right;
+  width: 54%;
+  color: red;
+}
+
 .checkbox {
   width: 30px;
 }
@@ -117,10 +125,6 @@ textarea {
   width: 200px;
   height: 100px;
   vertical-align: top;
-}
-
-.messages {
-  color: red;
 }
 
 .chooseform {
