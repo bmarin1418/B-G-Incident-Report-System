@@ -176,10 +176,36 @@ function printPDF() {
             }
         }
     }
-    document_definition = addInputsTo(document_definition);
+    var document_definition = addInputsTo(document_definition);
     //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
     //If a head injury occured, add that page
+    if ($(HEAD_INJURY_ID).is(':checked')) {
+        var treatment_index = document_definition.content.length - 4;
+        document_definition.content.splice(treatment_index, 0, {text: "Head Injury Report", pageBreak: "before", style:"form_title"})
+        document_definition.content.splice(treatment_index, 0, "Dear Parent/Guardian:\nToday, your child had an injury to his/her head. At present, he/she does not seem to exhibit any alarming symptoms. However, bumps or blows to the head sometimes cause a mild brain injury called a concussion. Signs of head injury can occur immediately or develop over several hours. Be alert and watch for the following symptoms:");
+        
+        document_definition.content.splice(treatment_index, 0, {
+            ul: [
+                "Persistent headache and /or stiff neck",
+                "Slurred speech or blurry vision",
+                "Any episodes of nausea or vomiting",
+                "Loss of muscle coordination-unsteady walking, staggering balance, or weakness in an arm, hand or leg",
+                "Having more trouble than usual remembering things, concentrating or making decisions",
+                "Becoming easily irritated for little or no reason",
+                "Any loss of conciseness",
+                "Feeling sad, anxious or listless",
+                "Extreme drowsiness or unable to arouse from sleep",
+                "Any excess bleeding from the wound .Blood or clear watery liquid coming from the ears or nose",
+                "Avoid all sedatives or narcotics"
+                
+            ]
+        });
+        
+        document_definition.content.splice(treatment_index, 0, "It is important to call or see your doctor immediately if any of the above signs are observed in your child.")
+        
+        document_definition.content.push("Please note: This advice is a collaboration of general researched practices and is not intended as a substitute for medical advice, diagnosis, or treatment. Always seek the advice of a qualified health provided with any questions you may have regarding a medical condition. Never disregard professional advice or delay in seeking it because of the information provided above. If you think your child may have a medical emergency, call your doctor or 911 immediately.");
 
+    }
     pdfMake.createPdf(document_definition).open();
 }
 
@@ -216,5 +242,5 @@ function addInputsTo(document_definition) {
                 }
             }
         });
-        return document_definition;
-    }
+    return document_definition;
+}
