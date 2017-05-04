@@ -80,8 +80,8 @@ function submitClickHandler(inputValidator) {
                 alert("Data did not send");
             }
             printPDF(FORM_ID);
+            // document_definition
             // window.location.href = "confirmation_page.html";
-
         });
 
         return false;
@@ -142,8 +142,11 @@ function printPDF() {
     document_definition = addInputsTo(document_definition); //TODO Implement this
     //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
     //If a head injury occured, add that page
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
+    window.location.href = "confirmation_page.html";
+    // pdfMake.createPdf(document_definition).open();
 
-    pdfMake.createPdf(document_definition).open();
 }
 
 //Take the form inputs and add them to the pdf document definition
