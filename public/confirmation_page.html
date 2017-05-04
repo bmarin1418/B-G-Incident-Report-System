@@ -22,16 +22,18 @@ limitations under the License.
   <title>Incident Reports</title>
 
    <!-- Material Design Theming -->
+   <script src="resources/js/libraries/firebase.js"></script>
+   <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
    <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
    <script src="resources/js/libraries/material.min.js"></script>
-   <script src="resources/js/libraries/firebase.js"></script>
-   <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
+   <script src="resources/js/libraries/pdfmake.min.js"></script>
    <script src="resources/js/libraries/sweetalert-dev.js"></script>
+   <script src='resources/js/libraries/vfs_fonts.js'></script>
+    <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
    <script src="resources/js/custom/allpages.js"></script>
+
    <link rel="stylesheet" href="./resources/css/custom/main.css">
-   <script>
-    firebaseInit();
-   </script>
+
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -53,34 +55,20 @@ limitations under the License.
       <!-- Container for form selection box -->
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Home</h2>
-
-          <div class=logout>
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
-	  </div>
+            <h2 class="mdl-card__title-text">Confirmation</h2>
+            <div class=logout>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
+            </div>
 
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
 
 	  <div class="button-center">
-          <p>  </p>
-          <form action="gen_incident_form.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="gen-incident" name="gen-incident">General Incident Report</button> <br>
-          </form>
-          </div>  
-          <div class="button-center">
-          <p>  </p>
-          <form action="accident_form.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="accident" name="accident">Accident Report</button> <br>
-          </form>
-          </div>
-          <div class="button-center">
-          <p> </p>
-          <form action="mem_behavior_form.html">
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="memb-behavior" name="memb-behavior">Member Behavior Report</button> <br>
-          </form>
-          </div>
-
+            <p> Your form has been submitted! </p>
+            <form action="choose_form.html">
+            <button class="mdl-button mdl-js-button mdl-button--raised" name="home-button">Click to Submit Another Report</button>
+            </form>
+	  </div>
         </div>
       </div>
 

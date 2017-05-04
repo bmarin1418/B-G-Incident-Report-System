@@ -80,7 +80,7 @@ function submitClickHandler(inputValidator) {
                 alert("Data did not send");
             }
             printPDF(FORM_ID);
-            // window.location.href = "print_and_email.html";
+            // window.location.href = "confirmation_page.html";
 
         });
 

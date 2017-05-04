@@ -105,6 +105,10 @@ main-header, img {
   color: red;
 }
 
+.multi-line-message {
+  margin-top: -122px;
+}
+
 .checkbox {
   width: 30px;
 }
@@ -127,11 +131,11 @@ textarea {
   vertical-align: top;
 }
 
-.chooseform {
+.button-center {
   text-align: center;
   margin: auto;
 }
 
 #inappropriate_behavior_id {
-    width: 250px;
+  width: 250px;
 }
