@@ -105,6 +105,10 @@ main-header, img {
   color: red;
 }
 
+.multi-line-message {
+  margin-top: -122px;
+}
+
 .checkbox {
   width: 30px;
 }
