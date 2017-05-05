@@ -231,13 +231,13 @@ function addHeadInjuryFormTo(document_definition) {
         style: "form_title"
     });
     document_definition.content.splice(treatment_index++, 0, {
-        text: "Date: " + $(DATE_FIELD_ID).val()
+        text: "\nDate: " + $(DATE_FIELD_ID).val()
     });
     document_definition.content.splice(treatment_index++, 0, {
         text: "Child: " + $(NAME_FIELD_ID).val()
     });
     document_definition.content.splice(treatment_index++, 0, {
-        text: "\nDear Parent/Guardian:\nToday, your child had an injury to his/her head. At present, he/she does not seem to exhibit any alarming symptoms. However, bumps or blows to the head sometimes cause a mild brain injury called a concussion. Signs of head injury can occur immediately or develop over several hours. Be alert and watch for the following symptoms:\n"
+        text: "\nDear Parent/Guardian:\n\nToday, your child had an injury to his/her head. At present, he/she does not seem to exhibit any alarming symptoms. However, bumps or blows to the head sometimes cause a mild brain injury called a concussion. Signs of head injury can occur immediately or develop over several hours. Be alert and watch for the following symptoms:\n"
     });
     document_definition.content.splice(treatment_index++, 0, {
         text: "\n"
@@ -253,9 +253,8 @@ function addHeadInjuryFormTo(document_definition) {
                 "Any loss of conciseness",
                 "Feeling sad, anxious or listless",
                 "Extreme drowsiness or unable to arouse from sleep",
-                "Any excess bleeding from the wound .Blood or clear watery liquid coming from the ears or nose",
+                "Any excess bleeding from the wound. Blood or clear watery liquid coming from the ears or nose",
                 "Avoid all sedatives or narcotics\n"
-
             ]
     });
 
@@ -280,11 +279,11 @@ function addHeadInjuryAdviceTo(document_definition) {
         style: "form_field_title"
     });
     document_definition.content.push({
-        text: "The following information will help you and a support person monitor your condition. The support person should stay with you for at least 24 hours. It is important that you both understand what to watch for, and know when and where to obtain help. Monitoring during the first 24 hours following injury is the most critical; however, you may need to continue for several days. Your health care provider will give you specific instructions about how long to continue the monitoring."
+        text: "\nThe following information will help you and a support person monitor your condition. The support person should stay with you for at least 24 hours. It is important that you both understand what to watch for, and know when and where to obtain help. Monitoring during the first 24 hours following injury is the most critical; however, you may need to continue for several days. Your health care provider will give you specific instructions about how long to continue the monitoring.\n"
     });
 
     document_definition.content.push({
-        text: "During the first 24 hours, you should have your support person wake you every hour and check with you about the following items:",
+        text: "\nDuring the first 24 hours, you should have your support person wake you every hour and check with you about the following items:\n",
         style: "form_field_title"
     });
 
@@ -293,13 +292,21 @@ function addHeadInjuryAdviceTo(document_definition) {
             "Ask you the date, time and place",
             "Ask your name and the name of the support person",
             "Notice if you are exhibiting any unusual behaviors or actions",
-            "Notice if your walking or arm movements are clumsy"
+            "Notice if your walking or arm movements are clumsy\n"
         ]
     });
 
     document_definition.content.push({
-        text: "You and/or your support person should report any of the following symptoms:",
+        text: "\nYou and/or your support person should report any of the following symptoms:\n",
         style: "form_field_title"
+    });
+    
+    document_definition.content.push({text:'\n'});
+    document_definition.content.push({
+        image: EYES_BASE64,
+        width: 233,
+        height: 88,
+        style: "logo"
     });
 
     document_definition.content.push({
@@ -309,23 +316,23 @@ function addHeadInjuryAdviceTo(document_definition) {
             "Mental confusion or stranger behavior",
             "Amnesia or short-term memory loss",
             "Vomiting that continues and/or worsens",
-            "Restless or agitation that continues and/or worsens",
+            "Restlessness or agitation that continues and/or worsens",
             "Stiff neck",
             "Unequal pupils or peculiar eye movements (see figure 1)",
             "Visual changes",
-            "Changes in speech, or perseverating (repeating the same word (s) over and over)",
+            "Changes in speech, or perseverating (repeating the same word(s) over and over)",
             "Inability to move arms and legs equally on both sides, or weakness or loss of feeling in arm or leg",
             "Clear or bloody drainage from the ears or nose",
-            "Raccoon eyes(resembles a black eye) or Battle Sign (dark spots behind the ears(s))",
+            "Raccoon eyes (resembles a black eye) or Battle Sign (dark spots behind the ears(s))",
             "Difficulty breathing or unusual breathing pattern",
             "A worsening headache that is not relieved by acetaminophen (Tylenol, etc.)",
             "A temperature above 100 degrees F",
             "Slow or rapid pulse",
-            "Loss of bowel or bladder control"
+            "Loss of bowel or bladder control\n"
         ]
     });
 
-    document_definition.content.push({text: "If you are concerned about any difference in your treatment plan and the information in this handout, you are advised to contact your health care provider.", style: "form_field_title"});
+    document_definition.content.push({text: "\nIf you are concerned about any difference in your treatment plan and the information in this handout, you are advised to contact your health care provider.", style: "form_field_title"});
 
     return document_definition;
 }
