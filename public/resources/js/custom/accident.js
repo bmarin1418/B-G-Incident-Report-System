@@ -108,7 +108,8 @@ function submitClickHandler(inputValidator) {
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val(),
             "parentNotified": $('#parentid').val(),
-            "headInjury": $('#headinjuryid')
+            "nature": $('#natureid').val(),
+            "treatment": $('#treatment_id').val()
         }
 
         data = newForm;
