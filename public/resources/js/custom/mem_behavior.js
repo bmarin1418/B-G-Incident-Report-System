@@ -94,7 +94,9 @@ function submitClickHandler(inputValidator) {
       "location": $('#locationid').val(),
       "issuerName": $('#issuedbyid').val(),
       "behaviors": behaviors,
+      "other_behavior": $('#other_behavior').val(),
       "consequences": consequences,
+      "other_consequence": $('#other_consequence').val(),
       "staffComments": $('#commentsid').val()
     }
 
