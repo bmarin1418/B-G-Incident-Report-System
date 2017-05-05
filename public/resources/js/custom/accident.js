@@ -39,6 +39,9 @@ function initValidatorObj() {
         name: {
             presence: true
         },
+        member_id: {
+            validMemId: true
+        },
         date: {
             presence: true,
             datetime: {
@@ -98,7 +101,7 @@ function submitClickHandler(inputValidator) {
         var $form = $(this);
         console.log("Submit to Firebase");
 
-        var $studentID = $('#nameid').val();
+        var $studentID = $('#member_id').val();
 
         var newForm = {
             "childName": $('#nameid').val(),
@@ -108,8 +111,11 @@ function submitClickHandler(inputValidator) {
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val(),
             "parentNotified": $('#parentid').val(),
-            "nature": $('#natureid').val(),
-            "treatment": $('#treatment_id').val()
+        }
+        
+        if ($(HEAD_INJURY_ID).is(':checked')) {
+            newForm.nature = $('#natureid').val();
+            newForm.treatment = $('#treatment_id').val();
         }
 
         data = newForm;
@@ -138,14 +144,14 @@ function submitClickHandler(inputValidator) {
         if($club != "none"){
           firebase.database().ref('locations/'+$club+'/students/' + $studentID + '/accident/').push(data, function (err) {
               if (err) {
-                  alert("Data did not send");
+                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+              } else {
+                   printPDF();
               }
-              printPDF();
-              //window.location.href = "confirmation_page.html";
-
           });
+        } else {
+            sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
         }
-
 
         return false;
     }

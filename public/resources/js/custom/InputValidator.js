@@ -35,6 +35,7 @@ function InputValidator(form_id, constraints) {
     this.constraints = constraints;
     this.form_id = form_id;
     this.allowDateTimeValidation();
+    this.addIsValidMemID();
 
     // Hook up the inputs to validate on the fly
     var inputs = document.querySelectorAll("input, textarea, select")
@@ -65,6 +66,24 @@ InputValidator.prototype.validate = function() {
 /////////////////////////////////////////////////////////////////
 // Begin Private Functions
 /////////////////////////////////////////////////////////////////
+
+//Allows checking of whether a memberID is correct
+InputValidator.prototype.addIsValidMemID = function() {
+    validate.validators.validMemId = function (value, options, key, attr) {
+        if (value) {
+            if (!validate.isInteger(Number(attr.member_id))) {
+                return "is not a number"
+            } else if (attr.member_id.length < 3 || atrr.member_id.length > 8) {
+                return "is not the correct length"
+            } else {
+                return undefined;           
+            }
+            
+        } else {
+            return undefined;
+        }
+    }
+}
 
 // Show all errors
 InputValidator.prototype.showErrors = function (form, errors) {

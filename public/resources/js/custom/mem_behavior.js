@@ -32,12 +32,15 @@ function initValidatorObj() {
         name: {
             presence: true
         },
+        member_id: {
+            validMemId: true
+        },
         date: {
             presence: true,
-            date: {
-                earliest: moment().utc().subtract(7, 'days'),
-                latest: moment(),
-                datetime: true
+            datetime: {
+                dateOnly: true,
+                earliest: moment().utc().local().subtract(8, 'days'),
+                latest: moment().local()
             }
         },
         staff: {
@@ -90,7 +93,7 @@ function submitClickHandler(inputValidator) {
       "other_consequence": $('#other_consequence').val()
 
     }
-    var $studentID = $('#nameid').val();
+    var $studentID = $('#member_id').val();
     var newForm = {
       "childName": $('#nameid').val(),
       "date": $('#dateid').val(),
@@ -128,11 +131,14 @@ function submitClickHandler(inputValidator) {
 
     if($club != "none"){
       firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/behavior/').push(data, function (err) {
-        if (err) {
-          alert("Data did not send");
-        }
-        printPDF(FORM_ID);
+              if (err) {
+                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+              } else {
+                   printPDF();
+              }
       });
+    } else {
+        sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
     }
     return false;
   }
@@ -205,7 +211,6 @@ function printPDF() {
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
-    pdfMake.createPdf(document_definition).open();
 }
 
 function addInputsTo(document_definition) {

@@ -31,6 +31,9 @@ function initValidatorObj() {
         name: {
             presence: true
         },
+        member_id: {
+            validMemId: true
+        },
         date: {
             presence: true,
             datetime: {
@@ -63,7 +66,7 @@ function submitClickHandler(inputValidator) {
         var data = [];
         var $form = $(this);
         console.log("Submit to Firebase");
-        var $studentID = $('#nameid').val();
+        var $studentID = $('#member_id').val();
         var newForm = {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
@@ -106,11 +109,14 @@ function submitClickHandler(inputValidator) {
 
             if ($club != "none") {
                 firebase.database().ref('locations/' + $club + '/students/' + $studentID + '/general/').push(data, function (err) {
-                    if (err) {
-                        alert("Data did not send");
-                    }
-                    printPDF(FORM_ID);
+              if (err) {
+                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+              } else {
+                   printPDF();
+              }
                 });
+            } else {
+                sweetAlert("Login Issue", "Unknown club location, please login again to submit a form")
             }
         });
     }
@@ -167,13 +173,10 @@ function printPDF() {
             }
         }
     }
-    document_definition = addInputsTo(document_definition); //TODO Implement this
-    //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
-    //If a head injury occured, add that page
+    document_definition = addInputsTo(document_definition); 
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
-    // pdfMake.createPdf(document_definition).open();
 }
 
 //Take the form inputs and add them to the pdf document definition
