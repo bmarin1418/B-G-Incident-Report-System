@@ -73,12 +73,12 @@ InputValidator.prototype.addIsValidMemID = function() {
         if (value) {
             if (!validate.isInteger(Number(attr.member_id))) {
                 return "is not a number"
-            } else if (attr.member_id.length < 3 || atrr.member_id.length > 8) {
+            } else if (attr.member_id.length < 3 || attr.member_id.length > 8) {
                 return "is not the correct length"
             } else {
-                return undefined;           
+                return undefined;
             }
-            
+
         } else {
             return undefined;
         }
@@ -176,6 +176,3 @@ InputValidator.prototype.allowDateTimeValidation = function() {
         }
     });
 }
-
-
-
