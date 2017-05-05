@@ -77,14 +77,18 @@ function submitClickHandler(inputValidator) {
       "threatenting": $('#threatening').is(':checked'),
       "property_damage": $('#property_damage').is(':checked'),
       "stealing_cheating": $('#stealing_cheating').is(':checked'),
-      "behavior_other": $('#behavior_other').is(':checked')
+      "behavior_other": $('#behavior_other').is(':checked'),
+      "other_behavior": $('#other_behavior').val()
+
     }
     var consequences = {
       "event_loss": $('#event_loss').is(':checked'),
       "conference": $('#conference').is(':checked'),
       "parent_contact": $('#parent_contact').is(':checked'),
       "suspension": $('#suspension').is(':checked'),
-      "consequence_other": $('#consequence_other').is(':checked')
+      "consequence_other": $('#consequence_other').is(':checked'),
+      "other_consequence": $('#other_consequence').val()
+
     }
     var $studentID = $('#nameid').val();
     var newForm = {
@@ -94,9 +98,7 @@ function submitClickHandler(inputValidator) {
       "location": $('#locationid').val(),
       "issuerName": $('#issuedbyid').val(),
       "behaviors": behaviors,
-      "other_behavior": $('#other_behavior').val(),
       "consequences": consequences,
-      "other_consequence": $('#other_consequence').val(),
       "staffComments": $('#commentsid').val()
     }
 
@@ -202,6 +204,9 @@ function addInputsTo(document_definition) {
           $('#behaviors input:checked').each(function() {
             selected = selected + " " + $(this)[0].nextSibling.nodeValue;
           });
+          if($("#behavior_other").is(":checked")){
+            selected = selected + ": " + $("#other_behavior").val();
+          }
           var title = {
             text: '\n' + $(label).text() + '',
             style: 'form_field_title'
@@ -218,6 +223,9 @@ function addInputsTo(document_definition) {
           $('#consequences input:checked').each(function() {
             selected = selected + " " + $(this)[0].nextSibling.nodeValue;
           });
+          if($("#consequence_other").is(":checked")){
+            selected = selected + ": " + $("#other_consequence").val();
+          }
           var title = {
             text: '\n' + $(label).text() + '',
             style: 'form_field_title'
