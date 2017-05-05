@@ -103,15 +103,37 @@ function submitClickHandler(inputValidator) {
     }
 
     data = newForm;
-    firebase.database().ref('locations/carmichael/students/'+$studentID+'/behavior/').push(data, function (err) {
-      if (err) {
-        alert("Data did not send");
-      }
-      printPDF(FORM_ID);
-      //window.location.href = "confirmation_page.html";
 
-    });
+    var $club;
+    switch(firebase.auth().currentUser.email){
+      case "occstaff@bngc.com":
+        $club = "carmichael";
+        break;
+      case "wilsonstaff@bngc.com":
+        $club = "wilson";
+        break;
+      case "lasallestaff@bngc.com":
+        $club = "lasalle";
+        break;
+      case "harrisonstaff@bngc.com":
+        $club = "harrison";
+        break;
+      case "battellstaff@bngc.com":
+        $club = "battell";
+        break;
+      default:
+        $club = "none";
+        break;
+    }
 
+    if($club != "none"){
+      firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/behavior/').push(data, function (err) {
+        if (err) {
+          alert("Data did not send");
+        }
+        printPDF(FORM_ID);
+      });
+    }
     return false;
   }
 }
@@ -236,8 +258,8 @@ function addInputsTo(document_definition) {
           };
           document_definition.content.push(title);
           document_definition.content.push(txt);        }
+        }
       }
-    }
-  });
-  return document_definition;
-}
+    });
+    return document_definition;
+  }
