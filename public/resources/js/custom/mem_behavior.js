@@ -237,6 +237,9 @@ function addInputsTo(document_definition) {
                     $('#behaviors input:checked').each(function () {
                         selected = selected + " " + $(this)[0].nextSibling.nodeValue;
                     });
+                    if($("#behavior_other").is(":checked")){
+                      selected = selected + ": " + $("#other_behavior").val();
+                   }
                     var title = {
                         text: '\n' + $(label).text() + '',
                         style: 'form_field_title'
@@ -253,6 +256,9 @@ function addInputsTo(document_definition) {
                     $('#consequences input:checked').each(function () {
                         selected = selected + " " + $(this)[0].nextSibling.nodeValue;
                     });
+                    if($("#consequence_other").is(":checked")){
+                      selected = selected + ": " + $("#other_consequence").val();
+                   }
                     var title = {
                         text: $(label).text() + '',
                         style: 'form_field_title'
