@@ -75,14 +75,46 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
+<<<<<<< HEAD
         firebase.database().ref('locations/carmichael/students/' + $studentID + '/general/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
             }
             printPDF(FORM_ID);
             // window.location.href = "confirmation_page.html";
+=======
+>>>>>>> 4656f3e9e4622275d7bf76bd57a4e1e5c879758e
 
-        });
+        var $club;
+        switch(firebase.auth().currentUser.email){
+          case "occstaff@bngc.com":
+            $club = "carmichael";
+            break;
+          case "wilsonstaff@bngc.com":
+            $club = "wilson";
+            break;
+          case "lasallestaff@bngc.com":
+            $club = "lasalle";
+            break;
+          case "harrisonstaff@bngc.com":
+            $club = "harrison";
+            break;
+          case "battellstaff@bngc.com":
+            $club = "battell";
+            break;
+          default:
+            $club = "none";
+            break;
+        }
+
+        if($club != "none"){
+          firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/general/').push(data, function (err) {
+              if (err) {
+                  alert("Data did not send");
+              }
+              printPDF(FORM_ID);
+          });
+        }
 
         return false;
     }
@@ -139,8 +171,13 @@ function printPDF() {
             }
         }
     }
-    document_definition = addInputsTo(document_definition);
-    pdfMake.createPdf(document_definition).open();
+    document_definition = addInputsTo(document_definition); //TODO Implement this
+    //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
+    //If a head injury occured, add that page
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
+    window.location.href = "confirmation_page.html";
+    // pdfMake.createPdf(document_definition).open();
 }
 
 //Take the form inputs and add them to the pdf document definition

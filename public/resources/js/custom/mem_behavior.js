@@ -57,59 +57,85 @@ function initValidatorObj() {
 
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
-    if (inputValidator.validate()) {
-        var data = [];
-        var $form = $(this);
-        console.log("Submit to Firebase");
+  if (inputValidator.validate()) {
+    var data = [];
+    var $form = $(this);
+    console.log("Submit to Firebase");
 
-        var behaviors = {
-            "talking": $('#talking').is(':checked'),
-            "not_listening": $('#not_listening').is(':checked'),
-            "language": $('#language').is(':checked'),
-            "gestures": $('#gestures').is(':checked'),
-            "BGC_rules": $('#BGC_rules').is(':checked'),
-            "member_disrespect": $('#member_disrespect').is(':checked'),
-            "staff_disrespect": $('#staff_disrespect').is(':checked'),
-            "name_calling": $('#name_calling').is(':checked'),
-            "touching": $('#touching').is(':checked'),
-            "physical_contact": $('#physical_contact').is(':checked'),
-            "fighting": $('#fighting').is(':checked'),
-            "threatenting": $('#threatening').is(':checked'),
-            "property_damage": $('#property_damage').is(':checked'),
-            "stealing_cheating": $('#stealing_cheating').is(':checked'),
-            "behavior_other": $('#behavior_other').is(':checked')
-        }
-        var consequences = {
-            "event_loss": $('#event_loss').is(':checked'),
-            "conference": $('#conference').is(':checked'),
-            "parent_contact": $('#parent_contact').is(':checked'),
-            "suspension": $('#suspension').is(':checked'),
-            "consequence_other": $('#consequence_other').is(':checked')
-        }
-        var $studentID = $('#nameid').val();
-        var newForm = {
-            "childName": $('#nameid').val(),
-            "date": $('#dateid').val(),
-            "staffName": $('#staffid').val(),
-            "location": $('#locationid').val(),
-            "issuerName": $('#issuedbyid').val(),
-            "behaviors": behaviors,
-            "consequences": consequences,
-            "staffComments": $('#commentsid').val()
-        }
+    var behaviors = {
+      "talking": $('#talking').is(':checked'),
+      "not_listening": $('#not_listening').is(':checked'),
+      "language": $('#language').is(':checked'),
+      "gestures": $('#gestures').is(':checked'),
+      "BGC_rules": $('#BGC_rules').is(':checked'),
+      "member_disrespect": $('#member_disrespect').is(':checked'),
+      "staff_disrespect": $('#staff_disrespect').is(':checked'),
+      "name_calling": $('#name_calling').is(':checked'),
+      "touching": $('#touching').is(':checked'),
+      "physical_contact": $('#physical_contact').is(':checked'),
+      "fighting": $('#fighting').is(':checked'),
+      "threatenting": $('#threatening').is(':checked'),
+      "property_damage": $('#property_damage').is(':checked'),
+      "stealing_cheating": $('#stealing_cheating').is(':checked'),
+      "behavior_other": $('#behavior_other').is(':checked'),
+      "other_behavior": $('#other_behavior').val()
 
-        data = newForm;
-        firebase.database().ref('locations/carmichael/students/' + $studentID + '/behavior/').push(data, function (err) {
-            if (err) {
-                alert("Data did not send");
-            }
-            printPDF(FORM_ID);
-            //window.location.href = "confirmation_page.html";
-
-        });
-
-        return false;
     }
+    var consequences = {
+      "event_loss": $('#event_loss').is(':checked'),
+      "conference": $('#conference').is(':checked'),
+      "parent_contact": $('#parent_contact').is(':checked'),
+      "suspension": $('#suspension').is(':checked'),
+      "consequence_other": $('#consequence_other').is(':checked'),
+      "other_consequence": $('#other_consequence').val()
+
+    }
+    var $studentID = $('#nameid').val();
+    var newForm = {
+      "childName": $('#nameid').val(),
+      "date": $('#dateid').val(),
+      "staffName": $('#staffid').val(),
+      "location": $('#locationid').val(),
+      "issuerName": $('#issuedbyid').val(),
+      "behaviors": behaviors,
+      "consequences": consequences,
+      "staffComments": $('#commentsid').val()
+    }
+
+    data = newForm;
+
+    var $club;
+    switch(firebase.auth().currentUser.email){
+      case "occstaff@bngc.com":
+        $club = "carmichael";
+        break;
+      case "wilsonstaff@bngc.com":
+        $club = "wilson";
+        break;
+      case "lasallestaff@bngc.com":
+        $club = "lasalle";
+        break;
+      case "harrisonstaff@bngc.com":
+        $club = "harrison";
+        break;
+      case "battellstaff@bngc.com":
+        $club = "battell";
+        break;
+      default:
+        $club = "none";
+        break;
+    }
+
+    if($club != "none"){
+      firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/behavior/').push(data, function (err) {
+        if (err) {
+          alert("Data did not send");
+        }
+        printPDF(FORM_ID);
+      });
+    }
+    return false;
+  }
 }
 
 //Take the form and turn it to JSON to make a pdf
@@ -175,20 +201,16 @@ function printPDF() {
             }
         }
     }
-    document_definition = addInputsTo(document_definition); //TODO implement this
-    //document_definition.content.append({text: '\n Staff Signature', style:'form_field_title'})
-    //If a head injury occured, add that page
-
+    document_definition = addInputsTo(document_definition);
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
+    window.location.href = "confirmation_page.html";
     pdfMake.createPdf(document_definition).open();
 }
 
 function addInputsTo(document_definition) {
     var form_inputs = $(FORM_ID).serializeArray();
     var form_groups = $(FORM_ID).find('.form_group');
-
-    //Serialize arrary returns a different size array when there is and isn't a checked checkbox
-    //which makes the indexing a headache. That is why there is an index offset if the checkbox is
-    //checked.
 
     form_groups.each(function (form_index) {
         var label = $(this).find('label')[0];
