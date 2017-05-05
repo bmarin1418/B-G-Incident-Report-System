@@ -75,48 +75,44 @@ function submitClickHandler(inputValidator) {
         }
 
         data = newForm;
-<<<<<<< HEAD
         firebase.database().ref('locations/carmichael/students/' + $studentID + '/general/').push(data, function (err) {
             if (err) {
                 alert("Data did not send");
             }
             printPDF(FORM_ID);
             // window.location.href = "confirmation_page.html";
-=======
->>>>>>> 4656f3e9e4622275d7bf76bd57a4e1e5c879758e
 
-        var $club;
-        switch(firebase.auth().currentUser.email){
-          case "occstaff@bngc.com":
-            $club = "carmichael";
-            break;
-          case "wilsonstaff@bngc.com":
-            $club = "wilson";
-            break;
-          case "lasallestaff@bngc.com":
-            $club = "lasalle";
-            break;
-          case "harrisonstaff@bngc.com":
-            $club = "harrison";
-            break;
-          case "battellstaff@bngc.com":
-            $club = "battell";
-            break;
-          default:
-            $club = "none";
-            break;
-        }
+            var $club;
+            switch (firebase.auth().currentUser.email) {
+            case "occstaff@bngc.com":
+                $club = "carmichael";
+                break;
+            case "wilsonstaff@bngc.com":
+                $club = "wilson";
+                break;
+            case "lasallestaff@bngc.com":
+                $club = "lasalle";
+                break;
+            case "harrisonstaff@bngc.com":
+                $club = "harrison";
+                break;
+            case "battellstaff@bngc.com":
+                $club = "battell";
+                break;
+            default:
+                $club = "none";
+                break;
+            }
 
-        if($club != "none"){
-          firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/general/').push(data, function (err) {
-              if (err) {
-                  alert("Data did not send");
-              }
-              printPDF(FORM_ID);
-          });
-        }
-
-        return false;
+            if ($club != "none") {
+                firebase.database().ref('locations/' + $club + '/students/' + $studentID + '/general/').push(data, function (err) {
+                    if (err) {
+                        alert("Data did not send");
+                    }
+                    printPDF(FORM_ID);
+                });
+            }
+        });
     }
 }
 
