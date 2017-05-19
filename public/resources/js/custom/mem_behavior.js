@@ -3,8 +3,11 @@
 var FORM_ID = '#member_behavior_form';
 var SUBMIT_BUTTON_ID = '#sendForm';
 var LOGOUT_ID = '#logout';
-var DATE_FIELD_ID = '#dateid'
-
+var DATE_FIELD_ID = '#dateid';
+var OTHER_CONSEQUENCE_CHECK_ID = '#consequence_other';
+var OTHER_CONSEQUENCE_INPUT_ID = '#other_consequence';
+var OTHER_BEHAVIOR_CHECK_ID = '#behavior_other';
+var OTHER_BEHAVIOR_INPUT_ID = '#other_behavior';
 
 /* ------ Main Execution ------ */
 
@@ -22,8 +25,26 @@ function linkHandlers() {
     var inputValidator = initValidatorObj();
     $(SUBMIT_BUTTON_ID).click(function () {
         submitClickHandler(inputValidator);
-        console.log("form complete button clicked.");
     });
+
+    $(OTHER_BEHAVIOR_CHECK_ID).change(function () {
+        var cntxt = this;
+        otherChangeHandler(cntxt, OTHER_BEHAVIOR_INPUT_ID);
+    });
+
+    $(OTHER_CONSEQUENCE_CHECK_ID).change(function () {
+        var cntxt = this;
+        otherChangeHandler(cntxt, OTHER_CONSEQUENCE_INPUT_ID);
+    });
+}
+
+//Link click on other checkbox to showing or hiding the input
+function otherChangeHandler(cntxt, other_id) {
+    if ($(cntxt).is(":checked")) {
+        $(other_id).show();
+    } else {
+        $(other_id).hide();
+    }
 }
 
 //Returns an input validator object initalized for the accident form
@@ -33,7 +54,8 @@ function initValidatorObj() {
             presence: true
         },
         member_id: {
-            validMemId: true
+            validMemId: true,
+            presence: true
         },
         date: {
             presence: true,
@@ -54,94 +76,98 @@ function initValidatorObj() {
         },
         comments: {
             presence: true
-        }
+        },
+        other_behavior: presentIfOtherBehavior,
+        other_consequence: presentIfOtherConsequence
     });
+}
+
+//Function to set validation at runtime depending on the behavior other checkbox checked status
+function presentIfOtherBehavior(value, attributes, attributeName, options, constraints) {
+    if ($(OTHER_BEHAVIOR_CHECK_ID).is(':checked')) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
+}
+
+//Function to set validation at runtime depending on the consequence checkbox checked status
+function presentIfOtherConsequence(value, attributes, attributeName, options, constraints) {
+    if ($(OTHER_CONSEQUENCE_CHECK_ID).is(':checked')) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
 }
 
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
-  if (inputValidator.validate()) {
-    var data = [];
-    var $form = $(this);
-    console.log("Submit to Firebase");
+    if (inputValidator.validate()) {
+        var data = [];
+        var $form = $(this);
 
-    var behaviors = {
-      "talking": $('#talking').is(':checked'),
-      "not_listening": $('#not_listening').is(':checked'),
-      "language": $('#language').is(':checked'),
-      "gestures": $('#gestures').is(':checked'),
-      "BGC_rules": $('#BGC_rules').is(':checked'),
-      "member_disrespect": $('#member_disrespect').is(':checked'),
-      "staff_disrespect": $('#staff_disrespect').is(':checked'),
-      "name_calling": $('#name_calling').is(':checked'),
-      "touching": $('#touching').is(':checked'),
-      "physical_contact": $('#physical_contact').is(':checked'),
-      "fighting": $('#fighting').is(':checked'),
-      "threatenting": $('#threatening').is(':checked'),
-      "property_damage": $('#property_damage').is(':checked'),
-      "stealing_cheating": $('#stealing_cheating').is(':checked'),
-      "behavior_other": $('#behavior_other').is(':checked'),
-      "other_behavior": $('#other_behavior').val()
+        var behaviors = {
+            "talking": $('#talking').is(':checked'),
+            "not_listening": $('#not_listening').is(':checked'),
+            "language": $('#language').is(':checked'),
+            "gestures": $('#gestures').is(':checked'),
+            "BGC_rules": $('#BGC_rules').is(':checked'),
+            "member_disrespect": $('#member_disrespect').is(':checked'),
+            "staff_disrespect": $('#staff_disrespect').is(':checked'),
+            "name_calling": $('#name_calling').is(':checked'),
+            "touching": $('#touching').is(':checked'),
+            "physical_contact": $('#physical_contact').is(':checked'),
+            "fighting": $('#fighting').is(':checked'),
+            "threatenting": $('#threatening').is(':checked'),
+            "property_damage": $('#property_damage').is(':checked'),
+            "stealing_cheating": $('#stealing_cheating').is(':checked'),
+            "behavior_other": $('#behavior_other').is(':checked'),
+            "other_behavior": $('#other_behavior').val()
 
+        }
+        var consequences = {
+            "event_loss": $('#event_loss').is(':checked'),
+            "conference": $('#conference').is(':checked'),
+            "parent_contact": $('#parent_contact').is(':checked'),
+            "suspension": $('#suspension').is(':checked'),
+            "consequence_other": $('#consequence_other').is(':checked'),
+            "other_consequence": $('#other_consequence').val()
+        }
+        var studentID = $('#member_id').val();
+        var newForm = {
+            "childName": $('#nameid').val(),
+            "date": $('#dateid').val(),
+            "staffName": $('#staffid').val(),
+            "location": $('#locationid').val(),
+            "issuerName": $('#issuedbyid').val(),
+            "behaviors": behaviors,
+            "consequences": consequences,
+            "staffComments": $('#commentsid').val()
+        }
+
+        data = newForm;
+        var club = getClub();
+        if (club != "none") {
+            firebase.database().ref('locations/' + club + '/students/' + studentID + '/behavior/').push(data, function (err) {
+                if (err) {
+                    sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+                } else {
+                    printPDF();
+                }
+            });
+        } else {
+            sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
+        }
+        return false;
     }
-    var consequences = {
-      "event_loss": $('#event_loss').is(':checked'),
-      "conference": $('#conference').is(':checked'),
-      "parent_contact": $('#parent_contact').is(':checked'),
-      "suspension": $('#suspension').is(':checked'),
-      "consequence_other": $('#consequence_other').is(':checked'),
-      "other_consequence": $('#other_consequence').val()
-
-    }
-    var $studentID = $('#member_id').val();
-    var newForm = {
-      "childName": $('#nameid').val(),
-      "date": $('#dateid').val(),
-      "staffName": $('#staffid').val(),
-      "location": $('#locationid').val(),
-      "issuerName": $('#issuedbyid').val(),
-      "behaviors": behaviors,
-      "consequences": consequences,
-      "staffComments": $('#commentsid').val()
-    }
-
-    data = newForm;
-
-    var $club;
-    switch(firebase.auth().currentUser.email){
-      case "occstaff@bngc.com":
-        $club = "carmichael";
-        break;
-      case "wilsonstaff@bngc.com":
-        $club = "wilson";
-        break;
-      case "lasallestaff@bngc.com":
-        $club = "lasalle";
-        break;
-      case "harrisonstaff@bngc.com":
-        $club = "harrison";
-        break;
-      case "battellstaff@bngc.com":
-        $club = "battell";
-        break;
-      default:
-        $club = "none";
-        break;
-    }
-
-    if($club != "none"){
-      firebase.database().ref('locations/'+$club+'/students/'+$studentID+'/behavior/').push(data, function (err) {
-              if (err) {
-                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
-              } else {
-                   printPDF();
-              }
-      });
-    } else {
-        sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
-    }
-    return false;
-  }
 }
 
 //Take the form and turn it to JSON to make a pdf
@@ -167,13 +193,9 @@ function printPDF() {
                 style: "form_title"
       },
             {
-                text: "\n*The following constitutes an automatic 3-day suspension from the club:",
+                text: "\n*Fighting, blatant disrespect of staff or others, and destruction of property all result in an automatic 3-day suspension from the club",
                 style: "suspension_header"
       },
-            {
-                text: "\nFighting\nBlatant disrespect of staff or others\nDestruction of property\n",
-                style: "center"
-    }
     ],
         styles: {
             suspension_header: {
@@ -208,9 +230,26 @@ function printPDF() {
         }
     }
     document_definition = addInputsTo(document_definition);
+    document_definition = addExtraLinesTo(document_definition);
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
+}
+
+function addExtraLinesTo(document_definition) {
+    document_definition.content.push({
+        text: 'Please discuss this behavior with your child. Contact your club director if you have any questions about this report. Please note that if inappropriate behavior/incidents continue, it may result in automatic suspension or termination from the club. Thank you.',
+        style: 'form_field'
+    });
+    document_definition.content.push({
+        text: '\nClub Director/Authorized Signature: _____________________________________________',
+        style: 'form_field_title'
+    });
+    document_definition.content.push({
+        text: '\nParent/Guardian Signature: _____________________________________________\n(Must be returned signed in order for member to re-enter club)',
+        style: 'form_field_title'
+    });
+    return document_definition;
 }
 
 function addInputsTo(document_definition) {
@@ -237,9 +276,9 @@ function addInputsTo(document_definition) {
                     $('#behaviors input:checked').each(function () {
                         selected = selected + " " + $(this)[0].nextSibling.nodeValue;
                     });
-                    if($("#behavior_other").is(":checked")){
-                      selected = selected + ": " + $("#other_behavior").val();
-                   }
+                    if ($(OTHER_BEHAVIOR_CHECK_ID).is(":checked")) {
+                        selected = selected + ": " + $(OTHER_BEHAVIOR_INPUT_ID).val();
+                    }
                     var title = {
                         text: '\n' + $(label).text() + '',
                         style: 'form_field_title'
@@ -250,15 +289,21 @@ function addInputsTo(document_definition) {
                     };
                     document_definition.content.push(title);
                     document_definition.content.push(txt);
+
+                    if ($(OTHER_BEHAVIOR_CHECK_ID).is(":checked")) {
+                        document_definition.content.push({
+                            text: '\n'
+                        });
+                    }
                 }
                 if ($(label).text() == 'Consequences') {
                     var selected = "";
                     $('#consequences input:checked').each(function () {
                         selected = selected + " " + $(this)[0].nextSibling.nodeValue;
                     });
-                    if($("#consequence_other").is(":checked")){
-                      selected = selected + ": " + $("#other_consequence").val();
-                   }
+                    if ($(OTHER_CONSEQUENCE_CHECK_ID).is(":checked")) {
+                        selected = selected + ": " + $(OTHER_CONSEQUENCE_INPUT_ID).val() + '\n';
+                    }
                     var title = {
                         text: $(label).text() + '',
                         style: 'form_field_title'
@@ -269,6 +314,11 @@ function addInputsTo(document_definition) {
                     };
                     document_definition.content.push(title);
                     document_definition.content.push(txt);
+                    if ($(OTHER_CONSEQUENCE_CHECK_ID).is(":checked")) {
+                        document_definition.content.push({
+                            text: '\n'
+                        });
+                    }
                 }
             }
         }

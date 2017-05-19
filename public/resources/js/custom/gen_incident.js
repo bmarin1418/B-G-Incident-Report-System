@@ -21,7 +21,6 @@ function linkHandlers() {
     var inputValidator = initValidatorObj();
     $(SUBMIT_BUTTON_ID).click(function () {
         submitClickHandler(inputValidator);
-        console.log("form complete button clicked.");
     });
 }
 
@@ -32,7 +31,8 @@ function initValidatorObj() {
             presence: true
         },
         member_id: {
-            validMemId: true
+            validMemId: true,
+            presence: true
         },
         date: {
             presence: true,
@@ -174,6 +174,15 @@ function printPDF() {
         }
     }
     document_definition = addInputsTo(document_definition); 
+    document_definition = addSignatureLineTo(document_definition, document_definition.content.length);
+    document_definition.content.push({
+       text: '\n\nBranch Director Signature: _____________________________________________',
+       style: 'form_field_title'
+    });
+    document_definition.content.push({
+       text: '\nSignature Date: ________________________________________________________',
+       style: 'form_field_title'
+    });
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";

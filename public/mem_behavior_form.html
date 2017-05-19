@@ -36,6 +36,8 @@ limitations under the License.
   <script src="resources/js/libraries/pdfmake.min.js"></script>
   <script src="resources/js/libraries/vfs_fonts.js"></script>
   <script src="resources/js/libraries/sweetalert-dev.js"></script>
+
+  <script src="resources/js/custom/allFormPages.js"></script>
   <script src="resources/js/custom/allpages.js"></script>
   <script src="resources/js/libraries/validate.min.js"></script>
   <script src="resources/js/custom/InputValidator.js"></script>
@@ -92,7 +94,7 @@ limitations under the License.
                 <div class="form_group">
                   <p>
                     <label for="dateid">Date</label>
-                    <input type="date" class="single-line-text" id="dateid" name="date">
+                    <input type="date" placeholder="mm/dd/yy" class="single-line-text" id="dateid" name="date">
                   </p>
                   <div class="messages"></div>
                 </div>
@@ -157,9 +159,8 @@ limitations under the License.
                     <input type="checkbox" class="checkbox" id="stealing_cheating">Stealing/cheating
                     <br>
                     <input type="checkbox" class="checkbox" id="behavior_other">Other (suicide tendencies, illegal substances, weapons, etc.)<br>
-                    <input type="text" placeholder="Other Inappropriate Behavior" class="single-line-text" id="other_behavior" name="other_behavior">
+                    <input style="display: none;" type="text" placeholder="Other Inappropriate Behavior" class="single-line-text" id="other_behavior" name="other_behavior">
                   </p>
-                </p>
                 <div class="messages"></div>
               </div>
               <div class="form_group" id="consequences">
@@ -175,7 +176,7 @@ limitations under the License.
                   <input type="checkbox" class="checkbox" id="suspension">Out of club suspension
                   <br>
                   <input type="checkbox" class="checkbox" id="consequence_other">Other<br>
-                  <input type="text" placeholder="Other Consequences" class="single-line-text" id="other_consequence" name="other_consequence">
+                  <input style="display: none;" type="text" placeholder="Other Consequences" class="single-line-text" id="other_consequence" name="other_consequence">
                 </p>
                 <div class="messages"></div>
               </div>
