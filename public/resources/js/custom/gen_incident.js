@@ -63,10 +63,9 @@ function initValidatorObj() {
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
-        var data = [];
         var $form = $(this);
         console.log("Submit to Firebase");
-        var $studentID = $('#member_id').val();
+        var studentID = $('#member_id').val();
         var newForm = {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
@@ -77,48 +76,18 @@ function submitClickHandler(inputValidator) {
             "responseDescription": $('#responseid').val()
         }
 
-        data = newForm;
-        firebase.database().ref('locations/carmichael/students/' + $studentID + '/general/').push(data, function (err) {
-            if (err) {
-                alert("Data did not send");
-            }
-            printPDF(FORM_ID);
-            // window.location.href = "confirmation_page.html";
-
-            var $club;
-            switch (firebase.auth().currentUser.email) {
-            case "occstaff@bngc.com":
-                $club = "carmichael";
-                break;
-            case "wilsonstaff@bngc.com":
-                $club = "wilson";
-                break;
-            case "lasallestaff@bngc.com":
-                $club = "lasalle";
-                break;
-            case "harrisonstaff@bngc.com":
-                $club = "harrison";
-                break;
-            case "battellstaff@bngc.com":
-                $club = "battell";
-                break;
-            default:
-                $club = "none";
-                break;
-            }
-
-            if ($club != "none") {
-                firebase.database().ref('locations/' + $club + '/students/' + $studentID + '/general/').push(data, function (err) {
-              if (err) {
-                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
-              } else {
-                   printPDF();
-              }
-                });
-            } else {
-                sweetAlert("Login Issue", "Unknown club location, please login again to submit a form")
-            }
-        });
+        var club = getClub();
+        if (club != "none") {
+            firebase.database().ref('locations/' + club + '/students/' + studentID + '/accident/').push(newForm, function (err) {
+                if (err) {
+                    sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+                } else {
+                    printPDF();
+                }
+            });
+        } else {
+            sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
+        }
     }
 }
 
@@ -173,15 +142,15 @@ function printPDF() {
             }
         }
     }
-    document_definition = addInputsTo(document_definition); 
+    document_definition = addInputsTo(document_definition);
     document_definition = addSignatureLineTo(document_definition, document_definition.content.length);
     document_definition.content.push({
-       text: '\n\nBranch Director Signature: _____________________________________________',
-       style: 'form_field_title'
+        text: '\n\nBranch Director Signature: _____________________________________________',
+        style: 'form_field_title'
     });
     document_definition.content.push({
-       text: '\nSignature Date: ________________________________________________________',
-       style: 'form_field_title'
+        text: '\nSignature Date: ________________________________________________________',
+        style: 'form_field_title'
     });
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);

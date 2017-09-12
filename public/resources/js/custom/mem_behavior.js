@@ -36,6 +36,14 @@ function linkHandlers() {
         var cntxt = this;
         otherChangeHandler(cntxt, OTHER_CONSEQUENCE_INPUT_ID);
     });
+    
+    $(document).keypress(function (e) {
+        var key = e.which;
+        var enter_key_num = 13;
+        if (key == enter_key_num) {
+            submitClickHandler(inputValidator);
+        }
+    });  
 }
 
 //Link click on other checkbox to showing or hiding the input
