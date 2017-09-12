@@ -64,9 +64,8 @@ function initValidatorObj() {
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
         var data = [];
-        var $form = $(this);
         console.log("Submit to Firebase");
-        var $studentID = $('#member_id').val();
+        var studentID = $('#member_id').val();
         var newForm = {
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
@@ -85,30 +84,30 @@ function submitClickHandler(inputValidator) {
             printPDF(FORM_ID);
             // window.location.href = "confirmation_page.html";
 
-            var $club;
+            var club;
             switch (firebase.auth().currentUser.email) {
             case "occstaff@bngc.com":
-                $club = "carmichael";
+                club = "carmichael";
                 break;
             case "wilsonstaff@bngc.com":
-                $club = "wilson";
+                club = "wilson";
                 break;
             case "lasallestaff@bngc.com":
-                $club = "lasalle";
+                club = "lasalle";
                 break;
             case "harrisonstaff@bngc.com":
-                $club = "harrison";
+                club = "harrison";
                 break;
             case "battellstaff@bngc.com":
-                $club = "battell";
+                club = "battell";
                 break;
             default:
-                $club = "none";
+                club = "none";
                 break;
             }
 
-            if ($club != "none") {
-                firebase.database().ref('locations/' + $club + '/students/' + $studentID + '/general/').push(data, function (err) {
+            if (club != "none") {
+                firebase.database().ref('locations/' + club + '/students/' + studentID + '/general/').push(data, function (err) {
               if (err) {
                   sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
               } else {
