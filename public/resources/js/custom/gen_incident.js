@@ -63,7 +63,6 @@ function initValidatorObj() {
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
-        var $form = $(this);
         console.log("Submit to Firebase");
         var studentID = $('#member_id').val();
         var newForm = {
