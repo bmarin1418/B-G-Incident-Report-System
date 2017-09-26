@@ -8,6 +8,15 @@ var LOGOUT_ID = '#logout';
 var DATE_FIELD_ID = '#dateid';
 var HEAD_INJURY_ID = '#head_injury_checkbox';
 var NAME_FIELD_ID = '#nameid';
+var MEMBER_FIELD_ID = '#member_id';
+var LOCATION_FIELD_ID = '#locationid';
+var RESPONSE_FIELD_ID = '#responseid';
+var PARENT_NOT_FIEL_ID = '#parentid';
+var STAFF_FIELD_ID = '#staffid';
+var INCIDENT_FIELD_ID = '#incidentid';
+var NATURE_FIELD_ID = '#natureid';
+var TREATMENT_FIELD_ID = '#treatment_id';
+
 
 /* ------ Main Execution ------ */
 
@@ -40,7 +49,8 @@ function initValidatorObj() {
             presence: true
         },
         member_id: {
-            validMemId: true
+            validMemId: true,
+            presence: true
         },
         date: {
             presence: true,
@@ -99,50 +109,27 @@ function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
         var data = [];
         var $form = $(this);
-        console.log("Submit to Firebase");
 
-        var $studentID = $('#member_id').val();
+        var studentID = $(MEMBER_FIELD_ID).val();
 
         var newForm = {
-            "childName": $('#nameid').val(),
-            "date": $('#dateid').val(),
-            "staffName": $('#staffid').val(),
-            "location": $('#locationid').val(),
-            "incidentDescription": $('#incidentid').val(),
-            "responseDescription": $('#responseid').val(),
-            "parentNotified": $('#parentid').val(),
+            "childName": $(NAME_FIELD_ID).val(),
+            "date": $(DATE_FIELD_ID).val(),
+            "staffName": $(STAFF_FIELD_ID).val(),
+            "location": $(LOCATION_FIELD_ID).val(),
+            "incidentDescription": $(INCIDENT_FIELD_ID).val(),
+            "responseDescription": $(RESPONSE_FIELD_ID).val(),
+            "parentNotified": $(PARENT_NOT_FIEL_ID).val()
         }
         
         if ($(HEAD_INJURY_ID).is(':checked')) {
-            newForm.nature = $('#natureid').val();
-            newForm.treatment = $('#treatment_id').val();
+            newForm.nature = $(NAME_FIELD_ID).val();
+            newForm.treatment = $(TREATMENT_FIELD_ID).val();
         }
 
-        data = newForm;
-        var $club;
-        switch(firebase.auth().currentUser.email){
-          case "occstaff@bngc.com":
-            $club = "carmichael";
-            break;
-          case "wilsonstaff@bngc.com":
-            $club = "wilson";
-            break;
-          case "lasallestaff@bngc.com":
-            $club = "lasalle";
-            break;
-          case "harrisonstaff@bngc.com":
-            $club = "harrison";
-            break;
-          case "battellstaff@bngc.com":
-            $club = "battell";
-            break;
-          default:
-            $club = "none";
-            break;
-        }
-
-        if($club != "none"){
-          firebase.database().ref('locations/'+$club+'/students/' + $studentID + '/accident/').push(data, function (err) {
+        var club = getClub();
+        if(club != "none"){
+          firebase.database().ref('locations/' + club + '/students/' + studentID + '/accident/').push(newForm, function (err) {
               if (err) {
                   sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
               } else {
@@ -157,6 +144,8 @@ function submitClickHandler(inputValidator) {
     }
 }
 
+
+/* --- PDF Generation Functions --- */
 
 //Take the form and turn it to JSON to make a pdf
 function printPDF() {
@@ -211,12 +200,15 @@ function printPDF() {
     }
     var document_definition = addInputsTo(document_definition);
 
-    //If a head injury occured, add that page
+    //If a head injury occured, add appropriate pages
+    var non_head_inj_field_len = 20;
+    document_definition = addSignatureLineTo(document_definition, non_head_inj_field_len);
     if ($(HEAD_INJURY_ID).is(':checked')) {
         document_definition = addHeadInjuryFormTo(document_definition);
         document_definition = addHeadInjuryAdviceTo(document_definition);
     }
 
+    //Store the document_definition JSON for the confirmation page to print
     document_definition = JSON.stringify(document_definition)
     sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
@@ -258,8 +250,10 @@ function addInputsTo(document_definition) {
     return document_definition;
 }
 
+//Add the parent information head injury form to the PDF json
 function addHeadInjuryFormTo(document_definition) {
-    var treatment_index = document_definition.content.length - 4;
+    var head_inj_content_len = 4;
+    var treatment_index = document_definition.content.length - head_inj_content_len;
     document_definition.content.splice(treatment_index++, 0, {
         text: "Head Injury Report\n",
         pageBreak: "before",
@@ -306,7 +300,7 @@ function addHeadInjuryFormTo(document_definition) {
     return document_definition;
 }
 
-
+//Add the head injury advice to the PDF json
 function addHeadInjuryAdviceTo(document_definition) {
     document_definition.content.push({
         text: "MONITORING YOUR CONDITION FOR IMPORTANT SIGNS AND SYMPTOMS\n",
