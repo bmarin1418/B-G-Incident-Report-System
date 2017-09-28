@@ -8,6 +8,7 @@ $(document).ready(function () {
  * Handles the sign in button press.
  */
 function toggleSignIn() {
+
     if (!firebase.auth().currentUser) {
         var email = document.getElementById('email').value + "@bngc.com";
         var password = document.getElementById('password').value;
@@ -55,7 +56,12 @@ function initApp() {
             var email = user.email;
             var emailVerified = user.emailVerified;
             var uid = user.uid;
-            window.location.href = "choose_form.html";
+            var checkEmail = document.getElementById('email').value + "@bngc.com";
+            if (checkEmail == "occadmin@bngc.com") {
+              window.location.href = "new_page.html";
+            } else {
+              window.location.href = "choose_form.html";
+            }
         } else {
             document.getElementById('quickstart-sign-in').textContent = 'Sign in';
         }
