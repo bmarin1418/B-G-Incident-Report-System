@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<html>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Page</title>
+
+  <!-- styling for d3 example below -->
+  <style>
+  .chart div {
+    font: 10px sans-serif;
+    background-color: steelblue;
+    text-align: right;
+    padding: 3px;
+    margin: 1px;
+    color: white;
+  }
+  </style>
+
+   <!-- Material Design Theming -->
+   <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
+   <script src="resources/js/libraries/material.min.js"></script>
+   <script src="resources/js/libraries/firebase.js"></script>
+   <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
+   <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
+   <link rel="stylesheet" href="./resources/css/custom/main.css">
+   <script src="resources/js/libraries/sweetalert-dev.js"></script>
+   <script src="resources/js/custom/allpages.js"></script>
+   <script src="resources/js/custom/metrics.js"></script>
+   <script src="https://d3js.org/d3.v3.min.js"></script>
+
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+  <!-- Header section containing title -->
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+      <img src="resources/img/white-bgc-logo.png" alt="Logo" style="width:100px;height:50;">
+       &nbsp;&nbsp;&nbsp;
+        <h3>New Page</h3>
+      </div>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+
+      <!-- Container for form selection box -->
+      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+          <h2 class="mdl-card__title-text">Title</h2>
+
+          <div class=logout>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
+	         </div>
+
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+
+          Search by student ID number:
+          <br>
+          <input type="text" placeholder="123" class="single-line-text" id="userID" name="user">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="searchUID" name="search" onclick="searchUID()">Search</button>
+          <br><br>
+          <span id="search_result"></span><br>
+          <span id="forms_found"></span><br>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="showForms" name="search" style="display: none;">Click to View Forms</button>
+          <br><br><br><br><br>
+
+
+          <div class="chart" id="chart"></div>
+          <!-- script from online to create a bar chart from data -->
+          <script>
+            var data = [4, 8, 15, 16, 23, 42];
+            var x = d3.scale.linear()
+                .domain([0, d3.max(data)])
+                .range([0, 420]);
+            d3.select(".chart")
+              .selectAll("div")
+                .data(data)
+              .enter().append("div")
+                .style("width", function(d) { return x(d) + "px"; })
+                .text(function(d) { return d; });
+          </script>
+
+          <!-- script from online to create a pie chart from data -->
+          <script>
+            var w = 200;
+            var h = 200;
+            var r = h/2;
+            var aColor = [
+                'rgb(178, 55, 56)',
+                'rgb(213, 69, 70)',
+                'rgb(230, 125, 126)',
+                'rgb(239, 183, 182)'
+            ]
+            var data = [
+                {"label":"Colorectale levermetastase (n=336)", "value":74},
+                {"label": "Primaire maligne levertumor (n=56)", "value":12},
+                {"label":"Levensmetatase van andere origine (n=32)", "value":7},
+                {"label":"Beningne levertumor (n=34)", "value":7}
+            ];
+            var vis = d3.select('#chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
+            var pie = d3.layout.pie().value(function(d){return d.value;});
+            // Declare an arc generator function
+            var arc = d3.svg.arc().outerRadius(r);
+            // Select paths, use arc generator to draw
+            var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+            arcs.append("svg:path")
+                .attr("fill", function(d, i){return aColor[i];})
+                .attr("d", function (d) {return arc(d);})
+            ;
+            // Add the text
+            arcs.append("svg:text")
+                .attr("transform", function(d){
+                    d.innerRadius = 50; /* Distance of label to the center*/
+                    d.outerRadius = r;
+                    return "translate(" + arc.centroid(d) + ")";}
+                )
+                .attr("text-anchor", "middle")
+                .text( function(d, i) {return data[i].value + '%';})
+            ;
+          </script>
+
+          <!-- ignore this for now i'm working on it -->
+          <!-- <script type="text/javascript">
+            var database = firebase.database();
+            return firebase.database().ref('/locations/').once('value');
+          </script> -->
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
