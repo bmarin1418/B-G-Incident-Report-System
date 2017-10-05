@@ -36,14 +36,14 @@ function linkHandlers() {
         var cntxt = this;
         otherChangeHandler(cntxt, OTHER_CONSEQUENCE_INPUT_ID);
     });
-    
+
     $(document).keypress(function (e) {
         var key = e.which;
         var enter_key_num = 13;
         if (key == enter_key_num) {
             submitClickHandler(inputValidator);
         }
-    });  
+    });
 }
 
 //Link click on other checkbox to showing or hiding the input
@@ -85,6 +85,7 @@ function initValidatorObj() {
         comments: {
             presence: true
         },
+        behaviors: behaviorChecked,
         other_behavior: presentIfOtherBehavior,
         other_consequence: presentIfOtherConsequence
     });
@@ -93,6 +94,19 @@ function initValidatorObj() {
 //Function to set validation at runtime depending on the behavior other checkbox checked status
 function presentIfOtherBehavior(value, attributes, attributeName, options, constraints) {
     if ($(OTHER_BEHAVIOR_CHECK_ID).is(':checked')) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
+}
+
+//Function to set validation at runtime depending on the behavior other checkbox checked status
+function behaviorChecked(value, attributes, attributeName, options, constraints) {
+    if ($('#stealing_cheating').is(':checked')) {
         return {
             presence: true
         }
@@ -167,6 +181,12 @@ function submitClickHandler(inputValidator) {
             firebase.database().ref('locations/' + club + '/students/' + studentID + '/behavior/').push(data, function (err) {
                 if (err) {
                     sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+                } else if (noBoxChecked(behaviors) && noBoxChecked(consequences)) {
+                    sweetAlert("Form Did Not Submit", "Please check at least one box under the \"Inappropriate Behavior Type\" and \"Consequences\" sections");
+                } else if (noBoxChecked(behaviors)) {
+                    sweetAlert("Form Did Not Submit", "Please check at least one box under the \"Inappropriate Behavior Type\" section");
+                } else if (noBoxChecked(consequences)) {
+                    sweetAlert("Form Did Not Submit", "Please check at least one box under the \"Consequences\" section");
                 } else {
                     printPDF();
                 }
@@ -332,4 +352,14 @@ function addInputsTo(document_definition) {
         }
     });
     return document_definition;
+}
+
+function noBoxChecked(checkboxes) {
+  for (var key in checkboxes) {
+    if (checkboxes[key]) {
+      return false;
+    }
+  }
+
+  return true;
 }
