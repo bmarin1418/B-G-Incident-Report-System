@@ -45,7 +45,6 @@ limitations under the License.
    <script src="https://d3js.org/d3.v3.min.js"></script>
    <script src="resources/js/custom/metrics.js"></script>
 
-
 </head>
 <body>
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -75,8 +74,19 @@ limitations under the License.
 
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <div class="chart" id="chart"></div>
 
+          Search by student ID number:
+          <br>
+          <input type="text" placeholder="123" class="single-line-text" id="userID" name="user">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="searchUID" name="search" onclick="searchUID()">Search</button>
+          <br><br>
+          <span id="search_result"></span><br>
+          <span id="forms_found"></span><br>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="showForms" name="search" style="display: none;">Click to View Forms</button>
+          <br><br><br><br><br>
+
+
+          <div class="chart" id="chart"></div>
           <!-- script from online to create a bar chart from data -->
           <script>
             var data = [4, 8, 15, 16, 23, 42];
