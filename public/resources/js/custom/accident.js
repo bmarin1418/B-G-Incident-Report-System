@@ -209,8 +209,7 @@ function printPDF() {
     }
 
     //Store the document_definition JSON for the confirmation page to print
-    document_definition = JSON.stringify(document_definition)
-    sessionStorage.setItem('doc_def', document_definition);
+    pdfMake.createPdf(document_definition).open();
     window.location.href = "confirmation_page.html";
 }
 

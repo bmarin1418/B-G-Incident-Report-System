@@ -259,8 +259,7 @@ function printPDF() {
     }
     document_definition = addInputsTo(document_definition);
     document_definition = addExtraLinesTo(document_definition);
-    document_definition = JSON.stringify(document_definition)
-    sessionStorage.setItem('doc_def', document_definition);
+    pdfMake.createPdf(document_definition).open();
     window.location.href = "confirmation_page.html";
 }
 
