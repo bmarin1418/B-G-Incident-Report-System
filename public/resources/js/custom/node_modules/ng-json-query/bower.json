@@ -1,0 +1,33 @@
+{
+  "name": "ng-json-query",
+  "description": "Silly AngularJS wrapper for json-query library.",
+  "main": "./dist/ng-json-query.js",
+  "authors": [
+    "xfg"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "data",
+    "path",
+    "filter",
+    "json",
+    "query"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "*.conf.js",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xfg/ng-json-query.git"
+  },
+  "dependencies": {
+    "angular": ">=1.4.0"
+  }
+}

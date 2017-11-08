@@ -71,5 +71,14 @@ function searchUID() {
       // print error message if not
       document.getElementById("search_result").innerHTML = 'You have either entered an incorrect student ID number, or that student has no incident reports in the database. Please try again.'
     }
+
   });
 }
+
+
+// query the entire JSON
+// what are the keys?
+// go through all of the keys
+// or
+// access just the json w/ those keys
+// query on those keys
