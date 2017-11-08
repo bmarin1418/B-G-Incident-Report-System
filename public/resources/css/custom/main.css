@@ -29,7 +29,7 @@ a {
 }
 
 button.confirm {
-    background-color: #0288d1 !important; 
+    background-color: #0288d1 !important;
 }
 
 li a {
@@ -88,6 +88,7 @@ main-header, img {
 
 .logout {
   position: absolute;
+  top: 12px;
   right: 15px;
 }
 
@@ -148,4 +149,3 @@ textarea {
   margin-left: 20px;
   padding-left: 5px;
 }
-
