@@ -16,7 +16,7 @@
 
 
 * {
-  font-family: 'Helvetica Neue', 'Open Sans', 'Helvetica', 'Arial', 'sans-serif' !important;
+  font-family: 'Helvetica Neue', 'Open Sans', 'Helvetica', 'Arial', 'sans-serif' ;
 }
 
 .mdl-button {
@@ -135,6 +135,20 @@ textarea {
 .button-center {
   text-align: center;
   margin: auto;
+}
+
+.fa-question-circle {
+  color: white;
+  margin-top: -5px;
+  right: 115px;
+}
+
+.adjust-margin {
+  right: 210px;
+}
+
+.counter_adjust {
+  margin-right: -100px;
 }
 
 #inappropriate_behavior_id {
