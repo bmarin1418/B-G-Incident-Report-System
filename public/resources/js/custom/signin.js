@@ -58,7 +58,7 @@ function initApp() {
             var uid = user.uid;
             var checkEmail = document.getElementById('email').value + "@bngc.com";
             if (checkEmail == "occadmin@bngc.com") {
-              window.location.href = "new_page.html";
+              window.location.href = "metrics.html";
             } else {
               window.location.href = "choose_form.html";
             }
