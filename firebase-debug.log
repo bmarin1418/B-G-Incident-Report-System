@@ -3,7 +3,7 @@
 [debug] CLI Version:  3.6.1
 [debug] Platform:     darwin
 [debug] Node Version: v4.4.3
-[debug] Time:         Thu Nov 09 2017 14:10:17 GMT-0500 (EST)
+[debug] Time:         Thu Nov 09 2017 17:53:10 GMT-0500 (EST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
@@ -13,22 +13,57 @@
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Thu Nov 09 2017 14:10:17 GMT-0500 (EST)
+ Thu Nov 09 2017 17:53:10 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/bngcdb-86373  
- Thu Nov 09 2017 14:10:17 GMT-0500 (EST)
+ Thu Nov 09 2017 17:53:11 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/bngcdb-86373/tokens  
- Thu Nov 09 2017 14:10:18 GMT-0500 (EST)
+ Thu Nov 09 2017 17:53:11 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: /Users/trongaus/Documents/ND/Service-Projects/B-G-Incident-Report-System
 [debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/bngcdb-86373  
- Thu Nov 09 2017 14:10:18 GMT-0500 (EST)
+ Thu Nov 09 2017 17:53:12 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/164973952286/clients/_:getWebAppConfig  
- Thu Nov 09 2017 14:10:19 GMT-0500 (EST)
+ Thu Nov 09 2017 17:53:12 GMT-0500 (EST)
+[debug] <<< HTTP RESPONSE 200
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.6.1
+[debug] Platform:     darwin
+[debug] Node Version: v4.4.3
+[debug] Time:         Tue Jan 30 2018 15:55:31 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/m32FET7tSFKhtoqy2d4tbvugqiDVFIktls0H-kVNEAE',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Jan 30 2018 15:55:31 GMT-0500 (EST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/bngcdb-86373  
+ Tue Jan 30 2018 15:55:32 GMT-0500 (EST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/bngcdb-86373/tokens  
+ Tue Jan 30 2018 15:55:32 GMT-0500 (EST)
+[debug] <<< HTTP RESPONSE 200
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/trongaus/Documents/ND/Service-Projects/B-G-Incident-Report-System
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/bngcdb-86373  
+ Tue Jan 30 2018 15:56:32 GMT-0500 (EST)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/164973952286/clients/_:getWebAppConfig  
+ Tue Jan 30 2018 15:56:32 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [info] Public Directory: public
 [info] 
