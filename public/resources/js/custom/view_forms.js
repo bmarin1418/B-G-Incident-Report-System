@@ -56,13 +56,27 @@ var prettifyJSON = function(obj, count, forms, i) {
 					document.getElementById("json").innerHTML += "<b>Form issued by: </b>" + new_str["issuerName"] + "\n";
 				}
 				else if (key == "behaviors") {
-					document.getElementById("json").innerHTML += "<b>Inappropriate behaviors included: </b>";
+					document.getElementById("json").innerHTML += "<b>Inappropriate behaviors include: </b>";
 					// iterate through all true behaviors
+					var tmp = new_str[key];
+					for (key in tmp) {
+						// possible keys include: BGC_rules, behavior_other, fighting, gestures, language, member_disrespect, name_calling, not_listening, other_behavior, physical_contact, property_damage, staff_disrespect, stealing_cheating, talking, threatenting, touching
+						if (tmp[key] == true) {
+							document.getElementById("json").innerHTML += key + ", ";
+						};
+					};
 					document.getElementById("json").innerHTML += "\n";
 				}
 				else if (key == "consequences") {
-					document.getElementById("json").innerHTML += "<b>Consequences included: </b>";
+					document.getElementById("json").innerHTML += "<b>Consequences include: </b>";
 					// iterate through all true consequences
+					var tmp = new_str[key];
+					for (key in tmp) {
+						// possible keys include: conference, consequence_other, event_loss, other_consequence, parent_contact, suspension
+						if (tmp[key] == true) {
+							document.getElementById("json").innerHTML += key + ", ";
+						};
+					};
 					document.getElementById("json").innerHTML += "\n";
 				}
 				else if (key == "staffName") {
@@ -130,7 +144,7 @@ var prettifyJSON = function(obj, count, forms, i) {
 				};
 			};
 		};
-		document.getElementById("json").innerHTML += "\n\n";
+		document.getElementById("json").innerHTML += "\n";
 	};
 }
 
