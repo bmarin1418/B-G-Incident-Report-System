@@ -3,7 +3,7 @@
 [debug] CLI Version:  3.6.1
 [debug] Platform:     darwin
 [debug] Node Version: v4.4.3
-[debug] Time:         Tue Jan 30 2018 20:08:20 GMT-0500 (EST)
+[debug] Time:         Wed Jan 31 2018 13:55:49 GMT-0500 (EST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
@@ -13,22 +13,22 @@
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Tue Jan 30 2018 20:08:20 GMT-0500 (EST)
+ Wed Jan 31 2018 13:55:49 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/bngcdb-86373  
- Tue Jan 30 2018 20:08:20 GMT-0500 (EST)
+ Wed Jan 31 2018 13:55:49 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/bngcdb-86373/tokens  
- Tue Jan 30 2018 20:08:20 GMT-0500 (EST)
+ Wed Jan 31 2018 13:55:49 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: /Users/trongaus/Documents/ND/Service-Projects/B-G-Incident-Report-System
 [debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/bngcdb-86373  
- Tue Jan 30 2018 20:08:21 GMT-0500 (EST)
+ Wed Jan 31 2018 13:55:50 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/164973952286/clients/_:getWebAppConfig  
- Tue Jan 30 2018 20:08:21 GMT-0500 (EST)
+ Wed Jan 31 2018 13:55:50 GMT-0500 (EST)
 [debug] <<< HTTP RESPONSE 200
 [info] Public Directory: public
 [info] 
