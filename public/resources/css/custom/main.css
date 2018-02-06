@@ -16,7 +16,7 @@
 
 
 * {
-  font-family: 'Helvetica Neue', 'Open Sans', 'Helvetica', 'Arial', 'sans-serif' !important;
+  font-family: 'Helvetica Neue', 'Open Sans', 'Helvetica', 'Arial', 'sans-serif' ;
 }
 
 .mdl-button {
@@ -29,7 +29,7 @@ a {
 }
 
 button.confirm {
-    background-color: #0288d1 !important; 
+    background-color: #0288d1 !important;
 }
 
 li a {
@@ -88,6 +88,7 @@ main-header, img {
 
 .logout {
   position: absolute;
+  top: 12px;
   right: 15px;
 }
 
@@ -136,6 +137,20 @@ textarea {
   margin: auto;
 }
 
+.fa-question-circle {
+  color: white;
+  margin-top: -5px;
+  right: 115px;
+}
+
+.adjust-margin {
+  right: 210px;
+}
+
+.counter_adjust {
+  margin-right: -100px;
+}
+
 #inappropriate_behavior_id {
   width: 250px;
 }
@@ -148,4 +163,3 @@ textarea {
   margin-left: 20px;
   padding-left: 5px;
 }
-

@@ -1,3 +1,16 @@
+// Prompt help option
+function help() {
+    swal({
+            title: "Help",
+            text: "We can put some relevant content here",
+            type: "",
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonText: "Close",
+            closeOnCancel: true
+        });
+}
+
 //Prompt confirmation of logout
 function confirmLogout() {
     swal({
