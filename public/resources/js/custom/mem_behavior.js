@@ -200,7 +200,7 @@ function submitClickHandler(inputValidator) {
 
 //Take the form and turn it to JSON to make a pdf
 function printPDF() {
-    document_definition = {
+   var document_definition = {
         content: [
             {
                 image: BASE_64_BNG_LOGO,
@@ -259,7 +259,8 @@ function printPDF() {
     }
     document_definition = addInputsTo(document_definition);
     document_definition = addExtraLinesTo(document_definition);
-    pdfMake.createPdf(document_definition).open();
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
 }
 

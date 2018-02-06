@@ -1,6 +1,6 @@
 //Fill in the current date for the date field
 function initDateField(date_field_id) {
-    $(date_field_id)[0].valueAsDate = new Date();
+    $(DATE_FIELD_ID)[0].valueAsDate = new Date();
 }
 
 //Gets the appropriate club for the user

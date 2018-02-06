@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<!-- Anyone modifying the BGNC website - this library script has been altered to detect popup blockers, just replacing this with a standard library replacement will cause problems -->
+
 <!--
 Copyright (c) 2016 Google Inc.
 
@@ -13,6 +16,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+
 -->
 
 <html>
@@ -22,11 +28,24 @@ limitations under the License.
   <title>Incident Reports</title>
 
    <!-- Material Design Theming -->
-   <script src="resources/js/libraries/firebase.js"></script>
    <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
    <script src="resources/js/libraries/material.min.js"></script>
-   <script src='resources/js/libraries/vfs_fonts.js'></script>
+   <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
    <link rel="stylesheet" href="./resources/css/custom/main.css">
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- JavaScript Resources -->
+  <script src="resources/js/libraries/sweetalert-dev.js"></script>
+  <script src="resources/js/libraries/firebase.js"></script>
+  <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
+  <script src="resources/js/libraries/underscore.min.js"></script>
+  <script src="resources/js/libraries/moment.min.js"></script>
+  <script src="resources/js/libraries/pdfmake.min.js"></script>
+  <script src="resources/js/libraries/vfs_fonts.js"></script>
+  <script src="resources/js/custom/bng-logo.js"></script>
+  <script src="resources/js/custom/eyes.js"></script>
+  <script src="resources/js/custom/allpages.js"></script>
+  <script src="resources/js/custom/confirmation.js"></script>
 
 </head>
 <body>
@@ -58,10 +77,10 @@ limitations under the License.
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
 
 	  <div class="button-center">
-            <p> Your form has been submitted! </p>
-            <form action="choose_form.html">
-            <button class="mdl-button mdl-js-button mdl-button--raised" name="home-button">Click to Submit Another Report</button>
-            </form>
+            <h4> Your form has been submitted! </h4>
+            <button class="mdl-button mdl-js-button mdl-button--raised" name="home-button", id="home-button">Return to Home Page</button>
+            <br><br><br>
+            <button class="mdl-button mdl-js-button mdl-button--raised" name="print-again-button", id="print-again-button">Print Again</button>
 	  </div>
         </div>
       </div>

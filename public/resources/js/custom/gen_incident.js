@@ -151,7 +151,9 @@ function printPDF() {
         text: '\nSignature Date: ________________________________________________________',
         style: 'form_field_title'
     });
-    pdfMake.createPdf(document_definition).open();
+
+    document_definition = JSON.stringify(document_definition)
+    sessionStorage.setItem('doc_def', document_definition);
     window.location.href = "confirmation_page.html";
 }
 
