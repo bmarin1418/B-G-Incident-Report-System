@@ -64,8 +64,8 @@ function initValidatorObj() {
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
         console.log("Submit to Firebase");
-        var studentID = $('#member_id').val();
         var newForm = {
+            "memberId": $('#member_id').val(),
             "childName": $('#nameid').val(),
             "date": $('#dateid').val(),
             "staffName": $('#staffid').val(),
@@ -74,110 +74,34 @@ function submitClickHandler(inputValidator) {
             "incidentDescription": $('#incidentid').val(),
             "responseDescription": $('#responseid').val()
         }
-
-        var club = getClub();
-        if (club != "none") {
-            firebase.database().ref('locations/' + club + '/students/' + studentID + '/accident/').push(newForm, function (err) {
-                if (err) {
-                    sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
+        firebase.auth().onAuthStateChanged(function (user) { // This assures the firebaseInit is finished for getting club from user info
+            if (user) {
+                var club = getClub();
+                if (club != "none") {
+                    submitAndPrint(newForm, club);
                 } else {
-                    printPDF();
+                    sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
                 }
-            });
+            } else {
+                sweetAlert("Uh Oh", "No one is currently logged in");
+            }
+        });
+    } else {
+        sweetAlert("Oops", "Something isn't correctly filled in on your form");
+    }
+}
+
+// Send the form info to the database and then create the JSON for a pdf
+function submitAndPrint(newForm, club) {
+    firebase.database().ref('locations/' + club + '/students/' + newForm['memberId'] + '/accident/').push(newForm, function (err) {
+        if (err) {
+            sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
         } else {
-            sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
-        }
-    }
-}
-
-//Take the form and turn it to JSON to make a pdf
-function printPDF() {
-    document_definition = {
-        content: [
-            {
-                image: BASE_64_BNG_LOGO,
-                width: 109,
-                height: 65,
-                style: "logo"
-            },
-            {
-                text: "BOYS AND GIRLS CLUBS",
-                style: "main_header"
-            },
-            {
-                text: "OF ST. JOSEPH COUNTY",
-                style: "sub_header"
-            },
-            {
-                text: "\nGeneral Incident Report",
-                style: "form_title"
-            }
-        ],
-        styles: {
-            logo: {
-                alignment: "center"
-            },
-            main_header: {
-                fontSize: 20,
-                bold: true,
-                alignment: "center"
-            },
-            sub_header: {
-                fontSize: 15,
-                alignment: "center"
-            },
-            form_title: {
-                fontSize: 18,
-                alignment: "center"
-            },
-            form_field_title: {
-                bold: true,
-                fontSize: 12,
-                alignment: 'left'
-            },
-            form_field: {
-                fontSize: 12,
-                alignment: 'left'
-            }
-        }
-    }
-    document_definition = addInputsTo(document_definition);
-    document_definition = addSignatureLineTo(document_definition, document_definition.content.length);
-    document_definition.content.push({
-        text: '\n\nBranch Director Signature: _____________________________________________',
-        style: 'form_field_title'
-    });
-    document_definition.content.push({
-        text: '\nSignature Date: ________________________________________________________',
-        style: 'form_field_title'
-    });
-
-    document_definition = JSON.stringify(document_definition)
-    sessionStorage.setItem('doc_def', document_definition);
-    window.location.href = "confirmation_page.html";
-}
-
-//Take the form inputs and add them to the pdf document definition
-function addInputsTo(document_definition) {
-    var form_inputs = $(FORM_ID).serializeArray();
-    var form_groups = $(FORM_ID).find('.form_group');
-
-    form_groups.each(function (form_index) {
-        var label = $(this).find('label')[0];
-        if (label) {
-            if (form_inputs[form_index].value) {
-                var title = {
-                    text: '\n' + $(label).text() + '',
-                    style: 'form_field_title'
-                };
-                var txt = {
-                    text: form_inputs[form_index].value,
-                    style: 'form_field'
-                };
-                document_definition.content.push(title);
-                document_definition.content.push(txt);
-            }
+            //get JSON representation of PDF to print, then save to session storage for later printing
+            var document_definition = getGeneralIncidentJSON(newForm);
+            document_definition = JSON.stringify(document_definition);
+            sessionStorage.setItem('doc_def', document_definition);
+            window.location.href = "confirmation_page.html";
         }
     });
-    return document_definition;
 }

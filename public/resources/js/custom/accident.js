@@ -107,12 +107,8 @@ function headInjuryChangeHandler(cntxt) {
 //Send accident form data to firebase if the input is valid
 function submitClickHandler(inputValidator) {
     if (inputValidator.validate()) {
-        var data = [];
-        var $form = $(this);
-
-        var studentID = $(MEMBER_FIELD_ID).val();
-
         var newForm = {
+            "memberId": $(MEMBER_FIELD_ID).val(),
             "childName": $(NAME_FIELD_ID).val(),
             "date": $(DATE_FIELD_ID).val(),
             "staffName": $(STAFF_FIELD_ID).val(),
@@ -121,247 +117,40 @@ function submitClickHandler(inputValidator) {
             "responseDescription": $(RESPONSE_FIELD_ID).val(),
             "parentNotified": $(PARENT_NOT_FIEL_ID).val()
         }
-        
+
         if ($(HEAD_INJURY_ID).is(':checked')) {
-            newForm.nature = $(NAME_FIELD_ID).val();
-            newForm.treatment = $(TREATMENT_FIELD_ID).val();
+            newForm["nature"] = $(NATURE_FIELD_ID).val();
+            newForm["treatment"] = $(TREATMENT_FIELD_ID).val();
         }
 
-        var club = getClub();
-        if(club != "none"){
-          firebase.database().ref('locations/' + club + '/students/' + studentID + '/accident/').push(newForm, function (err) {
-              if (err) {
-                  sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
-              } else {
-                   printPDF();
-              }
-          });
-        } else {
-            sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
-        }
-
-        return false;
-    }
-}
-
-
-/* --- PDF Generation Functions --- */
-
-//Take the form and turn it to JSON to make a pdf
-function printPDF() {
-    document_definition = {
-        content: [
-            {
-                image: BASE_64_BNG_LOGO,
-                width: 109,
-                height: 65,
-                style: "logo"
-            },
-            {
-                text: "BOYS AND GIRLS CLUBS",
-                style: "main_header"
-            },
-            {
-                text: "OF ST. JOSEPH COUNTY",
-                style: "sub_header"
-            },
-            {
-                text: "\nAccident Report",
-                style: "form_title"
-            }
-        ],
-        styles: {
-            logo: {
-                alignment: "center"
-            },
-            main_header: {
-                fontSize: 20,
-                bold: true,
-                alignment: "center"
-            },
-            sub_header: {
-                fontSize: 15,
-                alignment: "center"
-            },
-            form_title: {
-                fontSize: 18,
-                alignment: "center"
-            },
-            form_field_title: {
-                bold: true,
-                fontSize: 12,
-                alignment: 'left'
-            },
-            form_field: {
-                fontSize: 12,
-                alignment: 'left'
-            }
-        }
-    }
-    var document_definition = addInputsTo(document_definition);
-
-    //If a head injury occured, add appropriate pages
-    var non_head_inj_field_len = 20;
-    document_definition = addSignatureLineTo(document_definition, non_head_inj_field_len);
-    if ($(HEAD_INJURY_ID).is(':checked')) {
-        document_definition = addHeadInjuryFormTo(document_definition);
-        document_definition = addHeadInjuryAdviceTo(document_definition);
-    }
-
-    //Store the document_definition JSON for the confirmation page to print
-    document_definition = JSON.stringify(document_definition)
-    sessionStorage.setItem('doc_def', document_definition);
-    window.location.href = "confirmation_page.html";
-}
-
-//Take the form inputs and add them to the pdf document definition
-function addInputsTo(document_definition) {
-    var form_inputs = $(FORM_ID).serializeArray();
-    var form_groups = $(FORM_ID).find('.form_group');
-    //Serialize arrary returns a different size array when there is and isn't a checked checkbox
-    //which makes the indexing a headache. That is why there is an index offset if the checkbox is
-    //checked.
-
-    var index_offset = 0;
-    form_groups.each(function (form_index) {
-        var label = $(this).find('label')[0];
-        if (label) {
-            if (form_inputs[form_index - index_offset].value) {
-                if ($(HEAD_INJURY_ID).is(':checked') ||
-                    ($(label).text() != 'Nature of Head Injury' && $(label).text() != 'Treatment Given')) {
-                    var title = {
-                        text: '\n' + $(label).text() + '',
-                        style: 'form_field_title'
-                    };
-                    var txt = {
-                        text: form_inputs[form_index - index_offset].value,
-                        style: 'form_field'
-                    };
-                    document_definition.content.push(title);
-                    document_definition.content.push(txt);
+        firebase.auth().onAuthStateChanged(function (user) { // This assures the firebaseInit is finished for getting club from user info
+            if (user) {
+                var club = getClub();
+                if (club != "none") {
+                    submitAndPrint(newForm, club);
+                } else {
+                    sweetAlert("Login Issue", "Unknown club location, please login again to submit a form");
                 }
+            } else {
+                sweetAlert("Uh Oh", "No one is currently logged in");
             }
+        });
+    } else {
+        sweetAlert("Oops", "Something isn't correctly filled in on your form");
+    }
+}
+
+// Send the form info to the database and then create the JSON for a pdf
+function submitAndPrint(newForm, club) {
+    firebase.database().ref('locations/' + club + '/students/' + newForm["memberId"] + '/accident/').push(newForm, function (err) {
+        if (err) {
+            sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
         } else {
-            if (!$(HEAD_INJURY_ID).is(':checked')) {
-                index_offset += 1;
-            }
+            //get JSON representation of PDF to print, then save to session storage for later printing
+            var document_definition = getAccidentJSON(newForm);
+            document_definition = JSON.stringify(document_definition);
+            sessionStorage.setItem('doc_def', document_definition);
+            window.location.href = "confirmation_page.html";
         }
     });
-    return document_definition;
-}
-
-//Add the parent information head injury form to the PDF json
-function addHeadInjuryFormTo(document_definition) {
-    var head_inj_content_len = 4;
-    var treatment_index = document_definition.content.length - head_inj_content_len;
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "Head Injury Report\n",
-        pageBreak: "before",
-        style: "form_title"
-    });
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "\nDate: " + $(DATE_FIELD_ID).val()
-    });
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "Child: " + $(NAME_FIELD_ID).val()
-    });
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "\nDear Parent/Guardian:\n\nToday, your child had an injury to his/her head. At present, he/she does not seem to exhibit any alarming symptoms. However, bumps or blows to the head sometimes cause a mild brain injury called a concussion. Signs of head injury can occur immediately or develop over several hours. Be alert and watch for the following symptoms:\n"
-    });
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "\n"
-    });
-    document_definition.content.splice(treatment_index++, 0, {
-        ul: [
-                "Persistent headache and or stiff neck",
-                "Slurred speech or blurry vision",
-                "Any episodes of nausea or vomiting",
-                "Loss of muscle coordination-unsteady walking, staggering balance, or weakness in an arm, hand or leg",
-                "Having more trouble than usual remembering things, concentrating or making decisions",
-                "Becoming easily irritated for little or no reason",
-                "Any loss of conciseness",
-                "Feeling sad, anxious or listless",
-                "Extreme drowsiness or unable to arouse from sleep",
-                "Any excess bleeding from the wound. Blood or clear watery liquid coming from the ears or nose",
-                "Avoid all sedatives or narcotics\n"
-            ]
-    });
-
-    document_definition.content.splice(treatment_index++, 0, {
-        text: "\nIt is important to call or see your doctor immediately if any of the above signs are observed in your child."
-    });
-
-    document_definition.content.push({
-        text: "\n"
-    });
-    document_definition.content.push({
-        text: "Please note: This advice is a collaboration of general researched practices and is not intended as a substitute for medical advice, diagnosis, or treatment. Always seek the advice of a qualified health provided with any questions you may have regarding a medical condition. Never disregard professional advice or delay in seeking it because of the information provided above. If you think your child may have a medical emergency, call your doctor or 911 immediately."
-    });
-    return document_definition;
-}
-
-//Add the head injury advice to the PDF json
-function addHeadInjuryAdviceTo(document_definition) {
-    document_definition.content.push({
-        text: "MONITORING YOUR CONDITION FOR IMPORTANT SIGNS AND SYMPTOMS\n",
-        pageBreak: "before",
-        style: "form_field_title"
-    });
-    document_definition.content.push({
-        text: "\nThe following information will help you and a support person monitor your condition. The support person should stay with you for at least 24 hours. It is important that you both understand what to watch for, and know when and where to obtain help. Monitoring during the first 24 hours following injury is the most critical; however, you may need to continue for several days. Your health care provider will give you specific instructions about how long to continue the monitoring.\n"
-    });
-
-    document_definition.content.push({
-        text: "\nDuring the first 24 hours, you should have your support person wake you every hour and check with you about the following items:\n",
-        style: "form_field_title"
-    });
-
-    document_definition.content.push({
-        ul: [
-            "Ask you the date, time and place",
-            "Ask your name and the name of the support person",
-            "Notice if you are exhibiting any unusual behaviors or actions",
-            "Notice if your walking or arm movements are clumsy\n"
-        ]
-    });
-
-    document_definition.content.push({
-        text: "\nYou and/or your support person should report any of the following symptoms:\n",
-        style: "form_field_title"
-    });
-    
-    document_definition.content.push({text:'\n'});
-    document_definition.content.push({
-        image: EYES_BASE64,
-        width: 233,
-        height: 88,
-        style: "logo"
-    });
-
-    document_definition.content.push({
-        ul: [
-            "Unusual sleepiness or difficulty awakening",
-            "Convulsions (seizures)",
-            "Mental confusion or stranger behavior",
-            "Amnesia or short-term memory loss",
-            "Vomiting that continues and/or worsens",
-            "Restlessness or agitation that continues and/or worsens",
-            "Stiff neck",
-            "Unequal pupils or peculiar eye movements (see figure 1)",
-            "Visual changes",
-            "Changes in speech, or perseverating (repeating the same word(s) over and over)",
-            "Inability to move arms and legs equally on both sides, or weakness or loss of feeling in arm or leg",
-            "Clear or bloody drainage from the ears or nose",
-            "Raccoon eyes (resembles a black eye) or Battle Sign (dark spots behind the ears(s))",
-            "Difficulty breathing or unusual breathing pattern",
-            "A worsening headache that is not relieved by acetaminophen (Tylenol, etc.)",
-            "A temperature above 100 degrees F",
-            "Slow or rapid pulse",
-            "Loss of bowel or bladder control\n"
-        ]
-    });
-
-    document_definition.content.push({text: "\nIf you are concerned about any difference in your treatment plan and the information in this handout, you are advised to contact your health care provider.", style: "form_field_title"});
-
-    return document_definition;
 }
