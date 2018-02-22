@@ -1,0 +1,19 @@
+h4 {
+    clear: left;
+}
+
+pre {
+    overflow: hidden;
+}
+
+.form_container {
+    float: left; 
+    margin: 10px; 
+    width: 270px;
+}
+
+button {
+    margin: 5px !important; 
+    width: 90px; 
+    z-index: 0;
+}
