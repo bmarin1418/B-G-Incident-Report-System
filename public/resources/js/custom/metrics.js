@@ -91,7 +91,7 @@ function searchUID() {
                     });
                     // wait three seconds for query to complete
                     setTimeout(function(){
-                        window.location.href = 'view_forms.html'+'?uid='+document.getElementById('userID').value+'&forms_found='+form_types
+                        window.location.href = 'view_forms.html'+'?'+'location='+document.getElementById('location').value+'&uid='+document.getElementById('userID').value+'&forms_found='+form_types
                     }, 3000);
                 } else {
                     // print error message if not
