@@ -2,7 +2,7 @@
 function help() {
     swal({
             title: "Help",
-            text: "We can put some relevant content here",
+            text: "Need help?\n\nPlease contact Professor Shreya Kumar from the Computer Science Department at the University of Notre Dame.\n\nshreya.kumar@nd.edu\n(574)-631-7381",
             type: "",
             showCancelButton: true,
             showConfirmButton: false,

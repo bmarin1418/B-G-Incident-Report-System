@@ -69,6 +69,24 @@ limitations under the License.
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
 
 		<div class="container">
+
+		  <div class="container">
+
+		  	Select a location:
+		  	<br>
+		  	<select placeholder="Select..." class="single-line-text" id="location" name="location">
+		  		<option value="battell">Battell</option>
+		  		<option value="carmichael">Carmichael</option>
+		  		<option value="harrison">Harrison</option>
+		  		<option value="lasalle">LaSalle</option>
+		  		<option value="wilson">Wilson</option>
+		  		<option value="" disabled selected>Select...</option>
+		  	</select>
+        	<br><br><br>
+
+		  </div>
+
+		  <div class="container">
           Search by student ID number:
           <br>
           <input type="text" placeholder="123" class="single-line-text" id="userID" name="user">
@@ -76,6 +94,7 @@ limitations under the License.
           <br><br>
           <span id="search_result"></span><br>
           <span id="forms_found"></span><br>
+          </div>
 
           <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="showForms" name="search" style="display: none;"  onclick="window.location.href='view_forms.html'+'?uid='+document.getElementById('userID').value+'&forms_found='+document.getElementById('forms_found').innerHTML;return false;">Click to View Forms</button>
 
