@@ -3,7 +3,7 @@ function help() {
     swal({
             title: "Help",
             text: "Need help?\n\nPlease contact Professor Shreya Kumar from the Computer Science Department at the University of Notre Dame.\n\nshreya.kumar@nd.edu\n(574)-631-7381",
-            type: "",
+            type: "warning",
             showCancelButton: true,
             showConfirmButton: false,
             cancelButtonText: "Close",
@@ -14,8 +14,8 @@ function help() {
 //Prompt confirmation of logout
 function confirmLogout() {
     swal({
-            title: "Are you sure you want to logout?",
-            text: "",
+            title: "Logout",
+            text: "Are you sure you want to logout?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#0288d1",
