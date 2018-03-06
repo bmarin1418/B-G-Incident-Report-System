@@ -125,6 +125,18 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+	      
+div{
+   position: absolute;
+   top: 30px;
+   left: 170px;
+}
+
+form{
+   position: absolute;
+   top: 60px;
+   left: 59px;
+}
 
 .chart rect {
   fill: steelblue;
@@ -138,8 +150,6 @@ path {
 
 
 </style>
-<svg class="chart"></svg>
-
  <form name="myform" onSubmit="return handleClick()">
     <input name="Submit"  type="submit" value="Enter in Student ID Number" >
     <input type="text" id="myVal" placeholder="Add some text&hellip;">
@@ -151,7 +161,8 @@ path {
            value="Overall Data"
            onclick="updateData()" />
 </div>
-
+<h1 style="font-family:sans-serif;">Inappropriate Behavior By Type</h1>
+<svg class="chart"></svg>
 <!-- load the d3.js library -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
@@ -248,6 +259,15 @@ d3.csv("data.csv", function(error, data) {
         .attr("class", "y axis")
         .call(yAxis);
 
+    // Add the Title
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .attr("font-family", "sans-serif")
+        .style("font-weight", "900")
+        .style("font-size", "21px")
+        .text("Incident Count Timeline");
 });
 
 function handleClick(event){
