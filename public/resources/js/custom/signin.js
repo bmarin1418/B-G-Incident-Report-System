@@ -10,7 +10,7 @@ $(document).ready(function () {
 function toggleSignIn() {
 
     if (!firebase.auth().currentUser) {
-        var email = document.getElementById('email').value + "@bngc.com";
+        var email = document.getElementById('email').value + "@bgc.com";
         var password = document.getElementById('password').value;
         if (email.length < 10) {
             sweetAlert("Login Issue", 'Please enter a valid username');
@@ -56,8 +56,8 @@ function initApp() {
             var email = user.email;
             var emailVerified = user.emailVerified;
             var uid = user.uid;
-            var checkEmail = document.getElementById('email').value + "@bngc.com";
-            if (checkEmail == "occadmin@bngc.com") {
+            var checkEmail = document.getElementById('email').value + "@bgc.com";
+            if (checkEmail.search("admin") != -1) {
               window.location.href = "metrics.html";
             } else {
               window.location.href = "choose_form.html";

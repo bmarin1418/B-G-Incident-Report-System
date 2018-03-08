@@ -4,14 +4,13 @@ $(document).ready(function () {
     firebaseInit();
     var urlToParse = location.search;
     var url_params = parseQueryString(urlToParse);
-    if (url_params['uid'] == undefined || url_params['forms_found'] == undefined) { //Redirect to search page if no url parameters
+    if (url_params['uid'] == undefined || url_params['forms_found'] == undefined || url_params['location'] == undefined) { //Redirect to search page if no url parameters
         window.location.href = "metrics.html";
     }
     var form_types = parseFormTypes(url_params); //So we can tell the user what type each form we retrieved is
     firebase.auth().onAuthStateChanged(function (user) { // This assures the firebaseInit is done and we can get club
         if (user) {
-            var club = getClub(); //   from the logged in user e-mail
-            var database_query_base = '/locations/' + club + '/students/' + url_params.uid;
+            var database_query_base = '/locations/' + url_params.location + '/students/' + url_params.uid;
             for (var form_type_i = 0; form_type_i < form_types.length; form_type_i++) { // loop through all of the different types of forms submitted
                 var form_query = database_query_base + '/' + form_types[form_type_i].toLowerCase(); //This adds the type of form we're looking for
                 (function (form_type_i) { //Closure to preserve form_type_i for asyncronous callback
@@ -22,7 +21,7 @@ $(document).ready(function () {
                 })(form_type_i);
             }
         } else {
-            sweetAlert("Uh Oh", "There isn't a logged in user");
+            window.location.href = "index.html";
         }
     });
 });
@@ -92,12 +91,13 @@ function generateButtomHTML(view_button_id, delete_button_id) {
 function viewHandler(event) {
     var form_hash = $(this).parent().attr('id'); //return array containing [form_type, button_type, hash_id]
     var form_json = $(this).parent().data()['form'][form_hash]; // We don't care about the hash name for form PDF generation
+    var form_type = $(this).parent().attr('form_type').toLowerCase();
     var document_definition;
-    if (form_info[0] == 'Behavior') {
+    if (form_type == 'behavior') {
         document_definition = getBehaviorJSON(form_json);
-    } else if (form_info[0] == "Accident") {
+    } else if (form_type == "accident") {
         document_definition = getAccidentJSON(form_json);
-    } else if (form_info[0] == "General") {
+    } else if (form_type == "general") {
         document_definition = getGeneralIncidentJSON(form_json);
     }
     pdfMake.createPdf(document_definition).open();
@@ -121,12 +121,11 @@ function deleteHandler(event) {
                 },
                 function (isConfirm) {
                     if (isConfirm) {
-                        var club = getClub(); //   from the logged in user e-mail
                         var urlToParse = location.search;
                         var url_params = parseQueryString(urlToParse);
                         var form_type = this_ref.parent().attr('form_type').toLowerCase();
                         var hash_id = this_ref.parent().attr('id');
-                        var form_path = '/locations/' + club + '/students/' + url_params.uid + '/' + form_type + '/' + hash_id;
+                        var form_path = '/locations/' + url_params.location + '/students/' + url_params.uid + '/' + form_type + '/' + hash_id;
                         firebase.database().ref(form_path).remove(function(error){
                             if (!error) {
                                 //Remove the form type title if there are no more forms of that type
@@ -151,7 +150,7 @@ function deleteHandler(event) {
                 });
 
         } else {
-            sweetAlert("Uh Oh", "There isn't a logged in user");
+            window.location.href = "index.html";
         }
     });
 }

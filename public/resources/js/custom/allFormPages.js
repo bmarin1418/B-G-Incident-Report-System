@@ -13,47 +13,6 @@ function initDateField(date_field_id) {
     $(DATE_FIELD_ID)[0].valueAsDate = new Date();
 }
 
-//Gets the appropriate club based on the logged in user so we know where to store in the database
-function getClub() {
-    var club;
-    switch (firebase.auth().currentUser.email) {
-    case "occstaff@bngc.com":
-        club = "carmichael";
-        break;
-    case "occadmin@bngc.com":
-        club = "carmichael";
-        break;
-    case "wilsonstaff@bngc.com":
-        club = "wilson";
-        break;
-    case "wilsonadmin@bngc.com":
-        club = "wilson";
-        break;
-    case "lasallestaff@bngc.com":
-        club = "lasalle";
-        break;
-    case "lasalleadmin@bngc.com":
-        club = "lasalle";
-        break;
-    case "harrisonstaff@bngc.com":
-        club = "harrison";
-        break;
-    case "harrisonadmin@bngc.com":
-        club = "harrison";
-        break;
-    case "battellstaff@bngc.com":
-        club = "battell";
-        break;
-    case "battelladmin@bngc.com":
-        club = "battell";
-        break;
-    default:
-        club = "none";
-        break;
-    }
-    return club;
-}
-
 // Take the JSON key that we store in our database for a form and map to what should appear on a PDF for that key
 // We did this so there aren't arduously long keys in the database JSON and we can be more wordy on the PDF
 function jsonToFormText(json_key) {

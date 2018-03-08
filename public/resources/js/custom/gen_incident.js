@@ -101,6 +101,7 @@ function submitAndPrint(newForm, club) {
             var document_definition = getGeneralIncidentJSON(newForm);
             document_definition = JSON.stringify(document_definition);
             sessionStorage.setItem('doc_def', document_definition);
+            sessionStorage.setItem('form_type', 'general');
             window.location.href = "confirmation_page.html";
         }
     });

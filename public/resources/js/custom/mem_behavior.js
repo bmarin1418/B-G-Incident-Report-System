@@ -205,93 +205,17 @@ function submitAndPrint(newForm, club) {
             var document_definition = getBehaviorJSON(newForm);
             document_definition = JSON.stringify(document_definition);
             sessionStorage.setItem('doc_def', document_definition);
+            sessionStorage.setItem('form_type', 'behavior');
             window.location.href = "confirmation_page.html";
         }
     });
 }
 
-/*
-
-function addBehaviorInputsTo(document_definition) {
-    var form_inputs = $(FORM_ID).serializeArray();
-    var form_groups = $(FORM_ID).find('.form_group');
-
-    form_groups.each(function (form_index) {
-        var label = $(this).find('label')[0];
-        if (label) {
-            if ($(label).text() != 'Inappropriate Behavior Type' && $(label).text() != 'Consequences') {
-                var title = {
-                    text: '\n' + $(label).text() + '',
-                    style: 'form_field_title'
-                };
-                var txt = {
-                    text: form_inputs[form_index].value,
-                    style: 'form_field'
-                };
-                document_definition.content.push(title);
-                document_definition.content.push(txt);
-            } else {
-                if ($(label).text() == 'Inappropriate Behavior Type') {
-                    var selected = "";
-                    $('#behaviors input:checked').each(function () {
-                        selected = selected + " " + $(this)[0].nextSibling.nodeValue;
-                    });
-                    if ($(OTHER_BEHAVIOR_CHECK_ID).is(":checked")) {
-                        selected = selected + ": " + $(OTHER_BEHAVIOR_INPUT_ID).val();
-                    }
-                    var title = {
-                        text: '\n' + $(label).text() + '',
-                        style: 'form_field_title'
-                    };
-                    var txt = {
-                        text: selected,
-                        style: 'form_field'
-                    };
-                    document_definition.content.push(title);
-                    document_definition.content.push(txt);
-
-                    if ($(OTHER_BEHAVIOR_CHECK_ID).is(":checked")) {
-                        document_definition.content.push({
-                            text: '\n'
-                        });
-                    }
-                }
-                if ($(label).text() == 'Consequences') {
-                    var selected = "";
-                    $('#consequences input:checked').each(function () {
-                        selected = selected + " " + $(this)[0].nextSibling.nodeValue;
-                    });
-                    if ($(OTHER_CONSEQUENCE_CHECK_ID).is(":checked")) {
-                        selected = selected + ": " + $(OTHER_CONSEQUENCE_INPUT_ID).val() + '\n';
-                    }
-                    var title = {
-                        text: $(label).text() + '',
-                        style: 'form_field_title'
-                    };
-                    var txt = {
-                        text: selected,
-                        style: 'form_field'
-                    };
-                    document_definition.content.push(title);
-                    document_definition.content.push(txt);
-                    if ($(OTHER_CONSEQUENCE_CHECK_ID).is(":checked")) {
-                        document_definition.content.push({
-                            text: '\n'
-                        });
-                    }
-                }
-            }
-        }
-    });
-    return document_definition;
-}
-*/
 function noBoxChecked(checkboxes) {
     for (var key in checkboxes) {
         if (checkboxes[key]) {
             return false;
         }
     }
-
     return true;
 }

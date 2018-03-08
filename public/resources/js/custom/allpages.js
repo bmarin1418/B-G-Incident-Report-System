@@ -50,3 +50,44 @@ function firebaseInit() {
 function backToChoose() {
     window.location.href = "choose_form.html";
 }
+
+//Gets the appropriate club based on the logged in user so we know where to store in the database
+function getClub() {
+    var club;
+    switch (firebase.auth().currentUser.email) {
+    case "occstaff@bgc.com":
+        club = "carmichael";
+        break;
+    case "occadmin@bgc.com":
+        club = "carmichael";
+        break;
+    case "wilsonstaff@bgc.com":
+        club = "wilson";
+        break;
+    case "wilsonadmin@bgc.com":
+        club = "wilson";
+        break;
+    case "lasallestaff@bgc.com":
+        club = "lasalle";
+        break;
+    case "lasalleadmin@bgc.com":
+        club = "lasalle";
+        break;
+    case "harrisonstaff@bgc.com":
+        club = "harrison";
+        break;
+    case "harrisonadmin@bgc.com":
+        club = "harrison";
+        break;
+    case "battellstaff@bgc.com":
+        club = "battell";
+        break;
+    case "battelladmin@bgc.com":
+        club = "battell";
+        break;
+    default:
+        club = "none";
+        break;
+    }
+    return club;
+}
