@@ -25,17 +25,17 @@ limitations under the License.
 
    <!-- Material Design Theming -->
    <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
-   <script src="resources/js/libraries/sweetalert-dev.js"></script>
+   <script src="resources/js/libraries/sweetalert-dev.min.js"></script>
    <script src="resources/js/libraries/material.min.js"></script>
-   <script src="resources/js/libraries/firebase.js"></script>
+   <script src="resources/js/libraries/firebase.min.js"></script>
    <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
    <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
    <link rel="stylesheet" href="./resources/css/custom/main.css">
    <script src="resources/js/custom/allpages.js"></script>
-   <script src="https://d3js.org/d3.v3.min.js"></script>
+   <script src="resources/js/libraries/d3.v3.min.js"></script>
+   <script src="resources/js/libraries/d3-timeline.js"></script>
    <script src="resources/js/custom/metrics.js"></script>
-   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-   <link href="resources/css/custom/metrics.css" rel="stylesheet">
+   <link rel="stylesheet" href="resources/css/custom/metrics.css">
 
 </head>
 <body>
@@ -51,14 +51,13 @@ limitations under the License.
       </div>
     </div>
   </header>
-
+ 
   <main class="mdl-layout__content mdl-color--grey-100">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-
-      <!-- Container for form selection box -->
-      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+    <!-- Container for form selection box -->
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
-          <h2 class="mdl-card__title-text">Metrics</h2>
+          <h2 class="mdl-card__title-text">Admin Dashboard</h2>
 
           <a><i class="logout fa fa-question-circle fa-3x" aria-hidden="true" onclick="help()"></i></a>
           <div class="logout">
@@ -67,271 +66,72 @@ limitations under the License.
 
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-
-		<div class="container">
-
-		  <div class="container">
-
-		  	Select a location:
-		  	<br>
-		  	<select placeholder="Select..." class="single-line-text" id="location" name="location">
-		  		<option value="battell">Battell</option>
-		  		<option value="carmichael">Carmichael</option>
-		  		<option value="harrison">Harrison</option>
-		  		<option value="lasalle">LaSalle</option>
-		  		<option value="wilson">Wilson</option>
-		  		<option value="" disabled selected>Select...</option>
-		  	</select>
-        	<br><br><br>
-
+		  <div id="stats_div" class="box_horizontal">
+            <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+               <h2 class="mdl-card__title-text">Stats</h2>
+            </div>
+		    <div class="container">
+              <div class="box_horizontal stats_select">
+                <div class="option_styling">
+                    <h5>Location</h5>
+                </div>
+		  	    <select class="single-line-text center_select" id="location_view" name="location">
+		  		  <option value="battell">Battell</option>
+		  		  <option value="carmichael">Carmichael</option>
+		  		  <option value="harrison">Harrison</option>
+		  		  <option value="lasalle">LaSalle</option>
+		  		  <option value="wilson">Wilson</option>
+		  	    </select>
+              </div>
+              <div class="box_horizontal stats_select">
+                <div class="option_styling">
+                    <h5>Students</h5>
+                </div>
+                <select class="single-line-text" id="all_or_single" name="location">
+		  		  <option value="all_students">All Students</option>
+                  <option value="single_student">Single Student</option>
+		  	    </select>
+                <br>
+                <b id="userID_title_stats" style="visibility: hidden">Student ID</b>
+                <input type="text" style="visibility: hidden" placeholder="123" class="single-line-text center_input" id="userID_stats" name="user_stats">
+              </div>
+            </div>
+            <div class="box_horizontal" id="timeline"></div>
+            <div id="barchart"></div>
 		  </div>
-
-		  <div class="container">
-          Search by student ID number:
-          <br>
-          <input type="text" placeholder="123" class="single-line-text" id="userID" name="user">
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="searchUID" name="search" onclick="searchUID()">Search</button>
-          <br><br>
-          <span id="search_result"></span><br>
-          <span id="forms_found"></span><br>
+          <div id="view_forms_div" class="box_horizontal">
+            <div class="centered_content">
+              <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+                 <h2 class="mdl-card__title-text center_button">View Forms</h2>
+              </div>
+              <div class="container">
+                  <div class="option_styling">
+                      <h5>Location</h5>
+                  </div>
+		  	      <select class="single-line-text center_select" id="location_stats" name="location">
+		  		    <option value="battell">Battell</option>
+		    		<option value="carmichael">Carmichael</option>
+		  		    <option value="harrison">Harrison</option>
+		  		    <option value="lasalle">LaSalle</option>
+		  		    <option value="wilson">Wilson</option>
+		  	      </select>  
+              </div>
+              <div class="container">
+                  <div class="option_styling">
+                      <h5>Student ID</h5>
+                  </div>
+                  <input type="text" placeholder="123" class="single-line-text center_input" id="userID_search" name="user_search">
+              </div>
+              <div class="container">
+                  <br>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="search_button" name="search">View Forms</button>
+              </div>
+            </div>
           </div>
-
-          <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="showForms" name="search" style="display: none;"  onclick="window.location.href='view_forms.html'+'?uid='+document.getElementById('userID').value+'&forms_found='+document.getElementById('forms_found').innerHTML;return false;">Click to View Forms</button>
-
-          <br><br><br><br><br>
 		</div>
-		</div>
-
-        <br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br>
-        <br><br><br><br><br>
-
-
-
-<div class="container">
-</head>
-body { font: 12px Arial;}
-
-path {
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}
-	      
-div{
-   position: absolute;
-   top: 30px;
-   left: 170px;
-}
-
-form{
-   position: absolute;
-   top: 60px;
-   left: 59px;
-}
-
-.chart rect {
-  fill: steelblue;
-}
-
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end;
-}
-
-
-</style>
- <form name="myform" onSubmit="return handleClick()">
-    <input name="Submit"  type="submit" value="Enter in Student ID Number" >
-    <input type="text" id="myVal" placeholder="Add some text&hellip;">
- </form>
-
-<div id="option">
-    <input name="updateButton"
-           type="button"
-           value="Overall Data"
-           onclick="updateData()" />
+    </div>
+  </div>
+  </main>
 </div>
-<h1 style="font-family:sans-serif;">Inappropriate Behavior By Type</h1>
-<svg class="chart"></svg>
-<!-- load the d3.js library -->
-<script src="http://d3js.org/d3.v3.min.js"></script>
-
-<script>
-	
-var data = [4, 8, 15, 16, 23, 42];
-var label = ["Stealing","Hitting","Swearing","Talking","ChewingGum","Kicking"];
-
-var width = 420,
-    barHeight = 20;
-
-var x = d3.scale.linear()
-    .domain([0, d3.max(data)])
-    .range([0, width]);
-
-var chart = d3.select(".chart")
-    .attr("width", width)
-    .attr("height", barHeight * data.length);
-
-var bar = chart.selectAll("g")
-    .data(data)
-  .enter().append("g")
-    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-
-bar.append("rect")
-    .attr("width", x)
-    .attr("height", barHeight - 1);
-
-bar.append("text")
-    .attr("x", function(d) { return x(d) - 3; })
-    .attr("y", barHeight / 2)
-    .attr("dy", ".35em")
-    .text(function(d, i) { return label[i]; });
-    //.text(function(d) { return d; });
-	
-//SECOND GRAPH (TIME GRAPH)
-// Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 270 - margin.top - margin.bottom;
-
-// Parse the date / time
-var parseDate = d3.time.format("%d-%b-%y").parse;
-
-// Set the ranges
-var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
-
-// Define the axes
-var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
-
-var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
-
-// Define the line
-var valueline = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
-
-// Adds the svg canvas
-var svg = d3.select("body")
-    .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-
-// Get the data
-d3.csv("data.csv", function(error, data) {
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.close = +d.close;
-    });
-
-  // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-    // Add the valueline path.
-    svg.append("path")
-        .attr("class", "line")
-        .attr("d", valueline(data));
-
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    // Add the Title
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")
-        .attr("font-family", "sans-serif")
-        .style("font-weight", "900")
-        .style("font-size", "21px")
-        .text("Incident Count Timeline");
-});
-
-function handleClick(event){
-      var myValue = document.getElementById("myVal").value;
-      myValue += ".csv";
-      d3.csv(myValue, function(error, data) {
-        data.forEach(function(d) {
-                d.date = parseDate(d.date);
-                d.close = +d.close;
-            });
-
-        // Scale the range of the data again
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-            y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-    // Select the section we want to apply our changes to
-    var svg = d3.select("body").transition();
-
-    // Make the changes
-        svg.select(".line")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
-	      
-    });
-        return false;
-}
-
-// ** Update data section (Called from the onclick)
-function updateData() {
-
-    // Get the data again
-    d3.csv("overall_data.csv", function(error, data) {
-        data.forEach(function(d) {
-                d.date = parseDate(d.date);
-                d.close = +d.close;
-            });
-
-       // Scale the range of the data again
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-            y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-    // Select the section we want to apply our changes to
-    var svg = d3.select("body").transition();
-
-    // Make the changes
-        svg.select(".line")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
-
-    });
-}
-
-</script>
 </body>
-</html>
+    

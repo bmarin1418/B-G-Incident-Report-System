@@ -1,120 +1,98 @@
-//CSS to style d3 charts
-.chart div {
-    font: 10px sans-serif;
-    background-color: steelblue;
-    text-align: right;
-    padding: 3px;
-    margin: 1px;
-    color: white;
+body { 
+    font: 12px Arial;
 }
 
-#pieChart {
-	position:absolute;
-	top:250px;
-	left:10px;
-	width:400px;
-	height: 400px;
-}
-
-
-#lineChart {
-	position:absolute;
-	top:100px;
-	left:410px;
-	height: 150px;
-}
-
-#barChart {
-	position:absolute;
-	top:240px;
-	left:410px;
-	height: 250px;
-}
-
-#OverallButton {
-	position:absolute;
-	top:380px;
-	left:140px;
-	height: 100px;
-}
-
-.slice {
-   font-size: 12pt;
-   font-family: Verdana;
-   fill: white; //svg specific - instead of color
-   font-weight: bold;
-  		}
-
-/*for line chart*/
-.axis path, .axis line {
+path {
+    stroke: steelblue;
+    stroke-width: 2;
     fill: none;
-    stroke: black;
-    shape-rendering: crispEdges; //The shape-rendering property is an SVG attribute, used here to make sure our axis and its tick mark lines are pixel-perfect.
 }
 
-.line {
-  fill: none;
-  /*stroke: steelblue;*/
-  stroke-width: 3px;
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
 }
 
-.dot {
-  /*fill: white;*/
-  /*stroke: steelblue;*/
-  stroke-width: 1.5px;
-  }
-
-
-.axis text {
-    font-family: Verdana;
-    font-size: 11px;
+.chart rect {
+  fill: steelblue;
 }
 
-.title {
-	 font-family: Verdana;
-    font-size: 15px;
-
+.chart text {
+  fill: white;
+  font: 200px sans-serif;
+  text-anchor: end;
 }
 
-.xAxis {
-    font-family: verdana;
-    font-size: 11px;
-    fill: black;
+.box_horizontal {
+    height: auto;
+    float: left;
+    padding: 4px;
 }
 
-.yAxis {
-    font-family: verdana;
-    font-size: 11px;
-    fill: white;
+#stats_div {
+    width: 75%;
+    height: 375px;
+    border: 2px solid #0000001a;
+}     
+
+#view_forms_div {
+    width: 22%;
+    height: 375px;
+    float: right;
+    border: 2px solid #0000001a;
 }
 
-
-table {
-	border-collapse:collapse;
-	border: 0px;
-	font-family: Verdana;
-	color: #5C5558;
-	font-size: 12px;
-	text-align: right;
+.option_styling {
+    text-align: center;
+    padding: 4px;
 }
 
-td {
-	padding-left: 10px;
+h5 {
+    margin: 3px;
 }
 
-#lineChartTitle1 {
-	font-family: Verdana;
-	font-size  : 14px;
-	fill       : lightgrey;
-	font-weight: bold;
-	text-anchor: middle;
+.mdl-card__supporting-text {
+    width: auto;
 }
 
-#lineChartTitle2 {
-	font-family: Verdana;
-	font-size  : 72px;
-	fill       : grey;
-	text-anchor: middle;
-	font-weight: bold;
-	/*font-style: italic;*/
+#search_button {
+    width: 204px;
+}
+
+.centered_content {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.center_button {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.center_input {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+center_select {
+    width: 204px;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+#barchart {
+    margin-top: 0px;
+}
+#timeline {
+    margin-top: 0px;
+}
+
+.stats_select {
+    margin-top: 30px;
 }
