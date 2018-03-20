@@ -73,9 +73,9 @@ function searchStudents() {
         }
         
         // We're going to make three database queries asyncronously to determine what forms are present for the student. When they all complete, we create a url query parameter with the info and redirect to the view_forms page. Google promises if this code is confusing
-        var behavior = str + '/behavior';
-        var accident = str + '/accident';
-        var general = str + '/general';
+        var behavior = student_path + '/behavior';
+        var accident = student_path + '/accident';
+        var general = student_path + '/general';
 
         // check for behavior forms
         var behavior_check = firebase.database().ref(behavior).once('value').then(function (snapshot) {
@@ -105,7 +105,7 @@ function searchStudents() {
         });
 
         // Do all the checks asyncronously and continue execution when they return the results
-        Promise.all([getArticle, getProfilePic, getIsStarred]).then(function(results) {
+        Promise.all([behavior_check, accident_check, general_check]).then(function(results) {
             var form_types = '';
             for (var i = 0; i < 3; i++) {
                 if (form_types != '') {
@@ -113,7 +113,7 @@ function searchStudents() {
                 }
                 form_types += results[i];
             }
-            window.location.href = 'view_forms.html' + '?' + 'location=' + document.getElementById('location').value + '&uid=' + document.getElementById('userID').value + '&forms_found=' + form_types;
+            window.location.href = 'view_forms.html' + '?' + 'location=' + $(LOCATION_VIEW_ID).val() + '&uid=' + $(STUDENT_ID_VIEW).val() + '&forms_found=' + form_types;
         });
     });
 }
