@@ -40,11 +40,13 @@ limitations under the License.
   <script src="resources/js/libraries/vfs_fonts.js"></script>
   <script src="resources/js/custom/bng-logo.js"></script>
   <script src="resources/js/custom/eyes.js"></script>
-  <script src="resources/js/custom/allpages.js"></script>
   <script src="resources/js/custom/allFormPages.js"></script>
+  <script src="resources/js/custom/allpages.js"></script>
   <script src="resources/js/libraries/validate.min.js"></script>
   <script src="resources/js/custom/InputValidator.js"></script>
-    <script src="resources/js/custom/view_forms.js"></script>
+  <script src="resources/js/custom/view_forms.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="resources/css/custom/view_forms.css" rel="stylesheet">
 
 </head>
 
@@ -67,12 +69,13 @@ limitations under the License.
                 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                     <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
                         <h2 class="mdl-card__title-text">View Forms</h2>
+                        <a><i class="logout fa fa-question-circle fa-3x shiftleft" aria-hidden="true" onclick="help()"></i></a>
+
                         <div class="backhome">
-                            <button class="back mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" name="back" id="back" onclick="window.location.href='/metrics.html'">Back</button>
+                            <button class="back mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100 shiftup" name="back" id="back" onclick="window.location.href='/metrics.html'">Back</button>
                         </div>
-                        <a><i class="adjust-margin logout fa fa-question-circle fa-3x" aria-hidden="true" onclick="help()"></i></a>
                         <div class="logout">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100 shiftup" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
                         </div>
                     </div>
                     <div class="mdl-card__supporting-text mdl-color-text--grey-600 page_bg">
