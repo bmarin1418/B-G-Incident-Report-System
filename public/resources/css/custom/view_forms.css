@@ -17,3 +17,12 @@ button {
     width: 90px; 
     z-index: 0;
 }
+
+.shiftleft {
+	margin-right: 115px;
+	margin-top: -5px !important;
+}
+
+.shiftup {
+	margin-top : 0px !important;
+}
