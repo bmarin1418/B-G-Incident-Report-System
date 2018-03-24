@@ -206,6 +206,7 @@ function submitAndPrint(newForm, club) {
             document_definition = JSON.stringify(document_definition);
             sessionStorage.setItem('doc_def', document_definition);
             sessionStorage.setItem('form_type', 'behavior');
+            sessionStorage.setItem('date', newForm['date']);
             window.location.href = "confirmation_page.html";
         }
     });

@@ -8,25 +8,168 @@ STUDENT_SELECT = "#all_or_single";
 STUDENT_SELECT_TITLE = "#userID_title_stats";
 BAR_CHART_ID = "#barchart";
 TIMELINE_ID = "#timeline";
-CHART = undefined;
+MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+NUM_MONTHS_DISPLAYED = 3
 
 $(document).ready(function () {
     firebaseInit();
     $(SEARCH_ID).click(searchStudents);
     $(LOGOUT_ID).click(confirmLogout);
     $(STUDENT_SELECT).change(toggleStudentDisplay);
+    $(STUDENT_SELECT).change(updateCharts);
+    $(STUDENT_ID_STATS).change(updateCharts);
+    $(LOCATION_STATS_ID).change(updateCharts);
     buildBarChart();
-    updateBarChart();
-    buildTimeline([
-        {label: "Accident", times: [
-            {"starting_time": 1517461110000, "ending_time": 1517461110000} ]},
-        {label: "Behavior", 
-         times: [{"starting_time": 1517461110000, "ending_time": 1517461110000} ]},
-        {label: "Incident", 
-         times: [{"starting_time": 1517461110000, "ending_time": 1517461110000} ]},
-      ]);
-    updateTimeline();
+    buildTimeline();
+    updateCharts(); //Call this once to initialize to whatever the selections are at
 });
+
+
+// Dispatches to a more specific chart update function based on what the user has currently selected
+function updateCharts() {
+    firebase.auth().onAuthStateChanged(function (user) { // This assures the firebaseInit is done and we can query the database
+        if (user) {
+            if ($(STUDENT_SELECT).val() == "single_student") {
+                updateChartsSingleStudent();
+            } else {
+                updateChartsAllStudents();
+            }
+        } else {
+            window.location.href = "index.html";
+        }
+    });   
+}
+
+// Create an array of functions containing all the queries we want to do to get metadata. as well as some accompanying info about what the query is
+function createMetadataQueries() {
+    var location = $(LOCATION_STATS_ID).val();
+    var form_types = ['accident', 'behavior', 'general'];
+    var returnSnapshotVal = function (snapshot) { return snapshot.val(); }
+    var query_funcs = [];
+    var function_manifest = []; //We'll store what each query function is for
+    //We need to loop over all form types and the last three months for each form type, creating a query for the count of forms submitted and the times the forms were submitted
+    for (var form_i = 0; form_i < form_types.length; form_i++) {
+        for (var date_i = 0; date_i < NUM_MONTHS_DISPLAYED; date_i ++) {
+            var date = new Date();
+            date.setMonth(date.getMonth() - date_i);
+            var month = MONTH_NAMES[date.getMonth()];
+            // Create the count query for a given form_type and month pair
+            var query_path_count = '/locations/' + location + '/metadata/' + form_types[form_i] + '/' + month + '_count';
+            var query_func_count = firebase.database().ref(query_path_count).once('value').then(returnSnapshotVal);
+            query_funcs.push(query_func_count);
+            function_manifest.push({'type': 'count', 'month': month, 'form_type': form_types[form_i]});
+            
+            // Create the times query for a given form_type and month pair
+            var query_path_times = '/locations/' + location + '/metadata/' + form_types[form_i] + '/' + month + '_times';
+            var query_func_times = firebase.database().ref(query_path_times).once('value').then(returnSnapshotVal);
+            query_funcs.push(query_func_times);
+            function_manifest.push({'type': 'times', 'month': month, 'form_type': form_types[form_i]});
+        }
+    }
+    return {'funcs': query_funcs, 'manifest': function_manifest};
+}
+
+// Given the query info, query index, and results, update the bar_chart_data for all locations. This formats the data correctly for input
+// into updateBarchart()
+function updateBarData(bar_chart_data, manifest_i, results, query_info) {
+    var form_type = query_info['manifest'][manifest_i]['form_type']; //Unpack from the manifest JSON for readability
+    var form_type_count = results[manifest_i]
+    if (form_type == 'accident') {
+        bar_chart_data[0] += form_type_count;
+    } else if (form_type == 'behavior') {
+        bar_chart_data[1] += form_type_count;
+    } else if (form_type == 'general') {
+        bar_chart_data[2] += form_type_count;
+    } else {
+        console.log('unknown form type included in query manifest');
+    }
+}
+
+// Update the timeline data for a given result, given the index for the manifest of the query matching the results as well as the manfiest. This formats the data correctly for input
+// into updateBarchart()
+function updateTimelineData(timeline_data, manifest_i, results, query_info) {
+    var form_type = query_info['manifest'][manifest_i]['form_type']; //Unpack from the manifest JSON for readability
+    for (timestamp_hash in results[manifest_i]) {
+        var form_submit_time = new Date(results[manifest_i][timestamp_hash])
+        var epoch_submit_time = form_submit_time.getTime();
+        if (form_type == 'accident') {
+            timeline_data[0]['times'].push({"starting_time": epoch_submit_time, "ending_time": epoch_submit_time});
+        } else if (form_type == 'behavior') {
+            timeline_data[1]['times'].push({"starting_time": epoch_submit_time, "ending_time": epoch_submit_time});
+        } else if (form_type == 'general') {
+            timeline_data[2]['times'].push({"starting_time": epoch_submit_time, "ending_time": epoch_submit_time});
+        } else {
+            console.log('unknown form type included in query manifest');
+        }
+    }
+}
+
+// When the user wants to view stats for a all students at a location this updates the d3 charts
+function updateChartsAllStudents() {
+    // We're going to make database queries asyncronously for metadata, then wait until they complete and continue the code execution syncronously. Google javascript promises if this code is confusing
+    
+    var query_info = createMetadataQueries();
+    Promise.all(query_info['funcs']).then(function(results) {
+        bar_chart_data = [0, 0, 0];
+        timeline_data = [{label: "Accident", times: []},
+                                {label: "Behavior", times: []},
+                                {label: "Incident", times: []}];
+        
+        for (var result_i = 0; result_i < results.length; result_i++) {
+            if (query_info['manifest'][result_i]['type'] == 'count') {
+                updateBarData(bar_chart_data, result_i, results, query_info);
+            } else if (query_info['manifest'][result_i]['type'] == 'times') {
+                updateTimelineData(timeline_data, result_i, results, query_info);
+            } else {
+                console.log('Unknown query type included in query manifest');
+            }
+        }
+        updateBarChart(bar_chart_data);
+        updateTimeline(timeline_data);
+    });
+}
+
+// When the user wants to view stats for a single student this updates the d3 charts
+function updateChartsSingleStudent() {
+    var form_counts = {'accident': 0, 'behavior': 0, 'general': 0};
+    var timeline = {'accident': [], 'behavior': [], 'general': []};
+    var location = $(LOCATION_STATS_ID).val();
+    var uid = $(STUDENT_ID_STATS).val();
+    var database_query = '/locations/' + location + '/students/' + uid;
+    
+    // We're going to query the database for all the submitted forms for a given student. Then we loop over the JSON to count
+    // each form type for the barchart as well as find when the forms were submitted for the timeline
+    firebase.database().ref(database_query).once('value').then(function (snapshot) {
+        var form_json = snapshot.val(); //form_json is indexed by the form type then random hash for the each submitted form
+        for (form_type in form_json) {  
+            form_counts[form_type] += 1; // Count form types for the bar chart
+            for (hash_id in form_json[form_type]) { // Get the time of every report for the timeline
+                var timestamp = new Date(form_json[form_type][hash_id]['date']).getTime();
+                timeline[form_type].push({"starting_time": timestamp, "ending_time": timestamp});
+            }
+        }
+        
+        //d3-timeline and the custom d3 code for the bar chart expect data in a certain format. Convert to that and update.
+        bar_update_data = [formcounts['accident'], formcounts['behavior'], formcounts['general']]
+        updateBarChart(bar_update_data);
+        
+        timeline_update_data = [{
+                label: "Accident",
+                times: timeline['accident']
+            },
+            {
+                label: "Behavior",
+                times: timeline['behavior']
+                                   },
+            {
+                label: "Incident",
+                times: timeline['general']
+        }];
+        updateTimeline(timeline_update_data); 
+    });
+}
+
+
 // Prompt errors w/ searching by uid
 function showErr(message) {
     swal({
@@ -51,20 +194,28 @@ function toggleStudentDisplay() {
     }
 }
 
-// Search for a student's records by UID and location
-function searchStudents() {
+// Check the student ID field is filled out for the view forms functionality
+function checkStudentIdPresent() {
     var uid = $(STUDENT_ID_VIEW).val();
     if (uid === "" || uid === null || uid === undefined) { // throw error if no ID number was entered
         showErr("Please enter a student ID number");
         return;
     }
-    
+}
+
+// Check the location field is selected for the view forms functionality
+function checkLocationPresent() {
     var location = $(LOCATION_VIEW_ID).val();
     if (location === "" || location === null || location === undefined) { // throw error if no location selected
         showErr("Please select a location");
         return;
     }
+}
     
+// Search for a student's records by UID and location
+function searchStudents() {
+    checkStudentIdPresent();
+    checkLocationPresent();
     var student_path = '/locations/' + location + '/students/' + uid;
     firebase.database().ref(student_path).once('value').then(function (snapshot) {
         if (snapshot.val() == null) {
@@ -118,14 +269,10 @@ function searchStudents() {
     });
 }
 
-
-
-
-/*
-############# BAR CHART ###################
--------------------------------------------
-*/
-
+///////////////////////////////////////////
+/* ----     Begin Bar Chart Code     --- */
+///////////////////////////////////////////
+    
 // Function returning a JSON object that defines the sizing, axix labels, and color of the bar chart
 function barChartBasics() {
     var margin = {
@@ -149,9 +296,11 @@ function barChartBasics() {
     };
 }
 
+    
+// Initial one time setup of the d3 bar chart
 function buildBarChart() {
 	var basics = barChartBasics();
-	var bar_heights = [5, 10, 2];
+	var bar_heights = [1, 1, 1]; //Placeholder data until upadteBarChart is called
 	var xScale = d3.scale.linear()
                    .domain([0, bar_heights.length])
                    .range([0, basics.width]);
@@ -239,8 +388,7 @@ function buildBarChart() {
 }
 
 // Function to update the bar chart when the requested data to display changes
-function updateBarChart() {
-		var bar_heights = [15, 2, 7];
+function updateBarChart(bar_heights) {
 		var basics = barChartBasics();
 		var xScale = d3.scale.linear()
                        .domain([0, bar_heights.length])
@@ -287,8 +435,32 @@ function updateBarChart() {
 		    .attr("class", "yAxis");
 }
 
-function buildTimeline(labelTestData) {
+///////////////////////////////////////////
+/* ----      Begin Timeline Code     --- */
+///////////////////////////////////////////    
+
+// Create the timeline in the stats panel using the d3-timeline library. We wrap the actual building code for the sake of consistency with
+// barchart creation function interface mimicry
+function buildTimeline() {
+    //Empty timeline until updateTimeline is called
+    var tmp_data = [{
+            label: "Accident",
+            times: []
+        },
+        {
+            label: "Behavior",
+            times: []
+                               },
+        {
+            label: "Incident",
+            times: []
+    }];
     
+    buildTimelineWrapped(tmp_data)
+}
+
+//Function that take the data and creates a timeline based on it
+function buildTimelineWrapped(timeline_data) {
     var date = new Date();
     var begin_date = new Date(date.getFullYear(), date.getMonth() - 2, 1)
     var end_date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -305,24 +477,17 @@ function buildTimeline(labelTestData) {
             tickSize: 15,
           })
           .display("circle"); // toggle between rectangles and circles
-    CHART = chart
                 
     var svg = d3.select(TIMELINE_ID)
                 .append("svg")
                 .attr("width", 400)
-                .datum(labelTestData)
+                .datum(timeline_data)
                 .call(chart);
+    
 }
 
-//Update timeline (This is really just deleting the entire thing and rebuilding it)
-function updateTimeline() {
+//Update timeline (This is really just deleting the entire thing and rebuilding it, but it works)
+function updateTimeline(timeline_data) {
     $(TIMELINE_ID).empty();
-    buildTimeline([
-        {label: "Accident", times: [
-            {"starting_time": 1517461110000 - 1000000000, "ending_time": 1517461110000 - 1000000000} ]},
-        {label: "Behavior", 
-         times: [{"starting_time": 1517461110000, "ending_time": 1517461110000} ]},
-        {label: "Incident", 
-         times: [{"starting_time": 1517461110000, "ending_time": 1517461110000} ]},
-      ]);
+    buildTimelineWrapped(timeline_data);
 }
