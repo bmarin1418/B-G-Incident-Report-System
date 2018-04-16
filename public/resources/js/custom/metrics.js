@@ -135,12 +135,17 @@ function updateChartsSingleStudent() {
     var timeline = {'accident': [], 'behavior': [], 'general': []};
     var location = $(LOCATION_STATS_ID).val();
     var uid = $(STUDENT_ID_STATS).val();
+    if (uid == "") { return; } //Don't do updating if no student id present
     var database_query = '/locations/' + location + '/students/' + uid;
     
     // We're going to query the database for all the submitted forms for a given student. Then we loop over the JSON to count
     // each form type for the barchart as well as find when the forms were submitted for the timeline
     firebase.database().ref(database_query).once('value').then(function (snapshot) {
         var form_json = snapshot.val(); //form_json is indexed by the form type then random hash for the each submitted form
+        if (form_json == null) {
+            showErr("We can't find that student ID to show stats for");
+            return;
+        }
         for (form_type in form_json) {  
             form_counts[form_type] += 1; // Count form types for the bar chart
             for (hash_id in form_json[form_type]) { // Get the time of every report for the timeline
@@ -150,7 +155,7 @@ function updateChartsSingleStudent() {
         }
         
         //d3-timeline and the custom d3 code for the bar chart expect data in a certain format. Convert to that and update.
-        bar_update_data = [formcounts['accident'], formcounts['behavior'], formcounts['general']]
+        bar_update_data = [form_counts['accident'], form_counts['behavior'], form_counts['general']]
         updateBarChart(bar_update_data);
         
         timeline_update_data = [{
@@ -216,6 +221,8 @@ function checkLocationPresent() {
 function searchStudents() {
     checkStudentIdPresent();
     checkLocationPresent();
+    var uid = $(STUDENT_ID_VIEW).val();
+    var location = $(LOCATION_VIEW_ID).val();
     var student_path = '/locations/' + location + '/students/' + uid;
     firebase.database().ref(student_path).once('value').then(function (snapshot) {
         if (snapshot.val() == null) {
@@ -249,7 +256,7 @@ function searchStudents() {
         // check for general incident forms
         var general_check = firebase.database().ref(general).once('value').then(function (snapshot) {
             if (snapshot.val() != null) {
-                return 'General Incident';
+                return 'General';
             } else {
                 return '';
             }
@@ -259,7 +266,7 @@ function searchStudents() {
         Promise.all([behavior_check, accident_check, general_check]).then(function(results) {
             var form_types = '';
             for (var i = 0; i < 3; i++) {
-                if (form_types != '') {
+                if (form_types != '' && results[i] != '') {
                     form_types += ' and ';
                 }
                 form_types += results[i];
