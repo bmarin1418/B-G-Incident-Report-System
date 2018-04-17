@@ -83,7 +83,7 @@ function initValidatorObj() {
             presence: true
         },
         comments: {
-            presence: true
+            presence: false
         },
         behaviors: behaviorChecked,
         other_behavior: presentIfOtherBehavior,
