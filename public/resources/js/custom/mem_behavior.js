@@ -196,7 +196,7 @@ function submitAndPrint(newForm, club) {
         }
     if (noBoxChecked(consequences)) {
             sweetAlert("Form Did Not Submit", "Please check at least one box under the \"Consequences\" section");
-      
+    }
     firebase.database().ref('locations/' + club + '/students/' + newForm["memberId"] + '/behavior/').push(newForm, function (err) {
         if (err) {
             sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
