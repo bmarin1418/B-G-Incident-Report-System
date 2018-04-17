@@ -85,15 +85,9 @@ function initValidatorObj() {
         comments: {
             presence: true
         },
-        behaviors: {
-            presence: true  
-        },
-        other_behavior: {
-            presence: true  
-        },
-        other_consequence: {
-            presence: true  
-        },
+        behaviors: behaviorChecked,
+        other_behavior: presentIfOtherBehavior,
+        other_consequence: presentIfOtherConsequence
     });
 }
 
