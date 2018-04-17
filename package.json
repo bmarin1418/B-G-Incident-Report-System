@@ -1,0 +1,19 @@
+{
+  "name": "bincident",
+  "version": "1.0.0",
+  "description": "Website for the Boys and Girls Club of St. Joseph County to manage incident tracking and reporting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmarin1418/B-G-Incident-Report-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmarin1418/B-G-Incident-Report-System/issues"
+  },
+  "homepage": "https://github.com/bmarin1418/B-G-Incident-Report-System#readme"
+}

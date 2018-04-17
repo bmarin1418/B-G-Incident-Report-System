@@ -66,7 +66,6 @@ function initValidatorObj() {
             presence: true
         },
         date: {
-            presence: true,
             datetime: {
                 dateOnly: true,
                 earliest: moment().utc().local().subtract(8, 'days'),
@@ -85,7 +84,7 @@ function initValidatorObj() {
         comments: {
             presence: true
         },
-        behaviors: behaviorChecked,
+	behaviors: behaviorChecked,
         other_behavior: presentIfOtherBehavior,
         other_consequence: presentIfOtherConsequence
     });
@@ -106,14 +105,13 @@ function presentIfOtherBehavior(value, attributes, attributeName, options, const
 
 //Function to set validation at runtime depending on the behavior other checkbox checked status
 function behaviorChecked(value, attributes, attributeName, options, constraints) {
-    if ($('#stealing_cheating').is(':checked')) {
+    if (!($('#stealing_cheating').is(':checked')) && !($('#talking').is(':checked')) && !($('#not_listening').is(':checked')) && !($('#language').is(':checked')) && !($('#gestures').is(':checked')) && !($('#BGC_rules').is(':checked')) && !($('#member_disrespect').is(':checked')) && !($('#staff_disrespect').is(':checked')) && !($('#name_calling').is(':checked')) && !($('#touching').is(':checked')) && !($('#physical_contact').is(':checked')) && !($('#fighting').is(':checked')) && !($('#threatening').is(':checked')) && !($('#property_damage').is(':checked'))) {
         return {
             presence: true
         }
-    } else {
-        return {
-            presence: false
-        }
+    }
+    else{
+	presence: false
     }
 }
 
