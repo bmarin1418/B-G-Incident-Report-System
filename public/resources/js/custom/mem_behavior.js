@@ -85,9 +85,23 @@ function initValidatorObj() {
             presence: true
         },
 	behaviors: behaviorChecked,
+	consequences: consequenceChecked,
         other_behavior: presentIfOtherBehavior,
         other_consequence: presentIfOtherConsequence
     });
+}
+
+//Function to set validation at runtime depending on if a consequence is checked
+function consequenceChecked(value, attributes, attributeName, options, constraints) {
+    if (!($('#event_loss').is(':checked')) && !($('#suspension').is(':checked')) && !($('#parent_contact').is(':checked')) && !($('#conference').is(':checked'))) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
 }
 
 //Function to set validation at runtime depending on the behavior other checkbox checked status
