@@ -24,18 +24,22 @@ limitations under the License.
   <script src="http://d3js.org/d3.v2.js"></script>
 
    <!-- Material Design Theming -->
+   <link rel="icon" href="resources/img/bng.png">
    <link rel="stylesheet" href="resources/css/libraries/material.orange-indigo.min.css">
+   <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
+   <link rel="stylesheet" href="./resources/css/custom/main.css">
+   <link rel="stylesheet" href="resources/css/custom/metrics.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
+   <!-- JavaScript Resources -->
    <script src="resources/js/libraries/sweetalert-dev.min.js"></script>
    <script src="resources/js/libraries/material.min.js"></script>
    <script src="resources/js/libraries/firebase.min.js"></script>
    <script src="resources/js/libraries/jquery-3.2.0.min.js"></script>
-   <link rel="stylesheet" href="resources/css/libraries/sweetalert.css">
-   <link rel="stylesheet" href="./resources/css/custom/main.css">
    <script src="resources/js/custom/allpages.js"></script>
    <script src="resources/js/libraries/d3.v3.min.js"></script>
    <script src="resources/js/libraries/d3-timeline.js"></script>
    <script src="resources/js/custom/metrics.js"></script>
-   <link rel="stylesheet" href="resources/css/custom/metrics.css">
 
 </head>
 <body>
@@ -58,7 +62,6 @@ limitations under the License.
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
           <h2 class="mdl-card__title-text">Admin Dashboard</h2>
-
           <a><i class="logout fa fa-question-circle fa-3x" aria-hidden="true" onclick="help()"></i></a>
           <div class="logout">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--grey-100" id="logout" name="logout" onclick="confirmLogout()">Logout</button>
