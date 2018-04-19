@@ -66,7 +66,6 @@ function initValidatorObj() {
             presence: true
         },
         date: {
-            presence: true,
             datetime: {
                 dateOnly: true,
                 earliest: moment().utc().local().subtract(8, 'days'),
@@ -85,10 +84,24 @@ function initValidatorObj() {
         comments: {
             presence: true
         },
-        behaviors: behaviorChecked,
+	behaviors: behaviorChecked,
+	consequences: consequenceChecked,
         other_behavior: presentIfOtherBehavior,
         other_consequence: presentIfOtherConsequence
     });
+}
+
+//Function to set validation at runtime depending on if a consequence is checked
+function consequenceChecked(value, attributes, attributeName, options, constraints) {
+    if (!($('#event_loss').is(':checked')) && !($('#suspension').is(':checked')) && !($('#parent_contact').is(':checked')) && !($('#conference').is(':checked'))) {
+        return {
+            presence: true
+        }
+    } else {
+        return {
+            presence: false
+        }
+    }
 }
 
 //Function to set validation at runtime depending on the behavior other checkbox checked status
@@ -106,14 +119,13 @@ function presentIfOtherBehavior(value, attributes, attributeName, options, const
 
 //Function to set validation at runtime depending on the behavior other checkbox checked status
 function behaviorChecked(value, attributes, attributeName, options, constraints) {
-    if ($('#stealing_cheating').is(':checked')) {
+    if (!($('#stealing_cheating').is(':checked')) && !($('#talking').is(':checked')) && !($('#not_listening').is(':checked')) && !($('#language').is(':checked')) && !($('#gestures').is(':checked')) && !($('#BGC_rules').is(':checked')) && !($('#member_disrespect').is(':checked')) && !($('#staff_disrespect').is(':checked')) && !($('#name_calling').is(':checked')) && !($('#touching').is(':checked')) && !($('#physical_contact').is(':checked')) && !($('#fighting').is(':checked')) && !($('#threatening').is(':checked')) && !($('#property_damage').is(':checked'))) {
         return {
             presence: true
         }
-    } else {
-        return {
-            presence: false
-        }
+    }
+    else{
+	presence: false
     }
 }
 
@@ -206,6 +218,7 @@ function submitAndPrint(newForm, club) {
             document_definition = JSON.stringify(document_definition);
             sessionStorage.setItem('doc_def', document_definition);
             sessionStorage.setItem('form_type', 'behavior');
+            sessionStorage.setItem('date', newForm['date']);
             window.location.href = "confirmation_page.html";
         }
     });

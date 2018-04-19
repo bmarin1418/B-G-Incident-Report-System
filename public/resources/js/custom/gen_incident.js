@@ -93,7 +93,7 @@ function submitClickHandler(inputValidator) {
 
 // Send the form info to the database and then create the JSON for a pdf
 function submitAndPrint(newForm, club) {
-    firebase.database().ref('locations/' + club + '/students/' + newForm['memberId'] + '/accident/').push(newForm, function (err) {
+    firebase.database().ref('locations/' + club + '/students/' + newForm['memberId'] + '/general/').push(newForm, function (err) {
         if (err) {
             sweetAlert("Form Did Not Submit", "Check your internet connection and try again");
         } else {
@@ -102,6 +102,7 @@ function submitAndPrint(newForm, club) {
             document_definition = JSON.stringify(document_definition);
             sessionStorage.setItem('doc_def', document_definition);
             sessionStorage.setItem('form_type', 'general');
+            sessionStorage.setItem('date', newForm['date']);
             window.location.href = "confirmation_page.html";
         }
     });
