@@ -38,7 +38,6 @@ function initValidatorObj() {
             presence: true,
             datetime: {
                 dateOnly: true,
-                earliest: moment().utc().local().subtract(8, 'days'),
                 latest: moment().local()
             }
         },
