@@ -1,7 +1,0 @@
-Steps to add a new location to the system
-
-1. In firebase under the authentication tab, add a new login and password for staff members as well as an admin.
-
-2. Copy the UID of the staff member and in the database under the JSON key uid (it's on the first level). Add a key-value pair with key $LOCATION_staff_uid and the corresponding uid as the value. For the admin uid, add a key-value pair in the same location with key $LOCATION_admin_uid and the copied uid as the value.
-
-3. Go into the allFormPages.js file in the code and look at the funciton getClub(). Add a case that return $LOCATION.

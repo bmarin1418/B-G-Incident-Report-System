@@ -19,9 +19,9 @@ $(document).ready(function () {
     $(STUDENT_SELECT).change(updateCharts);
     $(STUDENT_ID_STATS).change(updateCharts);
     $(LOCATION_STATS_ID).change(updateCharts);
-    buildBarChart();
-    buildTimeline();
-    updateCharts(); //Call this once to initialize to whatever the selections are at
+    buildBarChart(); //Initial building, call update functions after this
+    buildTimeline(); //Initial building, call update functions after this
+    updateCharts();  //Call this once to initialize to whatever the selections are at
 });
 
 
@@ -204,8 +204,9 @@ function checkStudentIdPresent() {
     var uid = $(STUDENT_ID_VIEW).val();
     if (uid === "" || uid === null || uid === undefined) { // throw error if no ID number was entered
         showErr("Please enter a student ID number");
-        return;
+        return false;
     }
+    return true;
 }
 
 // Check the location field is selected for the view forms functionality
@@ -213,14 +214,15 @@ function checkLocationPresent() {
     var location = $(LOCATION_VIEW_ID).val();
     if (location === "" || location === null || location === undefined) { // throw error if no location selected
         showErr("Please select a location");
-        return;
+        return false;
     }
+    return true;
 }
     
 // Search for a student's records by UID and location
 function searchStudents() {
-    checkStudentIdPresent();
-    checkLocationPresent();
+    if (!checkStudentIdPresent()) { return };
+    if (!checkLocationPresent())  { return };
     var uid = $(STUDENT_ID_VIEW).val();
     var location = $(LOCATION_VIEW_ID).val();
     var student_path = '/locations/' + location + '/students/' + uid;

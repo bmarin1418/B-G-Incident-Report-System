@@ -59,7 +59,9 @@ h5 {
 }
 
 #search_button {
-    width: 204px;
+    width: 175px;
+    display: block !important;
+    margin: 0 auto !important;
 }
 
 .centered_content {
@@ -81,9 +83,13 @@ h5 {
 }
 
 .center_select {
-    width: 204px;
+    width: 150px;
     display: block !important;
     margin: 0 auto !important;
+}
+
+.single-line-text {
+    width: 150px;
 }
 
 #barchart {

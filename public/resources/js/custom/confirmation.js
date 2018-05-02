@@ -26,7 +26,7 @@ function udpateMetaData(form_type) {
         if (user) {
             var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var err_msg = "We couldn't update metadata. Check your connection and if the problem persists contact an administrator.";
-            var today = new Date();
+            var today = new Date(sessionStorage.getItem('date')); //We'll just call whatever the user chose for the date 'today'
             var club = getClub();
             var cur_month = monthNames[today.getMonth()];
             metadata_path_count = 'locations/' + club + '/metadata/' + form_type + '/' + cur_month + '_count';
